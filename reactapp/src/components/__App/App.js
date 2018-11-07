@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import styled from "styled-components";
 
 // Components
-import { ExampleComponent, LandingPage, UserSettingsSideBar } from "../../components";
+import { ExampleComponent, LandingPage, UserSettingsSideBar, UserSettingsSummaries } from "../../components";
 
 //Styles
 const AppContainer = styled.div`
@@ -24,6 +24,7 @@ class App extends Component {
         <Route exact path="/" component={ExampleComponent} />
         <Route exact path="/landing" component={LandingPage} />
         <Route path="/settings" component={UserSettingsSideBar} />
+        <Route path="/settings/summaries" component={UserSettingsSummaries} />
       </AppContainer>
     );
   }
