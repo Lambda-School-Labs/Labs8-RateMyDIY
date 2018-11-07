@@ -8,7 +8,7 @@ const SummariesContainer = styled.div`
 	flex-direction: column;
 	min-width: 550px;
   width: 84%;
-  background: #FFF;
+  background: #BBB;
 `;
 
 const TempDiv = styled.div`
@@ -20,7 +20,7 @@ class UserSettingSummaries extends Component {
   render() {
     return (
       <SummariesContainer>
-        <TempDiv>Under Construction</TempDiv>
+        <TempDiv></TempDiv>
       </SummariesContainer>
     );
   }
