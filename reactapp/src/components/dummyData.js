@@ -54,10 +54,17 @@ module.exports = {
   ],
   popularReviewers: [
     {
-      id: 2,
+      id: 1,
       name: "Tristen",
       star_count: 4.2,
       author: "john",
+      photo_url: "someURL.com"
+    },
+    {
+      id: 2,
+      name: "David",
+      star_count: 4.5,
+      author: "David",
       photo_url: "someURL.com"
     }
   ]

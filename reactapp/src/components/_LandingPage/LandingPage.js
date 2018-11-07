@@ -1,10 +1,10 @@
 // Import Dependencies
 import React, { Component } from "react";
 import { NavLink, Link, Route } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { getProjects, getMakers, getReviewers } from "../../actions";
 import "./LandingPage.css";
 
-const data = require("../dummyData.js");
 //Import component
 const {
   FeaturedProjects,
@@ -15,23 +15,34 @@ const {
 class LandingPage extends Component {
   constructor() {
     super();
-
-    this.state = {
-      featuredProjects: data.featuredProjects,
-      popularMakers: data.popularMakers,
-      popularReviewers: data.popularReviewers
-    };
+  }
+  componentDidMount() {
+    console.log("component did mount!");
+    this.props.getProjects();
+    this.props.getMakers();
+    this.props.getReviewers();
   }
 
   render() {
     return (
       <div className="landing-page-container">
-        <FeaturedProjects featuredProjects={this.state.featuredProjects} />
-        <PopularMakers popularMakers={this.state.popularMakers} />
-        <PopularReviewers reviewers={this.state.popularReviewers} />
+        <FeaturedProjects featuredProjects={this.props.featuredProjects} />
+        <PopularMakers popularMakers={this.props.popularMakers} />
+        <PopularReviewers reviewers={this.props.popularReviewers} />
       </div>
     );
   }
 }
 
-export default LandingPage;
+const mapStateToProps = state => {
+  return {
+    featuredProjects: state.landingPageReducer.featuredProjects,
+    popularMakers: state.landingPageReducer.popularMakers,
+    popularReviewers: state.landingPageReducer.popularReviewers
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getProjects, getMakers, getReviewers }
+)(LandingPage);

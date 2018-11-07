@@ -11,6 +11,13 @@
 // // ROUTES
 // const exampleRoutes = require('./routes/exampleRoutes');
 
-// server.use('/api/example', exampleRoutes);
+
+// SANITY CHECK
+server.get('/', (req, res) => {
+  res.send(`Believe it or not, this is the first endpoint added to the great RateMyDIY project.`)
+});
+
+server.use('/api/example', exampleRoutes);
+
 
 // module.exports = server;

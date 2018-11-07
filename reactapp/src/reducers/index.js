@@ -1,7 +1,12 @@
-import { combineReducers } from 'redux';
-import exampleReducer from './exampleReducer';
+import { combineReducers } from "redux";
+import exampleReducer from "./exampleReducer";
+import landingPageReducer from "./landingPageReducer";
 import myProjectReducer from './myProjectReducer'
 
 export default combineReducers({
-	 myProjectReducer
+  exampleReducer,
+  landingPageReducer,
+  myProjectReducer   
+                            
+
 });

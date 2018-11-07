@@ -26,7 +26,7 @@
 		"helmet": "^3.14.0",
 		"knex": "^0.15.2",
 		"morgan": "^1.9.1",
-		"mssql": "^4.2.2"
+		"mssql": "4.1.0"
 	},
 	"devDependencies": {
 		"jest": "^23.6.0",

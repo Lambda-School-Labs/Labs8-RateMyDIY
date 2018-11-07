@@ -10,17 +10,14 @@ import { ReviewerTile } from "../../../components";
 class Reviewers extends Component {
   constructor() {
     super();
-    this.state = { reviewers: [] };
   }
-  componentDidMount() {
-    this.setState({ ...this.state, reviewers: this.props.reviewers });
-  }
+  componentDidMount() {}
   render() {
     return (
       <div className="projects-container">
         <h1>Popular Reviewers</h1>
         <div className="projects">
-          {this.state.reviewers.map(reviewer => (
+          {this.props.reviewers.map(reviewer => (
             <ReviewerTile reviewer={reviewer} />
           ))}
         </div>

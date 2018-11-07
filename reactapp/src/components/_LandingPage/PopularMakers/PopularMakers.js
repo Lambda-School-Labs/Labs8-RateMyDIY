@@ -10,17 +10,14 @@ import { MakerTile } from "../../../components";
 class PopularMakers extends Component {
   constructor() {
     super();
-    this.state = { makers: [] };
   }
-  componentDidMount() {
-    this.setState({ ...this.state, makers: this.props.popularMakers });
-  }
+  componentDidMount() {}
   render() {
     return (
       <div className="projects-container">
         <h1>Popular Makers</h1>
         <div className="projects">
-          {this.state.makers.map(maker => (
+          {this.props.popularMakers.map(maker => (
             <MakerTile maker={maker} />
           ))}
         </div>
