@@ -1,2 +1,3 @@
 export * from "./exampleActions";
-export * from "./landingPageActions.js";
+export * from "./landingPageActions";
+export * from './projectActions';

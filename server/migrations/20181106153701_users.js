@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.unique();
 		table
-			.string('username', 36) // username chosen at registration
+			.string('username', 16) // username chosen at registration
 			.notNullable()
 			.unique();
 		table.decimal('user_rating').unsigned(); // average rating among all projects

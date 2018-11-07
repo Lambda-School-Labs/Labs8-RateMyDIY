@@ -5,7 +5,6 @@
 .projects-container {
   width: 100%;
   margin: 20px auto;
-
   border: 1px solid blue;
 }
 
@@ -21,3 +20,5 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+

@@ -1,9 +1,9 @@
-const db = require('../config/dbConfig');
+// const db = require('../config/dbConfig');
 
-module.exports = {
-	getExamples
-};
+// module.exports = {
+// 	getExamples
+// };
 
-function getExamples() {
-	return db('exampleTable');
-}
+// function getExamples() {
+// 	return db('exampleTable');
+// }

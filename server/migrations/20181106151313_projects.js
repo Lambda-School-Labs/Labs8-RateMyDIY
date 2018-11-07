@@ -6,10 +6,10 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.references('users.user_id');
 		table
-			.string('project_name', 64) // project title
+			.string('project_name', 48) // project title
 			.notNullable();
 		table.string('picture'); // primary image url
-		table.string('text', 560); // primary text field
+		table.string('text', 1024); // primary text field
 		table
 			.timestamp('last_updated') // time last updated
 			.notNullable()

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
 			.notNullable()
 			.references('project.project_id');
 		table.string('picture'); // image url
-		table.string('text', 560); // text field; decide on a reasonable max length
+		table.string('text', 1024); // text field; decide on a reasonable max length
 	});
 };
 
