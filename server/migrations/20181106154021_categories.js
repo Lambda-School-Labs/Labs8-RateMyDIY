@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
 	return knex.schema.createTable('categories', table => {
 		table.increments('category_id'); //primary key
 		table
-			.string('category_name', 36) // name of category
+			.string('category_name', 24) // name of category
 			.notNullable()
 			.unique();
 	});
