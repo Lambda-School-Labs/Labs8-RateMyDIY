@@ -21,3 +21,5 @@ export { default as ProjectTile } from "./ProjectTile/ProjectTile.js";
 export { default as MakerTile } from "./MakerTile/MakerTile.js";
 
 export { default as ReviewerTile } from "./ReviewerTile/ReviewerTile.js";
+ 
+export { default as ProjectList } from "./_AccountPage/_ProjectList/ProjectList"

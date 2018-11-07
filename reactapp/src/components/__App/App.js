@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import styled from "styled-components";
 
 // Components
-import { ExampleComponent, LandingPage } from "../../components";
+import { ExampleComponent, LandingPage, ProjectList } from "../../components";
 
 //Styles
 const AppContainer = styled.div`
@@ -23,6 +23,7 @@ class App extends Component {
         {/* <Navbar /> */}
         <Route exact path="/" component={ExampleComponent} />
         <Route exact path="/landing" component={LandingPage} />
+        <Route exact path="/ProjectList" component={ProjectList} />
       </AppContainer>
     );
   }
