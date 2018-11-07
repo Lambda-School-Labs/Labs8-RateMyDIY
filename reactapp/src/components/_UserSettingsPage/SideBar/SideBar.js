@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const UserSettingSideBarContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 150px;
+	width: 16%;
   min-height: 20%;
   background: #FFF;
 	border: 3px solid black;
