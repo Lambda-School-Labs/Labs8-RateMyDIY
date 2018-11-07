@@ -2,7 +2,17 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
-var cookieParser = require('cookie-parser');
+const passport = require('passport');
+const strategy = require('../setup-passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+const sessionConfig = {
+    secret: 'TKd8^S$W-HPS3NtF',
+    cookie: {},
+    resave: false,
+    saveUninitialized: false
+};
 
 module.exports = server => {
 	server.use(logger('tiny'));
@@ -10,4 +20,7 @@ module.exports = server => {
 	server.use(helmet());
 	server.use(express.json());
 	server.use(cookieParser());
+	server.use(session(sessionConfig));
+	server.use(passport.initialize());
+	server.use(passport.session());
 };

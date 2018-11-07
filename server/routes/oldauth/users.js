@@ -1,5 +1,5 @@
 var express = require('express');
-var secured = require('../config/secured');
+var secured = require('../../config/secured');
 var router = express.Router();
 
 /* GET user profile. */
