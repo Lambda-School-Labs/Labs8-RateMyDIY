@@ -8,13 +8,6 @@
 
 // configureMiddleware(server);
 
-<<<<<<< HEAD
-// ROUTES
-// const userInViews = require('./config/userInViews');
-// const authRouter = require('./routes/oldauth/auth');
-// const indexRouter = require('./routes/oldauth/index');
-// const usersRouter = require('./routes/oldauth/users');
-=======
 // // ROUTES
 // const exampleRoutes = require('./routes/exampleRoutes');
 
@@ -23,15 +16,10 @@
 server.get('/', (req, res) => {
   res.send(`Believe it or not, this is the first endpoint added to the great RateMyDIY project.`)
 });
->>>>>>> bbc647cab5030a89c6c1774a658c37cd2f9e77a3
 
-// server.use(userInViews());
-// server.use('/', authRouter);
-// server.use('/', indexRouter);
-// server.use('/', usersRouter);
-const cb = require('./routes/routes');
+const routes = require('./routes/routes');
 
-server.use('/', cb);
+server.use('/', routes);
 
 // Error handlers
 // Catch 404 and forward to error handler

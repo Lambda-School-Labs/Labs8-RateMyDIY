@@ -31,7 +31,7 @@ router.get('/signout', (req, res) => {
 
 router.get('/test', ensureLoggedIn, function (req, res, next) {
     // console.log(req.user);
-    console.log(req.getUserInfo());
+    console.log(req.user.app_metadata);
     let sub = req.user._json.sub.split('|');
     let userID = sub[1];
     let nickname = req.user._json.nickname;
@@ -46,9 +46,6 @@ router.get('/test', ensureLoggedIn, function (req, res, next) {
             res.status(201).json(ids[0]);
         })
         .catch(err => {
-            // if (err.errno === 19) {
-            //   return res.status(405).json({ error: "Please provide a unique field" });
-            // }
             res.status(500).json(err);
         });
 });

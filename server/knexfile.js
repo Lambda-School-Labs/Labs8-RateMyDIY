@@ -17,9 +17,6 @@ module.exports = {
 	},
 	development: {
 		client: 'mssql',
-<<<<<<< HEAD
-		connection: {},
-=======
 		connection: {
 			host: 'localhost\\SQLEXPRESS',
 			user: 'sa',
@@ -30,7 +27,6 @@ module.exports = {
 				encrypt: true
 			}
 		},
->>>>>>> b8adf097e0fae60d2c02035613ca2949d47f307d
 		useNullAsDefault: true,
 		migrations: {
 			directory: './migrations',
