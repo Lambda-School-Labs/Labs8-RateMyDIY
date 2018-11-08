@@ -4,7 +4,16 @@ const dbConnection = process.env.DATABASE_URL;
 module.exports = {
 	development: {
 		client: 'mssql',
-		connection: '??????',
+		connection: {
+			host: 'localhost\\SQLEXPRESS',
+			user: 'sa',
+			password: 'admin',
+			options: {
+				port: 1433,
+				database: 'diydb',
+				encrypt: true
+			}
+		},
 		useNullAsDefault: true,
 		migrations: {
 			directory: './migrations',
