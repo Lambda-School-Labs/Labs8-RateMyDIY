@@ -17,7 +17,20 @@ module.exports = {
 	},
 	development: {
 		client: 'mssql',
+<<<<<<< HEAD
 		connection: {},
+=======
+		connection: {
+			host: 'localhost\\SQLEXPRESS',
+			user: 'sa',
+			password: 'admin',
+			database: 'diydb',
+			options: {
+				port: 1433,
+				encrypt: true
+			}
+		},
+>>>>>>> b8adf097e0fae60d2c02035613ca2949d47f307d
 		useNullAsDefault: true,
 		migrations: {
 			directory: './migrations',
