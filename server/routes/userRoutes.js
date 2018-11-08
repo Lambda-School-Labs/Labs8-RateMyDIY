@@ -33,21 +33,22 @@ router.get('/test', ensureLoggedIn, function (req, res, next) {
     // console.log(req.user);
     console.log(req.user.app_metadata);
     let sub = req.user._json.sub.split('|');
-    let userID = sub[1];
-    let nickname = req.user._json.nickname;
+    let auth_id = sub[1];
+    let username = req.user._json.nickname;
     let user = {
-        userID,
-        nickname
+        auth_id,
+        username
     }
-    db
-        .createUser(user)
-        .then(ids => {
-            console.log(ids);
-            res.status(201).json(ids[0]);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
+    // db
+    //     .addUser(user)
+    //     .then(ids => {
+    //         console.log(ids);
+    //         res.status(201).json(ids[0]);
+    //     })
+    //     .catch(err => {
+    //         res.status(500).json(err);
+    //     });
+    res.status(200).json(user);
 });
 
 module.exports = router;

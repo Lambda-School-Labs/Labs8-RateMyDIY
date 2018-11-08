@@ -1,37 +1,32 @@
 const db = require('../config/dbConfig');
 
 module.exports = {
-    getProjects,
     getProjectByID,
-    createProject,
+    addProject,
     editProject,
     removeProject,
 };
 
-function getProjects() {
-    return db('projects');
-}
-
-function getProjectByID(project_id) {
+function getProjectByID(id) {
     return db('projects')
-        .where({ project_id })
+        .where({ project_id: id })
         .first();
 }
 
-function createProject(project) {
+function addProject(project) {
     return db('projects')
         .insert(project)
         .into('projects');
 }
 
-function editProject(project_id, changes) {
+function editProject(id, changes) {
     return db('projects')
-        .where({ project_id })
+        .where({ project_id: id })
         .update(changes);
 }
 
-function removeProject(project_id) {
+function removeProject(id) {
     return db('projects')
-        .where({ project_id })
+        .where({ project_id: id })
         .del();
 }

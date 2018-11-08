@@ -4,18 +4,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/signin')
 
 const db = require('../models/projectsModel');
 
-router.get('/projects', function (req, res, next) {
-    db
-        .get()
-        .then(projects => {
-            res.status(200).json(projects);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
-});
-
-router.get('/projects/:id', function (req, res, next) {
+router.get('/api/projects/:id', function (req, res, next) {
     const { id } = req.params;
     db
         .getProjectByID(id)
@@ -30,13 +19,17 @@ router.get('/projects/:id', function (req, res, next) {
         });
 });
 
-router.post('/projects', ensureLoggedIn, function (req, res, next) {
+router.get('/api/projects/user/:id', function (req, res, next) {
+    res.status(200).json({ user: 'project' });
+});
+
+router.post('/api/projects/add', ensureLoggedIn, function (req, res, next) {
     const project = req.body;
     if (!project.project_name) {
         return res.status(400).json({ error: 'Please provide more information.' });
     }
     db
-        .createProject(project)
+        .addProject(project)
         .then(res => {
             res.status(201).json(res);
         })
@@ -45,7 +38,7 @@ router.post('/projects', ensureLoggedIn, function (req, res, next) {
         });
 });
 
-router.put('/projects/:id', ensureLoggedIn, function (req, res, next) {
+router.put('/api/projects/edit/:id', ensureLoggedIn, function (req, res, next) {
     const { id } = req.params;
     const changes = req.body;
 
@@ -57,9 +50,9 @@ router.put('/projects/:id', ensureLoggedIn, function (req, res, next) {
         .catch(err => {
             res.status(500).json(err);
         });
-})
+});
 
-router.delete('/projects/:id', ensureLoggedIn, function (req, res, next) {
+router.delete('/api/projects/remove/:id', ensureLoggedIn, function (req, res, next) {
     const { id } = req.params;
 
     db

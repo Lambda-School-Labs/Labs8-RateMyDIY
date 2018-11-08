@@ -3,7 +3,7 @@ const db = require('../config/dbConfig');
 module.exports = {
 	getUsers,
 	getUsersByID,
-	createUser,
+	addUser,
 };
 
 function getUsers() {
@@ -16,7 +16,7 @@ function getUsersByID(id) {
 		.first();
 }
 
-function createUser(user) {
+function addUser(user) {
 	console.log(user);
 	return db('users').insert(user).into('users');
 }
