@@ -9,12 +9,14 @@ import "./LandingPage.css";
 const {
   FeaturedProjects,
   PopularMakers,
-  PopularReviewers
+  PopularReviewers,
+  SearchBar
 } = require("../../components");
 
 class LandingPage extends Component {
   constructor() {
     super();
+    this.state = { input: "" };
   }
   componentDidMount() {
     console.log("component did mount!");
@@ -23,12 +25,27 @@ class LandingPage extends Component {
     this.props.getReviewers();
   }
 
+  handleChange = e => {
+    console.log(e.target.value);
+    this.setState({ ...this.state, input: e.target.value });
+  };
+
+  handleSearch = e => {
+    //HTTP request to server
+    //Get search results from server
+    //Save to Redux store
+  };
+
   render() {
+    console.log(SearchBar);
     return (
-      <div className="landing-page-container">
-        <FeaturedProjects featuredProjects={this.props.featuredProjects} />
-        <PopularMakers popularMakers={this.props.popularMakers} />
-        <PopularReviewers reviewers={this.props.popularReviewers} />
+      <div className="container">
+        <SearchBar handleChange={this.handleChange} />
+        <div className="landing-page-container">
+          <FeaturedProjects featuredProjects={this.props.featuredProjects} />
+          <PopularMakers popularMakers={this.props.popularMakers} />
+          <PopularReviewers reviewers={this.props.popularReviewers} />
+        </div>
       </div>
     );
   }
