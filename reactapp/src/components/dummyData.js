@@ -1,17 +1,5 @@
-// const server = require('./server');
-
-// const port = process.env.PORT || 5000;
-// server.listen(port, () => {
-// 	console.log(`\n=== Listening on port: ${port} ===\n`);
-// });
-const express = require('express');
-const cors = require('cors');
-
-const server = express();
-server.use(express.json());
-server.use(cors());
-
-let myProjects = [
+module.exports = {
+  featuredProjects: [
     {
       id: 1,
       name: "Micro brew IPA",
@@ -25,24 +13,9 @@ let myProjects = [
       star_count: 4.2,
       author: "john",
       photo_url: "someURL.com"
-	},
-	{
-		id: 3,
-		name: "Steak Recipe",
-		star_count: 4.2,
-		author: "john",
-		photo_url: "someURL.com"
-	  },
-	  {
-		id: 4,
-		name: "Steak Recipe",
-		star_count: 4.2,
-		author: "john",
-		photo_url: "someURL.com"
-	  }
-  ]
-
-  let popularMakers = [
+    }
+  ],
+  popularMakers: [
     {
       id: 1,
       name: "Alejandrok",
@@ -78,18 +51,21 @@ let myProjects = [
       author: "john",
       photo_url: "someURL.com"
     }
+  ],
+  popularReviewers: [
+    {
+      id: 1,
+      name: "Tristen",
+      star_count: 4.2,
+      author: "john",
+      photo_url: "someURL.com"
+    },
+    {
+      id: 2,
+      name: "David",
+      star_count: 4.5,
+      author: "David",
+      photo_url: "someURL.com"
+    }
   ]
-
-  server.get('/api/popularMakers', (req, res) => {
-	res.json(popularMakers);
-  });
-  
-
-server.get('/api/myProjects', (req, res) => {
-  res.json(myProjects);
-});
-
-const port = process.env.PORT || 5000;
-server.listen(port, () => {
-	console.log(`\n=== Listening on port: ${port} ===\n`);
-});
+};

@@ -1,18 +1,29 @@
-// DEPENDENCIES
-const express = require('express');
+// // DEPENDENCIES
+// const express = require('express');
 
-const server = express();
+// const server = express();
 
-// MIDDLEWARE
-const configureMiddleware = require('./config/middleware');
+// // MIDDLEWARE
+// const configureMiddleware = require('./config/middleware');
 
-configureMiddleware(server);
+// configureMiddleware(server);
 
+<<<<<<< HEAD
 // ROUTES
 // const userInViews = require('./config/userInViews');
 // const authRouter = require('./routes/oldauth/auth');
 // const indexRouter = require('./routes/oldauth/index');
 // const usersRouter = require('./routes/oldauth/users');
+=======
+// // ROUTES
+// const exampleRoutes = require('./routes/exampleRoutes');
+
+
+// SANITY CHECK
+server.get('/', (req, res) => {
+  res.send(`Believe it or not, this is the first endpoint added to the great RateMyDIY project.`)
+});
+>>>>>>> bbc647cab5030a89c6c1774a658c37cd2f9e77a3
 
 // server.use(userInViews());
 // server.use('/', authRouter);
@@ -52,4 +63,5 @@ server.use(function (req, res, next) {
     });
   });
 
-module.exports = server;
+
+// module.exports = server;

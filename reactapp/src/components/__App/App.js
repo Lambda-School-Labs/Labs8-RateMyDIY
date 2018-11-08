@@ -1,29 +1,36 @@
 // Dependencies
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import styled from "styled-components";
 
 // Components
-import ExampleComponent from '../../components';
+
+import { ExampleComponent, LandingPage, ProjectList, UserSettingsSideBar } from "../../components";
+
 
 //Styles
 const AppContainer = styled.div`
-	display: flex;
-	max-width: 1280px;
-	height: 100vh;
-	background: #c7e8f1;
-	margin: 0 auto;
+  display: flex;
+  max-width: 1280px;
+  width: 880px;
+  height: 100vh;
+  background: #c7e8f1;
+  margin: 0 auto;
 `;
 
 class App extends Component {
-	render() {
-		return (
-			<AppContainer>
-				{/* <Navbar /> */}
-				<Route exact path="/" component={ExampleComponent} />
-			</AppContainer>
-		);
-	}
+  render() {
+    return (
+      <AppContainer>
+        {/* <Navbar /> */}
+        <Route exact path="/" component={ExampleComponent} />
+        <Route exact path="/landing" component={LandingPage} />
+        <Route exact path="/ProjectList" component={ProjectList} />
+        <Route path="/settings" component={UserSettingsSideBar} />
+
+      </AppContainer>
+    );
+  }
 }
 
 export default App;

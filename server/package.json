@@ -29,9 +29,13 @@
 		"helmet": "^3.14.0",
 		"knex": "^0.15.2",
 		"morgan": "^1.9.1",
+<<<<<<< HEAD
 		"passport": "^0.4.0",
 		"passport-auth0": "^1.1.0",
 		"sqlite3": "^4.0.3"
+=======
+		"mssql": "4.1.0"
+>>>>>>> bbc647cab5030a89c6c1774a658c37cd2f9e77a3
 	},
 	"devDependencies": {
 		"jest": "^23.6.0",

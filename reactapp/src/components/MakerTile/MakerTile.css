@@ -1,0 +1,10 @@
+.project {
+  width: 250px;
+  margin: 20px;
+  border: 1px solid yellow;
+}
+
+.project img {
+  width: 200px;
+  height: 200px;
+}
