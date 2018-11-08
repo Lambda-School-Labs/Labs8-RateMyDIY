@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
 		table
 			.integer('project_id')
 			.unsigned()
+			.notNullable()
 			.references('projects.project_id')
 			.onDelete('CASCADE');
 		table
@@ -10,7 +11,7 @@ exports.up = function(knex, Promise) {
 			.unsigned()
 			.references('categories.category_id')
 			.onDelete('CASCADE');
-		table.unique(['note_id', 'tag_id']);
+		table.unique(['project_id', 'category_id']);
 	});
 };
 

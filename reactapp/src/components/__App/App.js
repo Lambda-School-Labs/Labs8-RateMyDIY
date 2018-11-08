@@ -44,7 +44,6 @@ class App extends Component {
         <Route path="/settings/resumes" component={UserSettingResumes} />
         <Route path="/settings/billing" component={UserSettingBilling} />
         <Route path="/settings/settings" component={UserSettingSettings} />
-
       </AppContainer>
     );
   }
