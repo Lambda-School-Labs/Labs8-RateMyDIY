@@ -18,10 +18,12 @@ export { default as MakerTile } from "./MakerTile/MakerTile";
 export { default as ReviewerTile } from "./ReviewerTile/ReviewerTile";
 export { default as UserSettingsSummaries } from "./_UserSettingsPage/Summaries/Summaries";
 export { default as UserSettingsSideBar } from "./_UserSettingsPage/SideBar/SideBar";
+export { default as ProjectList } from "./_AccountPage/_ProjectList/ProjectList"
+export { default as ReviewList } from "./_AccountPage/_ReviewList/ReviewList"
+export { default as AccountSideBar } from "./_AccountPage/AccountSideBar"
 export { default as UserSettingBilling } from "./_UserSettingsPage/Billing/Billing"
 export { default as UserSettingEducation } from "./_UserSettingsPage/Education/Education"
 export { default as UserSettingPositions } from "./_UserSettingsPage/Positions/Positions"
 export { default as UserSettingResumes } from "./_UserSettingsPage/Resumes/Resumes"
 export { default as UserSettingSettings } from "./_UserSettingsPage/Settings/Settings"
 export { default as UserSettingSkills } from "./_UserSettingsPage/Skills/Skills"
-export { default as ProjectList } from "./_AccountPage/_ProjectList/ProjectList"

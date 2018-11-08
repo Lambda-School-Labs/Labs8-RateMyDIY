@@ -6,6 +6,7 @@ import styled from "styled-components";
 // Components
 import {
   ExampleComponent,
+   ReviewList,
   LandingPage,
   ProjectList,
   UserSettingsSideBar,
@@ -37,6 +38,7 @@ class App extends Component {
         <Route exact path="/landing" component={LandingPage} />
         <Route path="/settings" component={UserSettingsSideBar} />
         <Route path="/settings/summaries" component={UserSettingsSummaries} />
+        <Route exact path="/ReviewList" component={ReviewList} />
         <Route path="/settings/positions" component={UserSettingEducation} />
         <Route path="/settings/education" component={UserSettingPositions} />
         <Route path="/settings/skills" component={UserSettingSkills} />
