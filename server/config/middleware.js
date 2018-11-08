@@ -9,7 +9,6 @@ const session = require('express-session');
 
 const sessionConfig = {
     secret: 'TKd8^S$W-HPS3NtF',
-    cookie: {},
     resave: false,
     saveUninitialized: false
 };

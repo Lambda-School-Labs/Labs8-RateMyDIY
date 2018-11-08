@@ -18,7 +18,7 @@ configureMiddleware(server);
 // server.use('/', authRouter);
 // server.use('/', indexRouter);
 // server.use('/', usersRouter);
-const cb = require('./routes/cb');
+const cb = require('./routes/routes');
 
 server.use('/', cb);
 

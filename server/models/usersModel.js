@@ -2,6 +2,7 @@ const db = require('../config/dbConfig');
 
 module.exports = {
 	getUsers,
+	getUsersByID,
 	createUser,
 };
 
@@ -9,7 +10,13 @@ function getUsers() {
 	return db('users');
 }
 
+function getUsersByID(id) {
+	return db('users')
+		.where({ id })
+		.first();
+}
+
 function createUser(user) {
-	const { userID, nickname } = user;
-	db('users').insert(userID).into('users');
+	console.log(user);
+	return db('users').insert(user).into('users');
 }
