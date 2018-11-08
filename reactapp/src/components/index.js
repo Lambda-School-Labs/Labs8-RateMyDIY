@@ -9,4 +9,5 @@ export { default as MakerTile } from "./MakerTile/MakerTile";
 export { default as ReviewerTile } from "./ReviewerTile/ReviewerTile";
 export { default as UserSettingsSideBar } from "./_UserSettingsPage/SideBar/SideBar"
 export { default as ProjectList } from "./_AccountPage/_ProjectList/ProjectList"
-
+export { default as ReviewList } from "./_AccountPage/_ReviewList/ReviewList"
+export { default as AccountSideBar } from "./_AccountPage/AccountSideBar"

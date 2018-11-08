@@ -1,0 +1,40 @@
+.reviewPage {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.myReviewsDisplay {
+  border: 1px solid #dedede;
+  width: 200px;
+  margin-left: 30px;
+  height: 200px;
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+.myReviewDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-content: flex-start;
+}
+
+.addNewReview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+  
+}
+
+.addNewReview img {
+  height: 100px;
+  margin-top: 20px;
+}
+
+.addNewReview h2{
+    font-size: 30px;
+  }

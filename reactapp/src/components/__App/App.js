@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 // Components
 
-import { ExampleComponent, LandingPage, ProjectList, UserSettingsSideBar } from "../../components";
+import { ExampleComponent, LandingPage, ProjectList, UserSettingsSideBar, ReviewList } from "../../components";
 
 
 //Styles
@@ -27,6 +27,7 @@ class App extends Component {
         <Route exact path="/landing" component={LandingPage} />
         <Route exact path="/ProjectList" component={ProjectList} />
         <Route path="/settings" component={UserSettingsSideBar} />
+        <Route exact path="/ReviewList" component={ReviewList} />
 
       </AppContainer>
     );

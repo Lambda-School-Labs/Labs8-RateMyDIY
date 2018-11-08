@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchMyProjects } from "../../../actions";
+import { AccountSideBar } from "../../../components";
 import "./ProjectList.css";
+
 
 class ProjectList extends Component {
   componentDidMount() {
@@ -14,7 +16,7 @@ class ProjectList extends Component {
     return (
       <div className="projectPage">
         <div className="sideBar">
-          <h2>Search</h2>
+        <AccountSideBar />
         </div>
 
         <div className="myProjectDisplay">
