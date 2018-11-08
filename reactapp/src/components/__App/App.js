@@ -4,7 +4,19 @@ import { Route } from "react-router-dom";
 import styled from "styled-components";
 
 // Components
-import { ExampleComponent, LandingPage, UserSettingsSideBar, UserSettingsSummaries } from "../../components";
+import {
+  ExampleComponent,
+  LandingPage,
+  ProjectList,
+  UserSettingsSideBar,
+   UserSettingsSummaries,
+  UserSettingBilling,
+  UserSettingEducation,
+  UserSettingPositions,
+  UserSettingSkills,
+  UserSettingResumes,
+  UserSettingSettings,
+} from "../../components";
 
 //Styles
 const AppContainer = styled.div`
@@ -25,6 +37,12 @@ class App extends Component {
         <Route exact path="/landing" component={LandingPage} />
         <Route path="/settings" component={UserSettingsSideBar} />
         <Route path="/settings/summaries" component={UserSettingsSummaries} />
+        <Route path="/settings/positions" component={UserSettingEducation} />
+        <Route path="/settings/education" component={UserSettingPositions} />
+        <Route path="/settings/skills" component={UserSettingSkills} />
+        <Route path="/settings/resumes" component={UserSettingResumes} />
+        <Route path="/settings/billing" component={UserSettingBilling} />
+        <Route path="/settings/settings" component={UserSettingSettings} />
       </AppContainer>
     );
   }
