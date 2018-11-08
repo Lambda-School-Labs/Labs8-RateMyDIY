@@ -1,12 +1,12 @@
-// // DEPENDENCIES
-// const express = require('express');
+// DEPENDENCIES
+const express = require('express');
 
-// const server = express();
+const server = express();
 
-// // MIDDLEWARE
-// const configureMiddleware = require('./config/middleware');
+// MIDDLEWARE
+const configureMiddleware = require('./config/middleware');
 
-// configureMiddleware(server);
+configureMiddleware(server);
 
 // // ROUTES
 // const exampleRoutes = require('./routes/exampleRoutes');
@@ -17,7 +17,7 @@ server.get('/', (req, res) => {
   res.send(`Believe it or not, this is the first endpoint added to the great RateMyDIY project.`)
 });
 
-const routes = require('./routes/routes');
+const routes = require('./routes/userRoutes');
 
 server.use('/', routes);
 
@@ -52,4 +52,4 @@ server.use(function (req, res, next) {
   });
 
 
-// module.exports = server;
+module.exports = server;

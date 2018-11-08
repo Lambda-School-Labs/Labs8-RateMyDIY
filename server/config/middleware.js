@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const sessionConfig = {
-    secret: 'TKd8^S$W-HPS3NtF',
+    secret: 'TKd8^S$W-HPS3NtF', // .env file
     resave: false,
     saveUninitialized: false
 };
