@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/signin');
 
 const db = require('../models/usersModel');
 
@@ -14,7 +14,7 @@ router.get('/signin', passport.authenticate('auth0', {
 router.get('/callback', function (req, res, next) {
   passport.authenticate('auth0', function (err, user, info) {
     if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+    if (!user) { return res.redirect('/signin'); }
     req.logIn(user, function (err) {
       if (err) { return next(err); }
       const returnTo = req.session.returnTo;

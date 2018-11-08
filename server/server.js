@@ -17,9 +17,11 @@ server.get('/', (req, res) => {
   res.send(`Believe it or not, this is the first endpoint added to the great RateMyDIY project.`)
 });
 
-const routes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes');
+const projectsRoutes = require('./routes/projectsRoutes');
 
-server.use('/', routes);
+server.use('/', userRoutes);
+server.use('/', projectsRoutes);
 
 // Error handlers
 // Catch 404 and forward to error handler
