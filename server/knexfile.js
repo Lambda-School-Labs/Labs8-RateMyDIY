@@ -8,9 +8,9 @@ module.exports = {
 			host: 'localhost\\SQLEXPRESS',
 			user: 'sa',
 			password: 'admin',
+			database: 'diydb',
 			options: {
 				port: 1433,
-				database: 'diydb',
 				encrypt: true
 			}
 		},
