@@ -21,6 +21,7 @@
 	},
 	"dependencies": {
 		"connect-ensure-login": "^0.1.1",
+		"connect-session-knex": "^1.4.0",
 		"cookie-parser": "^1.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^6.1.0",
