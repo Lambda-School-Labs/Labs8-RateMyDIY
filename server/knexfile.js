@@ -36,16 +36,6 @@ module.exports = {
 				encrypt: true
 			}
 		},
-		// connection: {
-		// 	host: 'ratemydiy.database.windows.net',
-		// 	user: 'diyadmin',
-		// 	password: 'Lambda13',
-		// 	database: 'diydb',
-		// 	options: {
-		// 		port: 1433,
-		// 		encrypt: true
-		// 	}
-		// },
 		pool: {
 			min: 2,
 			max: 10
