@@ -7,7 +7,7 @@ A React app for people to share and rate DIY projects
 
 ### Installing a developer environment
 
-1. Fork lamboard and `clone` to your local machine.
+1. Fork this repository and `clone` to your local machine.
 1. From your console, cd into [/server](/server) and type `npm install` or `yarn install` to install the server dependencies.
 1. Type `yarn start` or `npm run-script start` to run the included script `nodemon server.js` from [package.json](package.json).
 1. CD into [/reactapp](/reactapp).

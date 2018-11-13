@@ -48,7 +48,6 @@ To run those 3 npm commands you can just do
 * [NodeJS](https://nodejs.org/en/)
 * [Express](https://expressjs.com/)
 * [Knex](https://knexjs.org/)
-* [GraphQL](https://graphql.org/)
 
 ### DBMS
 * [MS SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express)

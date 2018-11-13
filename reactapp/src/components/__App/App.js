@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import styled from "styled-components";
+import Auth from '../../components/Auth/Auth';
 
 // Components
 import {
@@ -9,6 +10,8 @@ import {
   ReviewList,
   LandingPage,
   ProjectList,
+  CreateEditPage, 
+  Billing,
   UserSettingsSideBar,
   UserSettingsSummaries,
   UserSettingBilling,
@@ -17,8 +20,9 @@ import {
   UserSettingSkills,
   UserSettingResumes,
   UserSettingSettings,
-  SearchBar,
-  SearchPage
+ SearchBar,
+  SearchPage,
+
 } from "../../components";
 
 //Styles
@@ -38,7 +42,7 @@ class App extends Component {
         <h1>Navigation</h1>
         <ul>
           <li>
-            <Link to="/landing">Landing Page</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/ReviewList">Review List</Link>
@@ -49,14 +53,18 @@ class App extends Component {
           <li>
             <Link to="/search">Search Page</Link>
           </li>
+          <li>
+            <Link to="/signin">Sign Up or Sign In</Link>
+          </li>
         </ul>
         {/* <Navbar /> */}
-        <Route exact path="/" component={ExampleComponent} />
-        <Route exact path="/landing" component={LandingPage} />
+        <Route exact path="/" component={LandingPage} />
         <Route path="/settings" component={UserSettingsSideBar} />
         <Route path="/settings/summaries" component={UserSettingsSummaries} />
         <Route exact path="/ReviewList" component={ReviewList} />
-        <Route exact path="/ProjectList" component={ ProjectList} />
+        <Route exact path="/ProjectList" component={ProjectList} />
+        <Route exact path="/Billing" component={Billing} />
+        <Route exact path="/CreateEditPage" component={CreateEditPage} />
         <Route path="/settings/positions" component={UserSettingEducation} />
         <Route path="/settings/education" component={UserSettingPositions} />
         <Route path="/settings/skills" component={UserSettingSkills} />
@@ -64,6 +72,7 @@ class App extends Component {
         <Route path="/settings/billing" component={UserSettingBilling} />
         <Route path="/settings/settings" component={UserSettingSettings} />
         <Route path="/search" component={SearchPage} />
+        <Route path="/signin" component={Auth} />
       </AppContainer>
     );
   }

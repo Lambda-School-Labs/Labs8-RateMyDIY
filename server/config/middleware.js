@@ -24,12 +24,13 @@ const sessionConfig = {
 };
 
 module.exports = server => {
-	server.use(logger('tiny'));
-	server.use(cors());
-	server.use(helmet());
-	server.use(express.json());
-	server.use(cookieParser());
-	server.use(session(sessionConfig));
-	server.use(passport.initialize());
-	server.use(passport.session());
+  //removed Logger middleware to debug server endpoints
+  //server.use(logger('tiny'));
+  server.use(cors());
+  server.use(helmet());
+  server.use(express.json());
+  server.use(cookieParser());
+  server.use(session(sessionConfig));
+  server.use(passport.initialize());
+  server.use(passport.session());
 };
