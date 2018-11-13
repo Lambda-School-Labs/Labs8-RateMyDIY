@@ -3,19 +3,6 @@ const express = require('express');
 
 const server = express();
 
-// SESSION STORE
-var session = require('express-session');
-var KnexSessionStore = require('connect-session-knex')(session);
-var store = new KnexSessionStore(/* options here */);
-
-server.use(session({
-  store: store,
-  secret: [process.env.SESSION_SECRET || 'this_is_not_a_very_good_secret'],
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }, // 1 week
-  resave: true,
-  saveUninitialized: true
-}));
-
 // MIDDLEWARE
 const configureMiddleware = require('./config/middleware');
 

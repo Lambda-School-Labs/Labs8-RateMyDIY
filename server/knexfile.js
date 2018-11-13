@@ -26,11 +26,21 @@ module.exports = {
 
 	production: {
 		client: 'mssql',
+		// connection: {
+		// 	host: dbHost,
+		// 	user: dbUser,
+		// 	password: dbPassword,
+		// 	database: dbName,
+		// 	options: {
+		// 		port: 1433,
+		// 		encrypt: true
+		// 	}
+		// },
 		connection: {
-			host: dbHost,
-			user: dbUser,
-			password: dbPassword,
-			database: dbName,
+			host: 'ratemydiy.database.windows.net',
+			user: 'diyadmin',
+			password: 'Lambda13',
+			database: 'diydb',
 			options: {
 				port: 1433,
 				encrypt: true
