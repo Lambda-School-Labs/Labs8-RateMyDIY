@@ -26,26 +26,26 @@ module.exports = {
 
 	production: {
 		client: 'mssql',
-		// connection: {
-		// 	host: dbHost,
-		// 	user: dbUser,
-		// 	password: dbPassword,
-		// 	database: dbName,
-		// 	options: {
-		// 		port: 1433,
-		// 		encrypt: true
-		// 	}
-		// },
 		connection: {
-			host: 'ratemydiy.database.windows.net',
-			user: 'diyadmin',
-			password: 'Lambda13',
-			database: 'diydb',
+			host: dbHost,
+			user: dbUser,
+			password: dbPassword,
+			database: dbName,
 			options: {
 				port: 1433,
 				encrypt: true
 			}
 		},
+		// connection: {
+		// 	host: 'ratemydiy.database.windows.net',
+		// 	user: 'diyadmin',
+		// 	password: 'Lambda13',
+		// 	database: 'diydb',
+		// 	options: {
+		// 		port: 1433,
+		// 		encrypt: true
+		// 	}
+		// },
 		pool: {
 			min: 2,
 			max: 10
