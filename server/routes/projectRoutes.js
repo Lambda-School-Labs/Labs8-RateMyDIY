@@ -42,14 +42,9 @@ router.get('/:project_id/reviews', function(req, res, next) {
 		});
 });
 
-<<<<<<< HEAD
 // add project
-router.post('/', ensureLoggedIn, function(req, res, next) {
+router.post('/', ensureLoggedIn, authenticate, function(req, res, next) {
 	const { user_id, project_name, img_url, text } = req.body;
-=======
-router.post('/api/projects', ensureLoggedIn, authenticate, function(req, res, next) {
-	const { user_id, project_name, picture, text } = req.body;
->>>>>>> User permissions
 
 	if (!project_name || !img_url || !text) {
 		return res.status(422).json({ error: 'Missing parameters.' });
