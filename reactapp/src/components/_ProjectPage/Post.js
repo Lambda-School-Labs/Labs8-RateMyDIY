@@ -4,12 +4,52 @@ import { getProject } from '../../actions';
 import { connect } from 'react-redux';
 
 // Components
-import { Post, ConfirmModal, StarCount } from '../../components';
+import {} from '../../components';
 
 // Styles
 import styled from 'styled-components';
 
-class ProjectPage extends Component {
+const PostContainer = styled.div``;
+
+const PostForm = styled.form``;
+
+const TextInput = styled.input``;
+
+const CancelButton = styled.button``;
+
+const SubmitInput = styled.input``;
+
+const ImgUrlInput = styled.div``;
+
+const Img = styled.img`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 380px;
+	width: 100%;
+	background: lightblue;
+	margin-bottom: 20px;
+`;
+
+const Text = styled.p`
+	width: 100%;
+	background: lightblue;
+	padding: 10px 10px;
+	margin-bottom: 20px;
+`;
+
+const OtherButtonContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -12px;
+	margin-bottom: 20px;
+`;
+
+const EditButton = styled.button``;
+
+const DeleteButton = styled.button``;
+
+class Post extends Component {
 	state = {};
 
 	// Add editProject, addPost, editPost, deleteProject, deletePost, or cancel to the state. This has various effects on what gets rendered below.
@@ -34,26 +74,6 @@ class ProjectPage extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	// If this is a new project, set up the state with empty form data.
-	// If the user is the project's author, add 'owner' to the state.
-	componentDidMount() {
-		if (this.props.match.params.id === 'new') {
-			this.setState({
-				newProject: true,
-				project_name: '',
-				text: '',
-				img_url: ''
-			});
-		} else {
-			if (this.props.match.params.username === this.props.username) {
-				this.setState({
-					owner: true
-				});
-				this.props.getProject(this.props.match.params.id);
-			}
-		}
-	}
-
 	render() {
 		return (
 			<PostContainer>
@@ -72,7 +92,7 @@ class ProjectPage extends Component {
 						<CancelButton
 							name="cancel"
 							value="Cancel"
-							onClick={this.props.clickHandler()}
+							onClick={this.props.clickHandler}
 						/>
 						<SubmitInput type="submit" value="Add New Text Field" />
 					</PostForm>
@@ -98,17 +118,17 @@ class ProjectPage extends Component {
 						<CancelButton
 							name="cancel"
 							value="Cancel"
-							onClick={this.props.clickHandler()}
+							onClick={this.props.clickHandler}
 						/>
 						<SubmitInput type="submit" value="Add New Image" />
 					</PostForm>
-				) : !this.state.editPost ? (
+				) : this.state.editPost ? (
 					<PostForm>
 						<ImgUrlInput
 							// allow uploads to aws later
 							name="img_url"
 							type="text"
-							placeholder="Image URL for finished project"
+							placeholder="image url"
 							value={this.state.img_url}
 							onChange={this.changeHandler}
 							required
@@ -116,7 +136,7 @@ class ProjectPage extends Component {
 						<TextInput
 							name="text"
 							type="text"
-							placeholder="Project description"
+							placeholder="text field"
 							value={this.state.text}
 							onChange={this.changeHandler}
 							required
@@ -125,58 +145,33 @@ class ProjectPage extends Component {
 						<CancelButton
 							name="cancel"
 							value="Cancel"
-							onClick={this.props.clickHandler()}
+							onClick={this.props.clickHandler}
 						/>
 					</PostForm>
 				) : (
 					<React.Fragment>
-						<ProjectHeader>
-							<ProjectName>{this.props.project.project_name}</ProjectName>
-							<StarCount rating={this.props.project.rating} />
-							<ReviewsButton
-								disabled={this.props.editProject || this.props.editPost}
+						{this.props.post.img_url && (
+							<Img
+								src={this.props.post.img_url}
+								alt={this.props.post.img_url}
 							/>
-						</ProjectHeader>
-						<Img />
-						<Text />
-						{this.props.owner && (
-							<EditButton disabled={this.props.disabled || this.props.disabled}>
-								Edit
-							</EditButton>
 						)}
+						{this.props.post.text && <Text>{this.props.post.text}</Text>}
 						{this.props.owner && (
-							<DeleteButton
-								disabled={this.props.disabled || this.props.disabled}
-							>
-								Delete Project
-							</DeleteButton>
+							<OtherButtonContainer>
+								<EditButton disabled={this.props.disabled}>
+									Edit Post
+								</EditButton>
+								<DeleteButton disabled={this.props.disabled}>
+									Delete Post
+								</DeleteButton>
+							</OtherButtonContainer>
 						)}
 					</React.Fragment>
 				)}
-
-				{this.state.cancel && <ConfirmModal />}
-				{this.state.deletePost && <DeleteModal post_id={this.props.post_id} />}
 			</PostContainer>
 		);
 	}
 }
 
-const mapStateToProps = state => {
-	console.log(state);
-	return {
-		user_id: state.userReducer.user_id,
-		username: state.userReducer.username,
-
-		project: state.projectReducer.project,
-		gettingProject: state.projectReducer.gettingProject,
-		updatingProject: state.projectReducer.updatingProject,
-		error: state.projectReducer.error
-
-		// redirect?
-	};
-};
-
-export default connect(
-	mapStateToProps,
-	{ getProject, updateProject, updatePost }
-)(ProjectPage);
+export default Post;
