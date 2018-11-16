@@ -1,13 +1,92 @@
 // Dependencies
 import React, { Component } from 'react';
-import { getProject } from '../../actions';
+import {
+	getProject,
+	addProject,
+	updateProject,
+	deleteProject,
+	addPost,
+	updatePost,
+	deletePost
+} from '../../actions';
 import { connect } from 'react-redux';
 
 // Components
-import { Post, ConfirmModal, StarCount } from '../../components';
+import { Post, DeleteModal, ConfirmModal, StarCount } from '../../components';
 
 // Styles
 import styled from 'styled-components';
+
+const ProjectPageContainer = styled.div`
+	width: 700px;
+	background: #ffeeee;
+	padding: 30px;
+	margin: 0 auto;
+`;
+
+const ProjectForm = styled.form``;
+
+const TextInput = styled.input``;
+
+const CancelButton = styled.button``;
+
+const SubmitInput = styled.input``;
+
+const ImgUrlInput = styled.input``;
+
+const ProjectHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+`;
+
+const ProjectName = styled.header``;
+
+const ReviewsButton = styled.button``;
+
+const Img = styled.img`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 380px;
+	width: 100%;
+	background: #cceeee;
+	margin-bottom: 20px;
+`;
+
+const Text = styled.p`
+	width: 100%;
+	background: #cceeee;
+	padding: 10px 10px;
+	margin-bottom: 20px;
+`;
+
+const EditButton = styled.button``;
+
+const DeleteButton = styled.button``;
+
+const ProjectNameInput = styled.input``;
+
+const Project = styled.div``;
+
+const StatusMessage = styled.p``;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 20px;
+`;
+
+const OtherButtonContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -12px;
+	margin-bottom: 20px;
+`;
+
+const ProjectButton = styled.button``;
+
+const ReviewButton = styled.button``;
 
 class ProjectPage extends Component {
 	state = {};
@@ -34,6 +113,11 @@ class ProjectPage extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
+	// Returns true if user is auther
+	// owner = () => this.props.project.user_id === this.props.user_id;
+	owner = () => true;
+
+	// Disable other buttons when you have an active form
 	disabled = () =>
 		!this.state.editProject ||
 		!this.state.editPost ||
@@ -41,7 +125,6 @@ class ProjectPage extends Component {
 		!this.state.newImage;
 
 	// If this is a new project, set up the state with empty form data.
-	// If the user is the project's author, add 'owner' to the state.
 	componentDidMount() {
 		if (this.props.match.params.id === 'new') {
 			this.setState({
@@ -51,12 +134,7 @@ class ProjectPage extends Component {
 				img_url: ''
 			});
 		} else {
-			if (this.props.match.params.username === this.props.username) {
-				this.setState({
-					owner: true
-				});
-				this.props.getProject(this.props.match.params.id);
-			}
+			this.props.getProject(this.props.match.params.id);
 		}
 	}
 
@@ -95,11 +173,11 @@ class ProjectPage extends Component {
 						<CancelButton
 							name="cancel"
 							value="Cancel"
-							onClick={this.clickHandler()}
+							onClick={this.clickHandler}
 						/>
 						<SubmitInput type="submit" value="Add New Project" />
 					</ProjectForm>
-				) : !this.state.editProject ? (
+				) : this.state.editProject ? (
 					<ProjectForm>
 						<ProjectHeader>
 							<ProjectNameInput
@@ -133,17 +211,17 @@ class ProjectPage extends Component {
 						<CancelButton
 							name="cancel"
 							value="Cancel"
-							onClick={this.clickHandler()}
+							onClick={this.clickHandler}
 						/>
 						<SubmitInput type="submit" value="Update Project" />
 					</ProjectForm>
 				) : (
 					<Project>
-						{this.props.gettingNote ? (
+						{this.props.gettingProject ? (
 							<React.Fragment>
 								<StatusMessage>Loading project...</StatusMessage>
 							</React.Fragment>
-						) : this.props.updatingNote ? (
+						) : this.props.updatingProject ? (
 							<React.Fragment>
 								<StatusMessage>Updating project...</StatusMessage>
 							</React.Fragment>
@@ -156,30 +234,37 @@ class ProjectPage extends Component {
 							<React.Fragment>
 								<ProjectHeader>
 									<ProjectName>{this.props.project.project_name}</ProjectName>
-									<StarCount rating={this.props.project.rating} />
-									<ReviewsButton disabled={this.state.disabled} />
+									<StarCount rating={this.props.project.project_rating} />
+									<ReviewsButton disabled={this.state.disabled}>
+										Reviews
+									</ReviewsButton>
 								</ProjectHeader>
-								<Img />
-								<Text />
-								{this.state.owner && (
-									<EditButton disabled={this.state.disabled}>Edit</EditButton>
-								)}
-								{this.state.owner && (
-									<DeleteButton disabled={this.state.disabled}>
-										Delete Project
-									</DeleteButton>
+								<Img
+									src={this.props.project.img_url}
+									alt={this.props.project.img_url || 'project image'}
+								/>
+								<Text>{this.props.project.text}</Text>
+								{this.owner() && (
+									<OtherButtonContainer>
+										<EditButton disabled={this.state.disabled}>
+											Edit Project
+										</EditButton>
+										<DeleteButton disabled={this.state.disabled}>
+											Delete Project
+										</DeleteButton>
+									</OtherButtonContainer>
 								)}
 							</React.Fragment>
 						)}
 					</Project>
 				)}
 
-				{this.props.project.posts[0] &&
+				{this.props.project.posts &&
 					this.props.project.posts.map(post => (
 						<Post
 							key={post.post_id}
 							post={post}
-							owner={this.state.owner}
+							owner={this.owner()}
 							disabled={this.state.disabled}
 						/>
 					))}
@@ -187,10 +272,13 @@ class ProjectPage extends Component {
 				{this.state.newText && <Post key="new" newText />}
 				{this.state.newImage && <Post key="new" newImage />}
 
-				{this.state.owner &&
+				{this.owner() &&
 					!this.state.newProject &&
 					!this.state.newText &&
-					!this.state.newImage && (
+					!this.state.newImage &&
+					!this.props.gettingProject &&
+					!this.props.updatingProject &&
+					!this.props.error && (
 						<ButtonContainer>
 							<ProjectButton disabled={this.state.disabled}>
 								Add Text Field
@@ -201,8 +289,7 @@ class ProjectPage extends Component {
 						</ButtonContainer>
 					)}
 
-				{/* Go to existing review else start a new one */}
-				{!this.state.owner && <ReviewButton>Review Project</ReviewButton>}
+				{this.owner() || <ReviewButton>Review Project</ReviewButton>}
 
 				{this.state.cancel && <ConfirmModal />}
 				{this.state.deleteProject && (
@@ -223,8 +310,7 @@ class ProjectPage extends Component {
 const mapStateToProps = state => {
 	console.log(state);
 	return {
-		user_id: state.userReducer.user_id,
-		username: state.userReducer.username,
+		// userInfo: state.userReducer.userInfo,
 
 		project: state.projectReducer.project,
 		gettingProject: state.projectReducer.gettingProject,
@@ -237,5 +323,13 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getProject, updateProject, updatePost }
+	{
+		getProject,
+		addProject,
+		updateProject,
+		deleteProject,
+		addPost,
+		updatePost,
+		deletePost
+	}
 )(ProjectPage);
