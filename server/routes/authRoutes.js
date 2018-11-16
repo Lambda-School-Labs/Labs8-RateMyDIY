@@ -33,9 +33,8 @@ router.get('/callback', function(req, res, next) {
 			}
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
-			console.log('callback', req.user);
-			let role = req.user._json['https://ratemydiy.heroku.com/roles'];
-			console.log(role[0]);
+			console.log(req.user._json);
+			let role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
 			let sub = req.user._json.sub.split('|');
 			let auth_id = sub[1];
 			let username = req.user._json.nickname;
@@ -47,20 +46,20 @@ router.get('/callback', function(req, res, next) {
 				usersDB
 					.addUser(user)
 					.then(res => {
-						res.redirect(returnTo || 'http://localhost:5000/');
+						res.redirect(returnTo || 'http://localhost:3000/');
 					})
 					.catch(err => {
 						res.status(500).json(err);
 					});
 			} else {
-				res.redirect(returnTo || 'http://localhost:5000/');
+				res.redirect(returnTo || 'http://localhost:3000/');
 			}
 		});
 	})(req, res, next);
 });
 
-router.get('/loggedIn', (req, res) => {
-	console.log(req.user);
+router.get('/loggedIn', function(req, res) {
+	console.log('loggedIn', req.cookies);
 	const auth_id = req.user._json.sub.split('|')[1];
 
 	authDB

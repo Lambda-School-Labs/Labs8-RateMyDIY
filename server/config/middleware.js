@@ -26,11 +26,11 @@ const sessionConfig = {
 
 module.exports = server => {
 	//removed Logger middleware to debug server endpoints
-	//server.use(logger('tiny'));
+	server.use(logger('tiny'));
 	server.use(cors({ 'Access-Control-Allow-Origin': '*' }));
 	server.use(helmet());
-	server.use(cookieParser());
 	server.use(express.json());
+	server.use(cookieParser());
 	server.use(session(sessionConfig));
 	server.use(passport.initialize());
 	server.use(passport.session());
