@@ -10,7 +10,7 @@ import axios from 'axios';
 // import cookie from "react-cookies";
 
 //Constant variables
-const loginURL = 'http://localhost:5000`}/signin';
+const loginURL = `${process.env.BACKEND_URL || `http://localhost:5000`}/signin`;
 
 // styled-components
 const DropDownWrapper = styled.div`

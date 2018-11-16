@@ -46,13 +46,18 @@ router.get('/callback', function(req, res, next) {
 				usersDB
 					.addUser(user)
 					.then(res => {
-						res.redirect(returnTo || 'http://localhost:3000/');
+						res.redirect(
+							returnTo ||
+								`${process.env.FRONTEND_URL || `http://localhost:3000`}/`
+						);
 					})
 					.catch(err => {
 						res.status(500).json(err);
 					});
 			} else {
-				res.redirect(returnTo || 'http://localhost:3000/');
+				res.redirect(
+					returnTo || `${process.env.FRONTEND_URL || `http://localhost:3000`}/`
+				);
 			}
 		});
 	})(req, res, next);
