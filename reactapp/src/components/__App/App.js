@@ -26,12 +26,12 @@ import {
 
 //Styles
 const AppContainer = styled.div`
-	display: flex;
-	max-width: 1280px;
-	min-width: 600px;
-	height: 100vh;
-	background: #eff;
-	margin: 10px auto;
+  display: flex;
+  max-width: 1280px;
+  min-width: 600px;
+  height: auto;
+  background: #EFF;
+  margin: 10px auto;
 `;
 
 class App extends Component {

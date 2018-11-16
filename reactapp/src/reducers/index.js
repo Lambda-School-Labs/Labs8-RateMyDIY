@@ -4,11 +4,13 @@ import projectReducer from './projectReducer';
 import postReducer from './postReducer';
 import searchReducer from './searchReducer';
 import settingsReducer from './settingsReducer';
+import sendgridReducer from "./sendgridReducer";
 
 export default combineReducers({
 	landingPageReducer,
 	projectReducer,
 	postReducer,
 	searchReducer,
-	settingsReducer
+	settingsReducer,
+  sendgridReducer
 });
