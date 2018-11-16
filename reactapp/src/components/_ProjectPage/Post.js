@@ -52,19 +52,18 @@ const DeleteButton = styled.button``;
 class Post extends Component {
 	state = {};
 
-	// Add editProject, addPost, editPost, deleteProject, deletePost, or cancel to the state. This has various effects on what gets rendered below.
+	// This isn't finished yet.
 	clickHandler = event => {
 		event.preventDefault();
 		this.setState({
 			[event.target.name]: true
 		});
 
-		// If we're editing the project, add it to the state.
+		// If we're editing the post, add it to the state.
 		if (this.state.editProject) {
 			this.setState({
-				project_name: this.props.project.project_name,
-				text: this.props.project.text,
-				img_url: this.props.project.img_url
+				text: this.props.post.text,
+				img_url: this.props.post.img_url
 			});
 		}
 	};

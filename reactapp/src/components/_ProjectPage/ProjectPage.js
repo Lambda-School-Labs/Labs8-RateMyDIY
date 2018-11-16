@@ -113,18 +113,18 @@ class ProjectPage extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	// Returns true if user is auther
-	// owner = () => this.props.project.user_id === this.props.user_id;
-	owner = () => true;
+	// Returns true if user is author
+	owner = () => this.props.project.user_id === this.props.user_id;
+	// owner = () => true;
 
-	// Disable other buttons when you have an active form
+	// Disable other buttons when there is an active form
 	disabled = () =>
 		!this.state.editProject ||
 		!this.state.editPost ||
 		!this.state.newText ||
 		!this.state.newImage;
 
-	// If this is a new project, set up the state with empty form data.
+	// If this is a new project, set up the state with an empty form.
 	componentDidMount() {
 		if (this.props.match.params.id === 'new') {
 			this.setState({
