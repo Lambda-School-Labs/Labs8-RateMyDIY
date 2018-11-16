@@ -21,7 +21,7 @@ import {
 	UserSettingSettings,
 	//  SearchBar, // not used
 	SearchPage,
-	Project
+	ProjectPage
 } from '../../components';
 
 //Styles
@@ -72,7 +72,7 @@ class App extends Component {
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
-				<Route path="/:username/projects/:id" component={Project} />
+				<Route path="/project/:id" component={ProjectPage} />
 			</AppContainer>
 		);
 	}
