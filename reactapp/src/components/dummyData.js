@@ -61,7 +61,7 @@ module.exports = {
 	],
 	popularReviewers: [
 		{
-			user_id: 32,
+			reviewer_id: 1,
 			name: 'Tristen',
 			star_count: 4.2,
 			author: 'john',
@@ -69,7 +69,7 @@ module.exports = {
 				'https://ssl.c.photoshelter.com/img-get2/I0000uXfqb7iQKLs/fit=1000x750/Tim-Allen-actor-comedian-from-the-TV-series-Home-Improvement-Last-Man-Standing-films-The-Santa-Clause-Toy-Story-Jungle-2-Jungle-Galaxy-Quest-in-a-celebrity-portrait-0001.jpg'
 		},
 		{
-			user_id: 45,
+			reviewer_id: 2,
 			name: 'David',
 			star_count: 4.5,
 			author: 'David',

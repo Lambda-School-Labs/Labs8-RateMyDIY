@@ -33,7 +33,6 @@ class FeaturedProjects extends Component {
 			<FeaturedProjectsWrapper>
 				<FeaturedProjectTitle>Featured Projects</FeaturedProjectTitle>
 				<FeaturedProjectListTiles>
-					{console.log(this.props.featuredProjects)}
 					{this.props.featuredProjects.map(project => (
 						<ProjectTile project={project} key={project.project_id} />
 					))}

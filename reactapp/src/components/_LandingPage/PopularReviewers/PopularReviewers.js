@@ -26,7 +26,7 @@ const PopularMakersTitle = styled.h1`
 	margin: 10px 25px;
 `;
 
-class Reviewers extends Component {
+class PopularReviewers extends Component {
 	// constructor() {
 	//   super();
 	// } // useless constructor
@@ -36,13 +36,13 @@ class Reviewers extends Component {
 			<PopularReviewersWrapper>
 				<PopularMakersTitle>Popular Reviewers</PopularMakersTitle>
 				<PopularReviewersListTiles>
-					{/* {this.props.reviewers.map(reviewer => (
-						<ReviewerTile reviewer={reviewer} key={reviewer.user_id} />
-					))} */}
+					{this.props.reviewers.map(reviewer => (
+						<ReviewerTile reviewer={reviewer} key={reviewer.reviewer_id} />
+					))}
 				</PopularReviewersListTiles>
 			</PopularReviewersWrapper>
 		);
 	}
 }
 
-export default Reviewers;
+export default PopularReviewers;

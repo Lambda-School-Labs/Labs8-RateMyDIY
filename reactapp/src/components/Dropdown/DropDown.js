@@ -1,11 +1,11 @@
 // Dependencies
-import React, { Fragment, Link } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 // import { Route } from "react-router-dom";
 // import { connect } from "react-redux";
 import styled from 'styled-components';
-import axios from 'axios';
+// import axios from 'axios';
 // import { Cookies } from "react-cookie";
 // import cookie from "react-cookies";
 
