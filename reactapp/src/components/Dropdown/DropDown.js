@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 // import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { connect } from 'react-redux';
 import { sendEmail } from '../../actions';
 
 const loginURL =
