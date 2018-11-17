@@ -10,7 +10,11 @@ import axios from 'axios';
 // import cookie from "react-cookies";
 
 //Constant variables
-const loginURL = `${process.env.BACKEND_URL || `http://localhost:5000`}/signin`;
+const loginURL =
+	(process.env.BACKEND_URL || `http://localhost:5000`) + `/signin`;
+
+const logoutURL =
+	(process.env.BACKEND_URL || `http://localhost:5000`) + `/signout`;
 
 // styled-components
 const DropDownWrapper = styled.div`
@@ -80,11 +84,11 @@ class DropDown extends React.Component {
 				{/* Conditional check to see if user is logged in */}
 				{/* if not logged in, show the login/signup buttons */}
 				{/* if logged in, show component that says "Hello NAME then have a signout button" */}
-				{this.props.userInfo ? (
+				{this.props.userInfo.user_id ? (
 					<Fragment>
 						<WelcomeMessage>Welcome</WelcomeMessage>
 						{this.props.userInfo.username}
-						<SignOutLink>Signout</SignOutLink>
+						<SignOutLink href={logoutURL}>Signout</SignOutLink>
 					</Fragment>
 				) : (
 					<Fragment>
