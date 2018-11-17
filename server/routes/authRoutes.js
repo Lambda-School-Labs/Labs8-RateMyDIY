@@ -47,8 +47,7 @@ router.get('/callback', function(req, res, next) {
 					.addUser(user)
 					.then(res => {
 						res.redirect(
-							returnTo ||
-								`${process.env.FRONTEND_URL || `http://localhost:3000`}/`
+							returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
 						);
 					})
 					.catch(err => {
@@ -56,21 +55,25 @@ router.get('/callback', function(req, res, next) {
 					});
 			} else {
 				res.redirect(
-					returnTo || `${process.env.FRONTEND_URL || `http://localhost:3000`}/`
+					returnTo || process.env.FRONTEND_URL || `http://localhost:3000`
 				);
 			}
 		});
 	})(req, res, next);
 });
 
-router.get('/loggedIn', function(req, res) {
-	console.log('loggedIn', req.cookies);
+router.post('/loggedIn', function(req, res, next) {
+	// console.log('cookies:', req.cookies);
+	// console.log('user:', req.user);
+
 	const auth_id = req.user._json.sub.split('|')[1];
+
+	console.log('auth_id', auth_id);
 
 	authDB
 		.loggedIn(auth_id)
-		.then(res => {
-			res.status(200).json(res);
+		.then(user => {
+			res.status(200).json(user);
 		})
 		.catch(err => {
 			res.status(500).json(err);
@@ -79,10 +82,13 @@ router.get('/loggedIn', function(req, res) {
 
 router.get('/signout', (req, res) => {
 	req.logout();
-	res.redirect('/');
+	res.redirect(process.env.FRONTEND_URL || `http://localhost:3000`);
 });
 
-router.post('/test', ensureLoggedIn, authenticate, function(req, res, next) {
+router.post('/test', ensureLoggedIn, function(req, res, next) {
+	console.log('cookies:', req.cookies);
+	console.log('user:', req.user);
+
 	//console.log(req.user);
 	//console.log(req.user.app_metadata);
 	res.status(200).json({ message: 'it works' });
