@@ -27,7 +27,12 @@ const sessionConfig = {
 module.exports = server => {
 	//removed Logger middleware to debug server endpoints
 	server.use(logger('tiny'));
-	server.use(cors({ 'Access-Control-Allow-Origin': '*' }));
+	server.use(
+		cors({
+			credentials: true,
+			origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+		})
+	);
 	server.use(helmet());
 	server.use(express.json());
 	server.use(cookieParser());
