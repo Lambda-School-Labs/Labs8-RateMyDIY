@@ -1,14 +1,18 @@
-import { combineReducers } from "redux";
-import loggedInReducer from "./loggedInReducer";
-import landingPageReducer from "./landingPageReducer";
-import myProjectReducer from "./myProjectReducer";
-import searchReducer from "./searchReducer";
-import settingsReducer from "./settingsReducer";
+import { combineReducers } from 'redux';
+import loggedInReducer from './loggedInReducer';
+import landingPageReducer from './landingPageReducer';
+import projectReducer from './projectReducer';
+import postReducer from './postReducer';
+import searchReducer from './searchReducer';
+import settingsReducer from './settingsReducer';
+import sendgridReducer from './sendgridReducer';
 
 export default combineReducers({
-  loggedInReducer,
-  landingPageReducer,
-  myProjectReducer,
-  searchReducer,
-  settingsReducer
+	loggedInReducer,
+	landingPageReducer,
+	projectReducer,
+	postReducer,
+	searchReducer,
+	settingsReducer,
+	sendgridReducer
 });
