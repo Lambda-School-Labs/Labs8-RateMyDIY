@@ -62,22 +62,25 @@ router.get('/callback', function(req, res, next) {
 	})(req, res, next);
 });
 
-router.post('/loggedIn', function(req, res, next) {
+router.get('/loggedIn', function(req, res, next) {
 	// console.log('cookies:', req.cookies);
 	// console.log('user:', req.user);
 
-	const auth_id = req.user._json.sub.split('|')[1];
+	if (req.user) {
+		const auth_id = req.user._json.sub.split('|')[1];
+		console.log('auth_id', auth_id);
 
-	console.log('auth_id', auth_id);
-
-	authDB
-		.loggedIn(auth_id)
-		.then(user => {
-			res.status(200).json(user);
-		})
-		.catch(err => {
-			res.status(500).json(err);
-		});
+		authDB
+			.loggedIn(auth_id)
+			.then(userInfo => {
+				res.status(200).json(userInfo);
+			})
+			.catch(err => {
+				res.status(500).json(err);
+			});
+	} else {
+		res.status(200).json({});
+	}
 });
 
 router.get('/signout', (req, res) => {

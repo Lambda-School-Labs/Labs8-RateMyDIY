@@ -11,7 +11,7 @@ export const loggedIn = () => {
 		dispatch({ type: GETTING_USER_INFO });
 
 		axios
-			.post((process.env.BACKEND_URL || `http://localhost:5000`) + `/loggedIn`)
+			.get((process.env.BACKEND_URL || `http://localhost:5000`) + `/loggedIn`)
 
 			.then(({ data }) => {
 				dispatch({ type: GOT_USER_INFO, payload: data });
