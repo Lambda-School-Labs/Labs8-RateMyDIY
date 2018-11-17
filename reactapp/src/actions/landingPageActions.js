@@ -15,7 +15,7 @@ export const getProjects = () => {
 		//const data = require("../components/dummyData.js");
 		axios
 			.get(
-				`${process.env.BACKEND_URL || `http://localhost:5000`}/api/projects/`
+				(process.env.BACKEND_URL || `http://localhost:5000`) + `/api/projects/`
 			)
 			.then(response =>
 				dispatch({ type: GET_PROJECTS, payload: response.data })
