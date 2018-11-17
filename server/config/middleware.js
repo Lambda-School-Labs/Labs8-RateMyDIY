@@ -15,7 +15,6 @@ var store = new KnexSessionStore({
 	createtable: false
 });
 
-// httpOnly configuration set to true for production
 const sessionConfig = {
 	store: store,
 	secret: [process.env.SESSION_SECRET || 'TKd8^S$W-HPS3NtF'],

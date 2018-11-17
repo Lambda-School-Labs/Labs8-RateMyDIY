@@ -11,7 +11,6 @@ import logger from 'redux-logger';
 import rootReducer from './reducers';
 // Components
 import { App } from './components';
-import { CookiesProvider } from 'react-cookie';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 // Styles
@@ -20,12 +19,10 @@ import './index.css';
 const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
-	<CookiesProvider>
-		<Provider store={store}>
-			<Router>
-				<App />
-			</Router>
-		</Provider>
-	</CookiesProvider>,
+	<Provider store={store}>
+		<Router>
+			<App />
+		</Router>
+	</Provider>,
 	document.getElementById('root')
 );
