@@ -98,7 +98,7 @@ class NewPost extends Component {
 						/>
 						<PostButtonContainer>
 							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Add New Text Field" />
+							<SubmitInput type="submit" value="Add Text Field" />
 						</PostButtonContainer>
 					</PostForm>
 				) : (
@@ -122,7 +122,7 @@ class NewPost extends Component {
 						/>
 						<PostButtonContainer>
 							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Add New Picture" />
+							<SubmitInput type="submit" value="Add Picture" />
 						</PostButtonContainer>
 					</PostForm>
 				)}

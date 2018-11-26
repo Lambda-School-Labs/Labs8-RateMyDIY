@@ -129,7 +129,7 @@ class EditPost extends Component {
 					/>
 					<PostButtonContainer>
 						<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-						<SubmitInput type="submit" value="Update Post" />
+						<SubmitInput type="submit" value="Submit Changes" />
 					</PostButtonContainer>
 				</PostForm>
 

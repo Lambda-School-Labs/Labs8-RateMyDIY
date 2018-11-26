@@ -149,7 +149,7 @@ class EditProject extends Component {
 				/>
 				<ProjectButtonContainer>
 					<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-					<SubmitInput type="submit" value="Update Project" />
+					<SubmitInput type="submit" value="Submit Changes" />
 				</ProjectButtonContainer>
 
 				{this.props.updatingProject && (
