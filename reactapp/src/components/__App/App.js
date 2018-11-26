@@ -1,6 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'; // removed Link from import (unused)
+import { Route, withRouter } from 'react-router-dom'; // removed Link from import (unused)
 import styled from 'styled-components';
 import Auth from '../../components/Auth/Auth';
 import { connect } from 'react-redux';
@@ -23,7 +23,8 @@ import {
 	UserSettingSettings,
 	//  SearchBar, // not used
 	SearchPage,
-	ProjectPage
+	ProjectPage,
+	NewProject
 } from '../../components';
 
 //Styles
@@ -81,6 +82,7 @@ class App extends Component {
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
 				<Route path="/project/:id" component={ProjectPage} />
+				<Route path="/newproject" component={NewProject} />
 			</AppContainer>
 		);
 	}
@@ -92,7 +94,9 @@ const mapStateToProps = state => ({
 	error: state.loggedInReducer.userInfo
 });
 
-export default connect(
-	mapStateToProps,
-	{ loggedIn }
-)(App);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ loggedIn }
+	)(App)
+);
