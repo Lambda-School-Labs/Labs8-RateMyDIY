@@ -141,6 +141,7 @@ class ProjectPage extends Component {
 						this.props.project.posts.map(post =>
 							post.post_id === this.props.postToUpdate ? (
 								<EditPost
+									key={post.post_id}
 									user_id={this.props.userInfo.user_id}
 									project_id={this.props.project.project_id}
 									post={post}
