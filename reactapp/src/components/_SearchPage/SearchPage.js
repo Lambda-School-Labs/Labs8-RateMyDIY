@@ -9,20 +9,32 @@ import './SearchPage.css';
 import { SearchBar, ProjectTile } from '../../components';
 
 class SearchPage extends Component {
-	// constructor() {
-	//   super();
-	// } // useless constructor
+	constructor() {
+		super();
+		this.state = { input: '' };
+	} // useless constructor
 
 	componentDidMount() {}
 	handleChange = e => {
-		console.log(e.target.value);
+		this.setState({ ...this.state, input: e.target.value });
+	};
+
+	handleSearch = e => {
+		//call featch search results action
+		this.props.fetchSearchResults(this.state.input);
+
+		//push to search page
+		this.props.history.push('/search');
 	};
 
 	render() {
 		console.log(this.props.projects);
 		return (
 			<div className="search-page-container">
-				<SearchBar handleChange={this.handleChange} />
+				<SearchBar
+					handleChange={this.handleChange}
+					handleSearch={this.handleSearch}
+				/>
 
 				<div className="search-options" />
 				<div className="search-results">
