@@ -83,7 +83,7 @@ class MakerTile extends React.Component {
 					<p onClick={this.showMakerProjects} className="project-name">
 						<a
 							onClick={e => this.searchMaker(e, this.props.maker.username)}
-							href={`/search?user=${this.props.maker.username}`}
+							href={`/search?query=${this.props.maker.username}`}
 						>
 							{this.props.maker.username}
 						</a>

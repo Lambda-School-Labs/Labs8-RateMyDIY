@@ -42,21 +42,22 @@ class LandingPage extends Component {
 	};
 
 	handleSearch = e => {
+		const searchTerm = this.state.input;
 		//call featch search results action
 		this.props.fetchSearchResults(this.state.input);
 
 		//push to search page
-		this.props.history.push('/search');
+		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 
-	searchClick = (e, input) => {
+	searchClick = input => {
 		console.log('search for this maker: ' + input);
-		e.preventDefault();
+
 		//call featch search results action
 		this.props.fetchSearchResults(input);
 
 		//push to search page
-		this.props.history.push('/search');
+		this.props.history.push(`/search?query=${input}`);
 	};
 
 	render() {
