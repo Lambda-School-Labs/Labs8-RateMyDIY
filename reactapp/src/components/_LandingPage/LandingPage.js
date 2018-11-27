@@ -49,6 +49,16 @@ class LandingPage extends Component {
 		this.props.history.push('/search');
 	};
 
+	searchClick = (e, input) => {
+		console.log('search for this maker: ' + input);
+		e.preventDefault();
+		//call featch search results action
+		this.props.fetchSearchResults(input);
+
+		//push to search page
+		this.props.history.push('/search');
+	};
+
 	render() {
 		// console.log(SearchBar);
 		return (
@@ -63,7 +73,7 @@ class LandingPage extends Component {
 					/>
 					<Twillio />
 					<FeaturedProjects />
-					<PopularMakers />
+					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>

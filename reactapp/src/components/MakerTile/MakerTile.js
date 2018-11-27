@@ -56,9 +56,10 @@ class MakerTile extends React.Component {
 		// React strap Modal \\
 	}
 
-	searchMaker = username => {
+	searchMaker = (e, username) => {
+		e.preventDefault();
 		console.log(username);
-		//this.props.fetchSearchResults(username);
+		this.props.fetchSearchResults(username);
 	};
 	render() {
 		return (
@@ -81,7 +82,7 @@ class MakerTile extends React.Component {
 
 					<p onClick={this.showMakerProjects} className="project-name">
 						<a
-							onClick={e => this.searchMaker(this.props.maker.username)}
+							onClick={e => this.searchMaker(e, this.props.maker.username)}
 							href={`/search?user=${this.props.maker.username}`}
 						>
 							{this.props.maker.username}
