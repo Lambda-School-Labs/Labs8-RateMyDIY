@@ -2,6 +2,10 @@ import React from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
+import './DropDown.css';
+
+const logoutURL =
+	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
 
 class DropDown extends React.Component {
   constructor(props) {
@@ -41,6 +45,12 @@ class DropDown extends React.Component {
               New Project
             </Link >
           </DropdownItem>
+          {window.screen.width <= 500 ? 
+          <DropdownItem>
+            <Link to={logoutURL}>
+              Signout
+            </Link>
+          </DropdownItem> : null }
         </DropdownMenu>
       </Dropdown>
     );
