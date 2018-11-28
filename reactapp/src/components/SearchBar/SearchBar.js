@@ -61,9 +61,9 @@ const SearchBar = props => {
 				<SelectStyle name="Maker" id="maker">
 					{/* Need to poll DB for list of makers */}
 					<option value="">Maker</option>
-					<option value="">Maker</option>
-					<option value="">Maker</option>
-					<option value="">Maker</option>
+					<option value="">Reviewer</option>
+					<option value="">Category</option>
+					<option value="">Stars</option>
 				</SelectStyle>
 				<SelectStyle name="Reviewer" id="reviewer">
 					<option value="">Reviewer</option>
