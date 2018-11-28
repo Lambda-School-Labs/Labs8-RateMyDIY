@@ -40,7 +40,8 @@ class SearchPage extends Component {
 
 				<div className="search-options" />
 				<div className="search-results">
-					<h1>Search results</h1>
+					<h1>Search results for: {this.state.input}</h1>
+					{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
 					{this.props.projects.map(project => (
 						<ProjectTile project={project} />
 					))}
