@@ -5,8 +5,18 @@ module.exports = {
 	getSearchResults
 };
 
+let options = {
+	shouldSort: true,
+	includeScore: true,
+	threshold: 0.3,
+	location: 0,
+	distance: 100,
+	maxPatternLength: 32,
+	minMatchCharLength: 1,
+	keys: ['project_name', 'text', 'username'] // need to have username in item array
+};
+
 function getSearchResults(query) {
-	console.log('lets get them search results');
 	console.log('query: ' + query);
 	let list = [];
 	//need to create JOIN SQL query to get data from all tables
@@ -22,17 +32,6 @@ function getSearchResults(query) {
 		)
 		.orderBy('project_rating', 'desc')
 		.then(projects => {
-			let options = {
-				shouldSort: true,
-				includeScore: true,
-				threshold: 0.3,
-				location: 0,
-				distance: 100,
-				maxPatternLength: 32,
-				minMatchCharLength: 1,
-				keys: ['project_name', 'text', 'username'] // need to have username in item array
-			};
-
 			let fuse = new Fuse(projects, options); // "projects" is the item array
 			let result = fuse.search(query);
 			return result;

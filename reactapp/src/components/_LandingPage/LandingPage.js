@@ -70,7 +70,7 @@ class LandingPage extends Component {
 					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
-					<PopularReviewers />
+					<PopularReviewers fetchSearchResults={this.searchClick} />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
