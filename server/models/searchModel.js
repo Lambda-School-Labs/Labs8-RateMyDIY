@@ -28,7 +28,8 @@ function getSearchResults(query) {
 			'projects.project_name',
 			'users.username',
 			'projects.project_id',
-			'projects.project_rating'
+			'projects.project_rating',
+			'projects.text'
 		)
 		.orderBy('project_rating', 'desc')
 		.then(projects => {

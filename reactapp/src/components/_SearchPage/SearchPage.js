@@ -20,6 +20,7 @@ class SearchPage extends Component {
 	};
 
 	handleSearch = e => {
+		e.preventDefault();
 		const searchTerm = this.state.input;
 		console.log(searchTerm);
 		//call featch search results action
