@@ -34,7 +34,12 @@ function getSearchResults(query) {
 		.then(projects => {
 			let fuse = new Fuse(projects, options); // "projects" is the item array
 			let result = fuse.search(query);
-			return result;
+			return result.map(item => item.item);
 		})
 		.catch(err => console.log(err));
+}
+
+function getProjectsByReviewer(username) {
+	// need to get all projects that have been reviewed by a username
+	//SQL statement that JOINS users, reviews, and projects table on users.username AND project_id
 }
