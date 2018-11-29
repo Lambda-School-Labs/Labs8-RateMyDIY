@@ -29,26 +29,26 @@ import {
 
 //Styles
 const AppContainer = styled.div`
-  display: flex;
-  max-width: 1280px;
-  min-width: 600px;
-  height: auto;
-  background: #eff;
-  margin: 10px auto;
+	display: flex;
+	max-width: 1280px;
+	min-width: 600px;
+	height: auto;
+	background: #eff;
+	margin: 10px auto;
 `;
 
 class App extends Component {
-  state = {};
+	state = {};
 
-  componentDidMount() {
-    this.props.loggedIn();
-  }
+	componentDidMount() {
+		this.props.loggedIn();
+	}
 
-  render() {
-    return (
-      <AppContainer>
-        {/* <h1>Navigation</h1> */}
-        {/* <ul>
+	render() {
+		return (
+			<AppContainer>
+				{/* <h1>Navigation</h1> */}
+				{/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -89,9 +89,10 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.loggedInReducer.userInfo,
-  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-  error: state.loggedInReducer.userInfo
+	userInfo: state.loggedInReducer.userInfo,
+
+	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+	gettingUserInfoError: state.loggedInReducer.gettingUserInfoError
 });
 
 export default withRouter(
