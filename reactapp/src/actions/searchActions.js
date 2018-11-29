@@ -12,19 +12,20 @@ export const FETCH_SEARCH_RESULTS_SUCCESS = "FETCH_SEARCH_RESULTS_SUCCESS";
 export const FETCH_SEARCH_RESULTS_ERROR = "FETCH_SEARCH_RESULTS_ERROR";
 
 
+
 export const FETCH_CATEGORY_RESULTS = "FETCH_CATEGORY_RESULTS";
 export const FETCH_CATEGORY_RESULTS_SUCCESS = "FETCH_CATEGORY_RESULTS_SUCCESS";
 export const FETCH_CATEGORY_RESULTS_ERROR = "FETCH_CATEGORY_RESULTS_ERROR";
 
 
+export const fetchMyProjects = (user_id) => {
 
-export const fetchMyProjects = () => {
   return dispatch => {
     dispatch({ type: FETCH_MYPROJECT });
     axios
-      .get(
+      .post(
         (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-          "/api/users/myprojects"
+          "/api/users/myprojects", { user_id: user_id }
       )
       .then(response => {
         dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
@@ -36,13 +37,13 @@ export const fetchMyProjects = () => {
   };
 };
 
-export const fetchMyReviews = () => {
+export const fetchMyReviews = (user_id) => {
   return dispatch => {
     dispatch({ type: FETCH_MYREVIEWS });
     axios
-      .get(
+      .post(
         (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-          "/api/users/myreviews"
+          "/api/users/myreviews", { user_id: user_id }
       )
       .then(response => {
         dispatch({ type: FETCH_MYREVIEWS_SUCCESS, payload: response.data });
