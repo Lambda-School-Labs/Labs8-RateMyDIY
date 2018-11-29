@@ -15,16 +15,12 @@ import {
 	Billing,
 	UserSettingsSideBar,
 	UserSettingsSummaries,
-	UserSettingBilling,
-	UserSettingEducation,
-	UserSettingPositions,
-	UserSettingSkills,
-	UserSettingResumes,
 	UserSettingSettings,
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage,
-	NewProject
+	NewProject,
+	AboutTheTeam
 } from '../../components';
 
 //Styles
@@ -71,18 +67,13 @@ class App extends Component {
 				<Route path="/settings/summaries" component={UserSettingsSummaries} />
 				<Route exact path="/ReviewList" component={ReviewList} />
 				<Route exact path="/ProjectList" component={ProjectList} />
-				<Route exact path="/Billing" component={Billing} />
 				<Route exact path="/CreateEditPage" component={CreateEditPage} />
-				<Route path="/settings/positions" component={UserSettingEducation} />
-				<Route path="/settings/education" component={UserSettingPositions} />
-				<Route path="/settings/skills" component={UserSettingSkills} />
-				<Route path="/settings/resumes" component={UserSettingResumes} />
-				<Route path="/settings/billing" component={UserSettingBilling} />
 				<Route path="/settings/settings" component={UserSettingSettings} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/signin" component={Auth} />
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
+				<Route path="/about" component={AboutTheTeam} />
 			</AppContainer>
 		);
 	}

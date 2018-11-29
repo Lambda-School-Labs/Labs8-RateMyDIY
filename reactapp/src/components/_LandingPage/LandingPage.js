@@ -3,17 +3,22 @@ import React, { Component } from 'react';
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from 'styled-components';
 //Added Redux imports
-import { fetchSearchResults } from '../../actions/index';
+import {
+	fetchSearchResults,
+	fetchProjectsByReviewer
+} from '../../actions/index';
 import { connect } from 'react-redux';
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 //Import components
 import {
-	DropDown,
+	Nav,
 	FeaturedProjects,
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio
+	Twillio,
+	Footer
 } from '../../components';
 
 // styled-components
@@ -25,9 +30,10 @@ const LandingPageContentWrapper = styled.div`
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
-`;
-const DropdownMenu = styled.div`
-	width: 100%;
+
+	@media (max-width: 500px) {
+		width: 100vw;
+	}
 `;
 
 class LandingPage extends Component {
@@ -39,23 +45,44 @@ class LandingPage extends Component {
 	handleChange = e => {
 		console.log(e.target.value);
 		this.setState({ ...this.state, input: e.target.value });
+
+		console.log(this.props);
 	};
 
 	handleSearch = e => {
+		const searchTerm = this.state.input;
 		//call featch search results action
 		this.props.fetchSearchResults(this.state.input);
 
 		//push to search page
-		this.props.history.push('/search');
+		this.props.history.push(`/search?query=${searchTerm}`);
+
+		//if not signed in,
+		//toggle signinpopup on
+	};
+
+	searchClick = input => {
+		console.log('search for this maker: ' + input);
+
+		//call featch search results action
+		this.props.fetchSearchResults(input);
+
+		//push to search page
+		this.props.history.push(`/search?query=${input}`);
+	};
+
+	getProjectsByReviewer = username => {
+		console.log('search for this reviewer : ' + username);
+		this.props.fetchProjectsByReviewer(username);
+
+		//push to search page
+		this.props.history.push(`/search?user=${username}`);
 	};
 
 	render() {
-		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
-				<DropdownMenu>
-					<DropDown />
-				</DropdownMenu>
+				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}
@@ -63,8 +90,11 @@ class LandingPage extends Component {
 					/>
 					<Twillio />
 					<FeaturedProjects />
-					<PopularMakers />
-					<PopularReviewers />
+					<PopularMakers fetchSearchResults={this.searchClick} />
+					<PopularReviewers
+						getProjectsByReviewer={this.getProjectsByReviewer}
+					/>
+					<Footer />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
@@ -72,10 +102,11 @@ class LandingPage extends Component {
 }
 
 const mapStateToProps = state => ({
-	projects: state.searchReducer.projects
+	projects: state.searchReducer.projects,
+	loggedIn: state.loggedInReducer.loggedIn
 });
 
 export default connect(
 	mapStateToProps,
-	{ fetchSearchResults }
+	{ fetchSearchResults, fetchProjectsByReviewer }
 )(LandingPage);

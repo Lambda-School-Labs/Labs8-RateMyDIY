@@ -14,23 +14,30 @@ const upload = require('../setup-aws-s3');
 const singleUpload = upload.single('image');
 
 // Amazon AWS Upload endpoint
-// todo: only upload when adding/updating project, post, or profile image
-// delete images from aws when replaced or when project/post/profile is deleted
 router.post('/image-upload', function(req, res) {
 	singleUpload(req, res, function(err, some) {
 		if (err) {
 			return res.status(422).send({
 				errors: [{ title: 'Image Upload Error', detail: err.message }]
 			});
+		} else {
+			// If Success
+			const path = req.file.path;
+			const imageName = req.file.key;
+			const imageLocation = req.file.location;
+			// Save the file name into database into profile model
+			res.json({
+				path: path,
+				image: imageName,
+				location: imageLocation
+			});
 		}
-		return res.json({ imageUrl: req.file.location });
 	});
 });
 
 // get project by id
 router.get('/:project_id', function(req, res, next) {
 	const { project_id } = req.params;
-
 	db.getProjectByID(project_id)
 		.then(project => {
 			if (project) {

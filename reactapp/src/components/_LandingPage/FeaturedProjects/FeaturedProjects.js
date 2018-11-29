@@ -12,18 +12,34 @@ const FeaturedProjectsWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: #fff;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const FeaturedProjectListTiles = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-content: space-between;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		align-self: center;
+	}
 `;
 
 const FeaturedProjectTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
 	margin: 10px 25px;
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 15px auto;
+		text-align: center;
+		font-weight: bold;
+	}
 `;
 
 class FeaturedProjects extends Component {
@@ -46,8 +62,8 @@ class FeaturedProjects extends Component {
 
 const mapStateToProps = state => ({
 	featuredProjects: state.landingPageReducer.featuredProjects,
-	fetching: state.landingPageReducer.fetching,
-	error: state.landingPageReducer.error
+	gettingFeaturedProjects: state.landingPageReducer.fetchingFeaturedProjects,
+	featuredProjectsError: state.landingPageReducer.featuredProjectsError
 });
 
 export default connect(
