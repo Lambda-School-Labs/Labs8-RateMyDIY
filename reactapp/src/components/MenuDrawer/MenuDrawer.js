@@ -37,9 +37,12 @@ const ButtonContainer = styled.div`
 `;
 
 class MenuDrawer extends React.Component {
-  state = {
-    top: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      top: false
+    };
+  }
 
   toggleDrawer = (side, open) => () => {
     this.setState({
@@ -48,9 +51,10 @@ class MenuDrawer extends React.Component {
   };
 
   render() {
+    console.log(this.props)
     const { classes } = this.props;
 
-    const fullList = (
+    const dropdownList = (
       <div className={classes.fullList}>
         <List>
             <ListItem className={classes.center}>
@@ -72,6 +76,38 @@ class MenuDrawer extends React.Component {
       </div>
     );
 
+    const sidebarList = (
+      <div className={classes.fullList}>
+        <List>
+            <ListItem className={classes.center}>
+                <Link to='/search'>
+                    Search
+                </Link>
+            </ListItem>
+            <ListItem className={classes.center}>
+                <Link to='/ProjectList'>
+                    My Projects
+                </Link >
+            </ListItem>
+            <ListItem className={classes.center}>
+                <Link to='/ReviewList'>
+                    My Reviews
+                </Link>
+            </ListItem>
+            <ListItem className={classes.center}>
+                <Link to='/Billing'>
+                    Billing
+                </Link>
+            </ListItem>
+            <ListItem className={classes.center}>
+                <Link to='/settings'>
+                    Settings
+                </Link>
+            </ListItem>
+        </List>
+      </div>
+    );
+
     return (
       <div>
         <ButtonContainer>
@@ -86,7 +122,7 @@ class MenuDrawer extends React.Component {
             onClick={this.toggleDrawer('top', false)}
             onKeyDown={this.toggleDrawer('top', false)}
           >
-            {fullList}
+            {this.props.dropdown ? {dropdownList} : {sidebarList} }
           </div>
         </Drawer>
       </div>
