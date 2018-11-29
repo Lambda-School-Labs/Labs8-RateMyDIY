@@ -67,6 +67,7 @@ const postRoutes = require('./routes/postRoutes');
 const landingPageRoutes = require('./routes/landingPageRoutes');
 const searchRoutes = require('./routes/searchRoutes');
 const filterRoutes = require('./routes/filterRoutes')
+const categoryRoutes = require('./routes/categoryRoutes')
 
 server.use('/', authRoutes);
 server.use('/api/users', userRoutes);
@@ -75,6 +76,8 @@ server.use('/api/posts', postRoutes);
 server.use('/api/lp', landingPageRoutes);
 server.use('/api/search', searchRoutes);
 server.use('/api/filter', filterRoutes);
+server.use('/api/category', categoryRoutes);
+
 
 //Twilio
 server.get('/send-text', (req, res) => {
