@@ -46,32 +46,16 @@ function getProjectsByReviewer(username) {
 	//SQL statement that JOINS users, reviews, and projects table on users.username AND project_id
 
 	return db('users')
-		.where({ username })
-		.first()
-		.then(user => {
-			return db('reviews')
-				.where({ user_id: user.user_id })
-				.join('projects', 'projects.project_id', 'reviews.project_id')
-				.select(
-					'projects.img_url',
-					'projects.user_id',
-					'projects.project_name',
-					'users.username',
-					'projects.project_id',
-					'projects.project_rating',
-					'projects.text'
-				)
-				.orderBy('project_rating', 'desc')
-				.then(projects => {
-					let fuse = new Fuse(projects, options); // "projects" is the item array
-					let result = fuse.search(query);
-					return result.map(item => item.item);
-				})
-				.catch(err => console.log(err));
-		})
-		.catch(err => console.log(err));
-	// 	return db('reviews')
-	// .where({user_id})
-	// .join('projects', 'projects.project_id', 'reviews.project_id')
-	// .select('projects.stuff')
+		.where({ 'users.username': username })
+		.join('reviews', 'reviews.user_id', 'users.user_id')
+		.join('projects', 'projects.project_id', 'reviews.project_id')
+		.join('users as makers', 'makers.user_id', 'projects.user_id')
+		.select(
+			'projects.project_id',
+			'projects.project_name',
+			'projects.project_rating',
+			'projects.img_url',
+			'projects.user_id',
+			'makers.username'
+		);
 }

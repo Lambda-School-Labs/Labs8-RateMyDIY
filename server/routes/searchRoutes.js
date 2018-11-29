@@ -7,7 +7,8 @@ const db = require('../models/searchModel');
 router.get('/', (req, res) => {
 	//get search query from URL
 	const query = req.query.query;
-	//const username = req.query.username;
+	const username = req.query.username;
+	console.log(username);
 
 	//check if query exists
 	if (!query && !username) {
@@ -21,14 +22,14 @@ router.get('/', (req, res) => {
 			.catch(err => res.status(500).json(err));
 	}
 
-	// if (username) {
-	// 	db.getProjectsByReviewer(username)
-	// 		.then(results => {
-	// 			console.log(results);
-	// 			res.status(200).json(results);
-	// 		})
-	// 		.catch(err => res.status(500).json(err));
-	// }
+	if (username) {
+		db.getProjectsByReviewer(username)
+			.then(results => {
+				console.log(results);
+				res.status(200).json(results);
+			})
+			.catch(err => res.status(500).json(err));
+	}
 });
 
 module.exports = router;

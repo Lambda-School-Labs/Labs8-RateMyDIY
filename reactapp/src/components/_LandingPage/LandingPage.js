@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 // import { NavLink, Link, Route } from "react-router-dom";
 import styled from 'styled-components';
 //Added Redux imports
-import { fetchSearchResults } from '../../actions/index';
+import {
+	fetchSearchResults,
+	fetchProjectsByReviewer
+} from '../../actions/index';
 import { connect } from 'react-redux';
 
 //Import components
@@ -57,8 +60,15 @@ class LandingPage extends Component {
 		this.props.history.push(`/search?query=${input}`);
 	};
 
+	getProjectsByReviewer = username => {
+		console.log('search for this reviewer : ' + username);
+		this.props.fetchProjectsByReviewer(username);
+
+		//push to search page
+		this.props.history.push(`/search?user=${username}`);
+	};
+
 	render() {
-		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
 				<Nav />
@@ -70,7 +80,9 @@ class LandingPage extends Component {
 					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
-					<PopularReviewers fetchSearchResults={this.searchClick} />
+					<PopularReviewers
+						getProjectsByReviewer={this.getProjectsByReviewer}
+					/>
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
@@ -83,5 +95,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ fetchSearchResults }
+	{ fetchSearchResults, fetchProjectsByReviewer }
 )(LandingPage);

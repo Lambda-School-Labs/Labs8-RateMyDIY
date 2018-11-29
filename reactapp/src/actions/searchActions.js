@@ -69,3 +69,26 @@ export const fetchSearchResults = query => {
       });
   };
 };
+
+export const fetchProjectsByReviewer = username => {
+  return dispatch => {
+    console.log("username: " + username);
+    const url =
+      (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+      "/api/search?username=" +
+      username;
+    dispatch({ type: FETCH_SEARCH_RESULTS });
+    axios
+      .get(url)
+      .then(response => {
+        dispatch({
+          type: FETCH_SEARCH_RESULTS_SUCCESS,
+          payload: response.data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: FETCH_SEARCH_RESULTS_ERROR });
+      });
+  };
+};

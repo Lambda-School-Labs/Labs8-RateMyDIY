@@ -51,7 +51,7 @@ class ReviewerTile extends React.Component {
 	searchReviewer = (e, username) => {
 		e.preventDefault();
 		console.log(username);
-		this.props.fetchSearchResults(username);
+		this.props.getProjectsByReviewer(username);
 	};
 	// Sets state for the reactstrap modal
 	toggle() {

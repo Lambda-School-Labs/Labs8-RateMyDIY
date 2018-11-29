@@ -39,7 +39,7 @@ class PopularReviewers extends Component {
 				<PopularReviewersListTiles>
 					{this.props.popularReviewers.map(reviewer => (
 						<ReviewerTile
-							fetchSearchResults={this.props.fetchSearchResults}
+							getProjectsByReviewer={this.props.getProjectsByReviewer}
 							reviewer={reviewer}
 							key={reviewer.user_id}
 						/>
