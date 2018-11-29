@@ -4,7 +4,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 	'/signin'
 );
 
-const authenticate = require('../config/authMiddleware');
+const authorize = require('../config/authMiddleware');
 
 const db = require('../models/projectModel');
 
@@ -14,6 +14,8 @@ const upload = require('../setup-aws-s3');
 const singleUpload = upload.single('image');
 
 // Amazon AWS Upload endpoint
+// todo: only upload when adding/updating project, post, or profile image
+// delete images from aws when replaced or when project/post/profile is deleted
 router.post('/image-upload', function(req, res) {
 	singleUpload(req, res, function(err, some) {
 		if (err) {
@@ -43,7 +45,6 @@ router.get('/:project_id', function(req, res, next) {
 });
 
 // get reviews by project id
-
 router.get('/:project_id/reviews', function(req, res, next) {
 	const { project_id } = req.params;
 
@@ -61,7 +62,7 @@ router.get('/:project_id/reviews', function(req, res, next) {
 });
 
 // add project
-router.post('/', ensureLoggedIn, authenticate, function(req, res, next) {
+router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_name, img_url, text } = req.body;
 
 	if (!project_name || !img_url || !text) {
@@ -79,8 +80,7 @@ router.post('/', ensureLoggedIn, authenticate, function(req, res, next) {
 });
 
 // update project by id
-
-router.put('/:project_id', ensureLoggedIn, function(req, res, next) {
+router.put('/:project_id', ensureLoggedIn, authorize, function(req, res, next) {
 	const { user_id, project_name, img_url, text } = req.body;
 	const { project_id } = req.params;
 
@@ -103,7 +103,11 @@ router.put('/:project_id', ensureLoggedIn, function(req, res, next) {
 });
 
 // delete project by id
-router.delete('/:project_id', ensureLoggedIn, function(req, res, next) {
+router.delete('/:project_id', ensureLoggedIn, authorize, function(
+	req,
+	res,
+	next
+) {
 	const { user_id } = req.body;
 	const { project_id } = req.params;
 
