@@ -26,7 +26,7 @@ const ImageHolder = styled.div`
 	max-height: 70%;
 
 	@media (max-width: 500px) {
-		max-width: 60%;
+		width: 60%;
 		height: 30vh;
 		margin: 0 auto;
 	}
