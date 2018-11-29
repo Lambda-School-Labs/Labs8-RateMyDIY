@@ -1,5 +1,6 @@
 export { default as App } from './__App/App';
 export { default as SearchBar } from './SearchBar/SearchBar';
+export { default as SearchPageSearchBar } from './SearchPageSearchBar/SearchPageSearchBar';
 export { default as FeaturedProjects } from './_LandingPage/FeaturedProjects/FeaturedProjects';
 export { default as PopularMakers } from './_LandingPage/PopularMakers/PopularMakers';
 export { default as PopularReviewers } from './_LandingPage/PopularReviewers/PopularReviewers';
@@ -29,3 +30,4 @@ export { default as ConfirmModal } from './_ProjectPage/ConfirmModal';
 export { default as StarCount } from './StarCount/StarCount';
 export { default as DeleteModal } from './_ProjectPage/DeleteModal';
 export { default as Fileupload } from './fileupload/fileupload';
+export { default as MenuDrawer } from './MenuDrawer/MenuDrawer';

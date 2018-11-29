@@ -11,13 +11,21 @@ export const FETCH_SEARCH_RESULTS = "FETCH_SEARCH_RESULTS";
 export const FETCH_SEARCH_RESULTS_SUCCESS = "FETCH_SEARCH_RESULTS_SUCCESS";
 export const FETCH_SEARCH_RESULTS_ERROR = "FETCH_SEARCH_RESULTS_ERROR";
 
-export const fetchMyProjects = () => {
+
+
+export const FETCH_CATEGORY_RESULTS = "FETCH_CATEGORY_RESULTS";
+export const FETCH_CATEGORY_RESULTS_SUCCESS = "FETCH_CATEGORY_RESULTS_SUCCESS";
+export const FETCH_CATEGORY_RESULTS_ERROR = "FETCH_CATEGORY_RESULTS_ERROR";
+
+
+export const fetchMyProjects = (user_id) => {
+
   return dispatch => {
     dispatch({ type: FETCH_MYPROJECT });
     axios
-      .get(
+      .post(
         (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-          "/api/users/myprojects"
+          "/api/users/myprojects", { user_id: user_id }
       )
       .then(response => {
         dispatch({ type: FETCH_MYPROJECT_SUCCESS, payload: response.data });
@@ -29,13 +37,13 @@ export const fetchMyProjects = () => {
   };
 };
 
-export const fetchMyReviews = () => {
+export const fetchMyReviews = (user_id) => {
   return dispatch => {
     dispatch({ type: FETCH_MYREVIEWS });
     axios
-      .get(
+      .post(
         (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-          "/api/users/myreviews"
+          "/api/users/myreviews", { user_id: user_id }
       )
       .then(response => {
         dispatch({ type: FETCH_MYREVIEWS_SUCCESS, payload: response.data });
@@ -69,3 +77,27 @@ export const fetchSearchResults = query => {
       });
   };
 };
+
+
+export const fetchCategoryResults = query => {
+    return dispatch => {
+      console.log("query: " + query);
+      const url =
+        (process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+        "/api/filter?query=" +
+        query;
+      dispatch({ type: FETCH_CATEGORY_RESULTS });
+      axios
+        .get(url)
+        .then(response => {
+          dispatch({
+            type: FETCH_CATEGORY_RESULTS_SUCCESS,
+            payload: response.data
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          dispatch({ type: FETCH_CATEGORY_RESULTS_ERROR });
+        });
+    };
+  };
