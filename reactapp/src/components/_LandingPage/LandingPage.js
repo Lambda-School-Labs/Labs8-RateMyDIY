@@ -63,10 +63,11 @@ class LandingPage extends Component {
 	};
 
 	render() {
+		console.log('VIEWPORT', window.innerWidth);
 		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
-				{window.screen.width <= 500? <MenuDrawer /> : <Nav /> }
+				{window.innerWidth <= 500? <MenuDrawer /> : <Nav /> }
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}

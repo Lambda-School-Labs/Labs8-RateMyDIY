@@ -2,7 +2,6 @@ import React from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import './DropDown.css';
 
 const logoutURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;

@@ -37,11 +37,19 @@ const SearchBarWrapper = styled.form`
 	width: 100%;
 	height: 35px;
 	align-items: baseline;
+
+	@media (max-width: 500px) {
+		position: relative;
+	}
 `;
 const SearchBarSearchButtonWrapper = styled.div`
 	display: flex;
 	height: 100px;
 	align-items: flex-end;
+
+	@media (max-width: 500px) {
+		position: relative;
+	}
 `;
 const SearchBarInput = styled.input`
 	width: 100%;
@@ -61,6 +69,16 @@ const SearchBarButton = styled.button`
 	border: none;
 	border: 2px solid black;
 	box-shadow: 5px 5px 0px;
+
+	@media (max-width: 500px) {
+		position: absolute;
+		right: 0;
+		margin: 5px 0px 0px 0px;
+		text-align: right;
+		border: none;
+		box-shadow: none;
+		z-index: 1;
+	}
 `;
 
 const SearchBar = props => {
@@ -102,8 +120,12 @@ const SearchBar = props => {
 					<SearchBarButton
 						onClick={e => props.handleSearch(e)}
 						className="search-button"
-					>
-						Search
+					>{window.innerWidth <= 500?  
+						<img 
+							src='https://cdn4.iconfinder.com/data/icons/kripto-black-2/512/kripto-search-b.png' 
+							style={{ width: '20px', height: '20px' }}
+							/> 
+							: 'Search' }
 					</SearchBarButton>
 				</SearchBarWrapper>
 			</SearchBarSearchButtonWrapper>
