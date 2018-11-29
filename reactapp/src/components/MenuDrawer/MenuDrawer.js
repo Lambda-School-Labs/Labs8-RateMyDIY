@@ -51,62 +51,64 @@ class MenuDrawer extends React.Component {
   };
 
   render() {
-    console.log(this.props)
     const { classes } = this.props;
+    let menuList;
 
-    const dropdownList = (
-      <div className={classes.fullList}>
-        <List>
-            <ListItem className={classes.center}>
-                <Link to={`/users/${this.props.userInfo.user_id}`}>
-                    My Profile
-                </Link>
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to={`/users/${this.props.userInfo.user_id}/settings`}>
-                    Profile Settings
-                </Link >
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to={logoutURL}>
-                    Signout
-                </Link>
-            </ListItem>
-        </List>
-      </div>
-    );
-
-    const sidebarList = (
-      <div className={classes.fullList}>
-        <List>
-            <ListItem className={classes.center}>
-                <Link to='/search'>
-                    Search
-                </Link>
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to='/ProjectList'>
-                    My Projects
-                </Link >
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to='/ReviewList'>
-                    My Reviews
-                </Link>
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to='/Billing'>
-                    Billing
-                </Link>
-            </ListItem>
-            <ListItem className={classes.center}>
-                <Link to='/settings'>
-                    Settings
-                </Link>
-            </ListItem>
-        </List>
-      </div>
-    );
+    if (this.props.sidebar) {
+      menuList = (
+        <div className={classes.fullList}>
+          <List>
+              <ListItem className={classes.center}>
+                  <Link to='/search'>
+                      Search
+                  </Link>
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to='/ProjectList'>
+                      My Projects
+                  </Link >
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to='/ReviewList'>
+                      My Reviews
+                  </Link>
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to='/Billing'>
+                      Billing
+                  </Link>
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to='/settings'>
+                      Settings
+                  </Link>
+              </ListItem>
+          </List>
+        </div>
+      );
+    } else {
+      menuList = (
+        <div className={classes.fullList}>
+          <List>
+              <ListItem className={classes.center}>
+                  <Link to={`/users/${this.props.userInfo.user_id}`}>
+                      My Profile
+                  </Link>
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to={`/users/${this.props.userInfo.user_id}/settings`}>
+                      Profile Settings
+                  </Link >
+              </ListItem>
+              <ListItem className={classes.center}>
+                  <Link to={logoutURL}>
+                      Signout
+                  </Link>
+              </ListItem>
+          </List>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -122,7 +124,7 @@ class MenuDrawer extends React.Component {
             onClick={this.toggleDrawer('top', false)}
             onKeyDown={this.toggleDrawer('top', false)}
           >
-            {this.props.dropdown ? {dropdownList} : {sidebarList} }
+            {menuList}
           </div>
         </Drawer>
       </div>
