@@ -5,6 +5,7 @@ import styled from 'styled-components';
 //Added Redux imports
 import { fetchSearchResults } from '../../actions/index';
 import { connect } from 'react-redux';
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 //Import components
 import {
@@ -61,7 +62,7 @@ class LandingPage extends Component {
 		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
-				<Nav />
+				{window.screen.width <= 500? <MenuDrawer /> : <Nav /> }
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}

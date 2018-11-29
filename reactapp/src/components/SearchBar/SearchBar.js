@@ -9,6 +9,10 @@ const SearchWrapper = styled.div`
 	margin: 25px auto;
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const SelectWrapper = styled.div`
@@ -21,6 +25,11 @@ const SelectStyle = styled.select`
 	width: 20%;
 	transform: 1s;
 	/* border-radius: 5px; */
+
+	@media (max-width: 500px) {
+		text-align-last: center;
+		padding-left: 10px;
+	}
 `;
 
 const SearchBarWrapper = styled.form`
