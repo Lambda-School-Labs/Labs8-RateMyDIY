@@ -50,3 +50,4 @@ export { default as Fileupload } from './fileupload/fileupload';
 export { default as MenuDrawer } from './MenuDrawer/MenuDrawer';
 export { default as AboutTheTeam } from './AboutTheTeam/AboutTheTeam';
 export { default as Footer } from './Footer/Footer';
+export { default as LogInPopUp } from './LogInPopUp/LogInPopUp';
