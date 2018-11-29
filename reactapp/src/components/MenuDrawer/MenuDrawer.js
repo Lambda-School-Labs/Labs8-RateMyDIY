@@ -13,6 +13,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import { Link } from "react-router-dom";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 const logoutURL =
 	(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/signout`;
@@ -22,10 +23,18 @@ const styles = {
     width: 250,
   },
   fullList: {
-    width: 'auto',
-    text-align: 'center';
+    width: 'auto'
   },
+  center: {
+    display: 'flex',
+    justifyContent: 'center'
+  }
 };
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 class MenuDrawer extends React.Component {
   state = {
@@ -44,17 +53,17 @@ class MenuDrawer extends React.Component {
     const fullList = (
       <div className={classes.fullList}>
         <List>
-            <ListItem>
+            <ListItem className={classes.center}>
                 <Link to={`/users/${this.props.userInfo.user_id}`}>
                     My Profile
                 </Link>
             </ListItem>
-            <ListItem>
+            <ListItem className={classes.center}>
                 <Link to={`/users/${this.props.userInfo.user_id}/settings`}>
                     Profile Settings
                 </Link >
             </ListItem>
-            <ListItem>
+            <ListItem className={classes.center}>
                 <Link to={logoutURL}>
                     Signout
                 </Link>
@@ -65,7 +74,11 @@ class MenuDrawer extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggleDrawer('top', true)}>Open Top</Button>
+        <ButtonContainer>
+            <Button onClick={this.toggleDrawer('top', true)} style={styles.center}>
+              <img src='https://cdn2.iconfinder.com/data/icons/lightly-icons/30/chevron-down-480.png' style={{ width: '20px', height: '20px' }} />
+            </Button>
+        </ButtonContainer>
         <Drawer anchor="top" open={this.state.top} onClose={this.toggleDrawer('top', false)}>
           <div
             tabIndex={0}
@@ -88,11 +101,5 @@ MenuDrawer.propTypes = {
 const mapStateToProps = state => ({
     userInfo: state.loggedInReducer.userInfo,
   });
-  
-//   export default connect(
-//     mapStateToProps
-//   )(DropDown);
-
-// export default withStyles(styles)(MenuDrawer);
 
 export default compose(withStyles(styles), connect(mapStateToProps))(MenuDrawer);
