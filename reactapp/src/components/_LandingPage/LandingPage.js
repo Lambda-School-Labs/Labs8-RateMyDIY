@@ -8,6 +8,7 @@ import {
 	fetchProjectsByReviewer
 } from '../../actions/index';
 import { connect } from 'react-redux';
+import MenuDrawer from '../MenuDrawer/MenuDrawer';
 
 //Import components
 import {
@@ -16,7 +17,8 @@ import {
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio
+	Twillio,
+	Footer
 } from '../../components';
 
 // styled-components
@@ -28,6 +30,10 @@ const LandingPageContentWrapper = styled.div`
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
+
+	@media (max-width: 500px) {
+		width: 100vw;
+	}
 `;
 
 class LandingPage extends Component {
@@ -71,7 +77,7 @@ class LandingPage extends Component {
 	render() {
 		return (
 			<LandingPageWrapper>
-				<Nav />
+				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}
@@ -83,6 +89,8 @@ class LandingPage extends Component {
 					<PopularReviewers
 						getProjectsByReviewer={this.getProjectsByReviewer}
 					/>
+      <Footer />
+
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);

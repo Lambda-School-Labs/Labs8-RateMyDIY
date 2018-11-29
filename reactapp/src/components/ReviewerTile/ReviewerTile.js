@@ -6,27 +6,44 @@ import styled from 'styled-components';
 
 // styled-components
 const ReviewerTileWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	margin: 20px;
-	overflow: hidden;
-	width: 200px;
-	height: 200px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+
+  @media (max-width: 500px) {
+		width: 100%;
+		height: 200px;
+		margin: 10% auto;
+	}
 `;
 
 const ImageHolder = styled.div`
-	max-width: 200px;
-	/* this needs to be changed if there are more or less lines on the tile */
-	max-height: 80%;
+  max-width: 200px;
+  /* this needs to be changed if there are more or less lines on the tile */
+  max-height: 80%;
+
+  @media (max-width: 500px) {
+		width: 60%;
+		height: 30vh;
+		margin: 0 auto;
+	}
 `;
 
 const ReviewerImage = styled.img`
-	display: block;
-	max-width: 100%;
-	max-height: 100%;
-	width: auto;
-	height: auto;
-	background: #fee;
+display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  background: #fee;
+
+  @media (max-width: 500px) {
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 const Details = styled.div`

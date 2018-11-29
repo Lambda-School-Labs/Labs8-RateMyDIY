@@ -1,12 +1,12 @@
 // Dependencies
 import React, { Component } from 'react';
 // import { Route } from "react-router-dom";
-import { fetchSearchResults } from '../../actions';
+import { fetchSearchResults, fetchCategoryResults } from '../../actions';
 import { connect } from 'react-redux';
 import './SearchPage.css';
 
 //Import components
-import { SearchBar, ProjectTile } from '../../components';
+import { SearchBar, ProjectTile , SearchPageSearchBar } from '../../components';
 
 class SearchPage extends Component {
 	constructor() {
@@ -15,6 +15,7 @@ class SearchPage extends Component {
 	} // useless constructor
 
 	componentDidMount() {}
+	
 	handleChange = e => {
 		this.setState({ ...this.state, input: e.target.value });
 	};
@@ -30,6 +31,40 @@ class SearchPage extends Component {
 		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 
+
+	handleFilterCategoryFood = e => {
+		e.preventDefault();
+		const searchTerm = 'food';
+		console.log(searchTerm);
+		//call featch search results action
+		this.props.fetchCategoryResults(searchTerm);
+		//push to search page
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+	handleFilterCategoryTech = e => {
+		e.preventDefault();
+		const searchTerm = 'tech';
+		console.log(searchTerm);
+		//call featch search results action
+		this.props.fetchCategoryResults(searchTerm);
+		//push to search page
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+
+	handleFilterCategoryHome = e => {
+		e.preventDefault();
+		const searchTerm = 'Home Improvement';
+		console.log(searchTerm);
+		//call featch search results action
+		this.props.fetchCategoryResults(searchTerm);
+		//push to search page
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+
+
 	render() {
 		console.log(this.props.projects);
 		return (
@@ -38,11 +73,17 @@ class SearchPage extends Component {
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
 				/>
-
 				<div className="search-options" />
 				<div className="search-results">
-					<h1>Search results for: {this.state.input}</h1>
-					{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+					<h1>Search results</h1>
+      {this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+					<SearchPageSearchBar 
+					handleFilterCategoryFood={this.handleFilterCategoryFood}
+					handleFilterCategoryTech={this.handleFilterCategoryTech}
+					handleFilterCategoryHome={this.handleFilterCategoryHome}
+					handleChange={this.handleChange}
+					/>
+
 					{this.props.projects.map(project => (
 						<ProjectTile project={project} />
 					))}
@@ -61,5 +102,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ fetchSearchResults }
+	{ fetchSearchResults , fetchCategoryResults }
 )(SearchPage);
