@@ -71,6 +71,27 @@ class ProjectTile extends React.Component {
 			modal: !this.state.modal
 		});
 	}
+	checkProjectRating = () => {
+		let rating = this.props.project.project_rating;
+		let ratingResult = '';
+		let star = <span className="fa fa-star checked" />;
+		if (this.props.project.project_rating) {
+			if (rating === 1) {
+				ratingResult = star;
+			} else if (rating === 2) {
+				ratingResult = star, star;
+			} else if (rating === 3) {
+				ratingResult = star, star, star;
+			} else if (rating === 4) {
+				ratingResult = star, star, star, star;
+			} else if (rating === 5) {
+				ratingResult = star, star, star, star, star;
+			}
+			return ratingResult;
+		} else {
+			return "No Reviews";
+		}
+	}
 
 	render() {
 		return (
@@ -115,11 +136,7 @@ class ProjectTile extends React.Component {
 							{this.props.project.project_name}
 						</ModalHeader>
 						<ModalBody>
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
-							<span className="fa fa-star checked" />
+							{this.checkProjectRating}
 						</ModalBody>
 						<ModalBody>{this.props.project.user_id}</ModalBody>
 						<ModalFooter>
