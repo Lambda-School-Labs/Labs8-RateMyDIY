@@ -4,15 +4,15 @@ module.exports = {
 	addCategory,
 };
 
-function addCategory( project_id, category) {
+function addCategory(user_id, project_id, category) {
 	return db('projects')
-		.where({ project_id  })
+		.where({ user_id, project_id })
 		.first()
 		.then(project => {
 			if (project) {
 				return db('categories')
 					.returning('category_id')
-					.insert({ ...category, project_id  })
+					.insert({ ...category, project_id })
 					.then(([id]) => {
 						if (id) {
 							return db('projects')
@@ -21,7 +21,7 @@ function addCategory( project_id, category) {
 								.then(() => id);
 						}
 					});
-			} else return undefined; // no project by that id || wrong author
+			} else return undefined; 
 		});
 }
 
