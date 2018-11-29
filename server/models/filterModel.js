@@ -13,8 +13,8 @@ function getProjectsCategory(category_name) {
 	'projects.project_name',
 	'projects.project_rating',
 	'projects.img_url',
-			'projects.user_id',
-			'users.username',
+	'projects.user_id',
+	'users.username',
 	'categories.category_id'
   );
 }

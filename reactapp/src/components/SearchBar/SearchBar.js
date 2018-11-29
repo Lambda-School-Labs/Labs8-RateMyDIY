@@ -88,7 +88,7 @@ const SearchBar = props => {
 				<SearchBarWrapper>
 					<SearchBarInput
 						onChange={e => props.handleChange(e)}
-						placeholder="Find a DIY project"
+						placeholder="Find a DIY project or Author"
 					/>
 					<SearchBarButton
 						onClick={e => props.handleSearch(e)}

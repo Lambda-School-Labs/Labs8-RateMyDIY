@@ -66,6 +66,7 @@ const projectRoutes = require('./routes/projectRoutes');
 const postRoutes = require('./routes/postRoutes');
 const landingPageRoutes = require('./routes/landingPageRoutes');
 const searchRoutes = require('./routes/searchRoutes');
+const filterRoutes = require('./routes/filterRoutes')
 
 server.use('/', authRoutes);
 server.use('/api/users', userRoutes);
@@ -73,6 +74,7 @@ server.use('/api/projects', projectRoutes);
 server.use('/api/posts', postRoutes);
 server.use('/api/lp', landingPageRoutes);
 server.use('/api/search', searchRoutes);
+server.use('/api/filter', filterRoutes);
 
 //Twilio
 server.get('/send-text', (req, res) => {
@@ -151,25 +153,6 @@ server.get('/send-text', (req, res) => {
 
 // });
 
-// category endpoint
-
-const categoryDb = require('./models/filterModel')
-
-const category= "food"
-
-server.get('/api/filter', (req, res) => {
-  categoryDb.getProjectsCategory(category)
-
-.then(results => {
- res.send(results)
-
-})
-.catch(err =>{
-  console.log(err)
-})
-
-
-
-});
+// });
 
 module.exports = server;

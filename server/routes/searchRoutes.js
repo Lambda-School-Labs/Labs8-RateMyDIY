@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const db = require("../models/searchModel");
+const db = require('../models/searchModel');
 
 //Search API endpoint
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   //get search query from URL
   const query = req.query.query;
 
   //check if query exists
   if (!query) {
-    res.status(400).json({ message: "Bad request" });
+    res.status(400).json({ message: 'Bad request' });
   }
   if (query) {
     db.getSearchResults(query)
