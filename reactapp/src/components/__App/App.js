@@ -24,7 +24,8 @@ import {
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage,
-	NewProject
+	NewProject,
+	AboutTheTeam
 } from '../../components';
 
 //Styles
@@ -38,17 +39,17 @@ const AppContainer = styled.div`
 `;
 
 class App extends Component {
-  state = {};
+	state = {};
 
-  componentDidMount() {
-    this.props.loggedIn();
-  }
+	componentDidMount() {
+		this.props.loggedIn();
+	}
 
-  render() {
-    return (
-      <AppContainer>
-        {/* <h1>Navigation</h1> */}
-        {/* <ul>
+	render() {
+		return (
+			<AppContainer>
+				{/* <h1>Navigation</h1> */}
+				{/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -83,15 +84,16 @@ class App extends Component {
 				<Route path="/signin" component={Auth} />
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
+				<Route path="/about" component={AboutTheTeam} />
 			</AppContainer>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-  userInfo: state.loggedInReducer.userInfo,
-  gettingUserInfo: state.loggedInReducer.gettingUserInfo,
-  error: state.loggedInReducer.userInfo
+	userInfo: state.loggedInReducer.userInfo,
+	gettingUserInfo: state.loggedInReducer.gettingUserInfo,
+	error: state.loggedInReducer.userInfo
 });
 
 export default withRouter(
