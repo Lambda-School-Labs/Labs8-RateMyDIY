@@ -14,7 +14,8 @@ import {
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio
+	Twillio,
+	Footer
 } from '../../components';
 
 // styled-components
@@ -66,7 +67,11 @@ class LandingPage extends Component {
 		// console.log(SearchBar);
 		return (
 			<LandingPageWrapper>
+<<<<<<< HEAD
 				{window.innerWidth <= 500? <MenuDrawer dropdown /> : <Nav /> }
+=======
+				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
+>>>>>>> f3907f7ee21cba2c7d09cb581a7853afe985a8d8
 				<LandingPageContentWrapper>
 					<SearchBar
 						handleChange={this.handleChange}
@@ -76,6 +81,7 @@ class LandingPage extends Component {
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers />
+					<Footer />
 				</LandingPageContentWrapper>
 			</LandingPageWrapper>
 		);
