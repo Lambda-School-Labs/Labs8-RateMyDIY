@@ -9,7 +9,7 @@ const usersDB = require('../models/usersModel');
 
 const authenticate = require('../config/authMiddleware');
 
-router.get('/user', function(req, res, next) {
+router.get('/user', function (req, res, next) {
 	res.status(200).json(req.cookies);
 });
 
@@ -17,7 +17,7 @@ router.post('/change', function(req, res, next) {
 	const sub = req.user.profile._json.sub;
 	const auth_id = sub.split('|')[1];
 	const { username } = req.body;
-	const img_url = req.user.profile._json.picture;
+	const img_url = req.user._json.picture;
 	const user = {
 		auth_id,
 		username,
