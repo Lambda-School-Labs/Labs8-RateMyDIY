@@ -8,6 +8,7 @@ import settingsReducer from './settingsReducer';
 import sendgridReducer from './sendgridReducer';
 import usernameReducer from './usernameReducer';
 import myProjectReducer from './myProjectReducer';
+import categoryReducer from './categoryReducer';
 
 
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
 	sendgridReducer,
 	usernameReducer,
 	myProjectReducer,
-	searchReducer
+	searchReducer,
+	categoryReducer
 });

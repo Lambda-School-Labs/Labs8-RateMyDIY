@@ -6,4 +6,5 @@ export * from './settingActions';
 export * from './sendgridActions';
 export * from './loggedInActions';
 export * from './usernameActions';
+export * from './categoryActions';
 

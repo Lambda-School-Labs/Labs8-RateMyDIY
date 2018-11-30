@@ -8,7 +8,7 @@ import axios from 'axios';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { addProject, setRedirect } from '../../actions';
+import { addProject, setRedirect, addCATEGORY } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -64,8 +64,10 @@ class NewProject extends Component {
     project_name: '',
     img_url: null,
     text: '',
-    category:''
+    category_name: '2',
+    project: '104'
   };
+
 
   singleFileChangedHandler = event => {
     this.setState({
@@ -84,13 +86,18 @@ class NewProject extends Component {
         this.state.selectedFile.name
       );
       axios
-        .post((process.env.REACT_APP_BACKEND || 'http://localhost:5000') + `/api/projects/image-upload`, data, {
-          headers: {
-            accept: 'application/json',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+        .post(
+          (process.env.REACT_APP_BACKEND || 'http://localhost:5000') +
+            `/api/projects/image-upload`,
+          data,
+          {
+            headers: {
+              accept: 'application/json',
+              'Accept-Language': 'en-US,en;q=0.8',
+              'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+            }
           }
-        })
+        )
         .then(response => {
           if (200 === response.status) {
             // If file size is larger than expected.
@@ -134,13 +141,17 @@ class NewProject extends Component {
   // Submit new project
   submitHandler = event => {
     event.preventDefault();
-
     this.props.addProject({
       user_id: this.props.userInfo.user_id,
       project_name: this.state.project_name,
       img_url: this.state.img_url,
-      text: this.state.text,
-      category: this.state.category
+      text: this.state.text
+    });
+
+    this.props.addCATEGORY({
+      category_name: this.state.category_name,
+      project_id: this.state.project,
+      user_id: this.props.userInfo.user_id,
     });
   };
 
@@ -148,7 +159,12 @@ class NewProject extends Component {
   cancelHandler = event => {
     event.preventDefault();
 
-    if (this.state.project_name || this.state.img_url || this.state.text || this.state.category) {
+    if (
+      this.state.project_name ||
+      this.state.img_url ||
+      this.state.text ||
+      this.state.category
+    ) {
       this.setState({
         confirm: {
           text: ['Do you want to discard these changes?'],
@@ -194,11 +210,7 @@ class NewProject extends Component {
               alt={this.state.img_url || 'placeholder image'}
             />
             <form>
-              <input
-                type="file"
-                onChange={this.singleFileChangedHandler}
-               
-              />
+              <input type="file" onChange={this.singleFileChangedHandler} />
               <div className="mt-5">
                 <button
                   className="btn btn-info"
@@ -216,11 +228,11 @@ class NewProject extends Component {
               onChange={this.changeHandler}
               required
             />
-              <TextInput
+            <TextInput
               name="category"
               type="text"
               placeholder="Category"
-              value={this.state.category}
+              value={this.state.category_name}
               onChange={this.changeHandler}
               required
             />
@@ -260,6 +272,7 @@ export default connect(
   mapStateToProps,
   {
     addProject,
-    setRedirect
+    setRedirect,
+    addCATEGORY
   }
 )(NewProject);

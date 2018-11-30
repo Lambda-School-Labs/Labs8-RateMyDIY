@@ -17,7 +17,6 @@ export const FETCH_CATEGORY_RESULTS_ERROR = "FETCH_CATEGORY_RESULTS_ERROR";
 
 
 export const fetchMyProjects = (user_id) => {
-
   return dispatch => {
     dispatch({ type: FETCH_MYPROJECT });
     axios
