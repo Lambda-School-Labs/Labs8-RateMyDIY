@@ -14,10 +14,11 @@ router.get('/user', function (req, res, next) {
 });
 
 router.post('/change', function(req, res, next) {
+	console.log(req.user.profile)
 	const sub = req.user.profile._json.sub;
 	const auth_id = sub.split('|')[1];
 	const { username } = req.body;
-	const img_url = req.user._json.picture;
+	const img_url = req.user.profile._json.picture;
 	const user = {
 		auth_id,
 		username,
