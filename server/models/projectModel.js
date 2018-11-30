@@ -1,4 +1,5 @@
 const db = require('../config/dbConfig');
+var Promise = require('bluebird');
 
 module.exports = {
 	getProjectByID,
@@ -32,12 +33,34 @@ function getReviewsByProjectID(project_id) {
 		});
 }
 
-function addProject(project) {
-	return db('projects')
-		.returning('project_id')
-		.insert(project)
-		.then(([id]) => id);
-}
+
+
+function addProject (project, categories) {
+	return db
+		.transaction(trx => {
+			return trx
+				.insert(project, 'project_id')
+				.into('projects')
+				.then(project_id => {
+					if (project_id, categories.length)
+						return Promise.map(categories, category_id => {
+							const project_category = { project_id, category_id };
+
+							return trx.insert(project_category).into('project_categories');
+						});
+				});
+		})
+		.then(function(inserts) {
+			console.log(
+				inserts.length + ' categories added for project_id ' + project_id
+			);
+			return project_id;
+		})
+		.catch(function(error) {
+			console.error(error);
+		});
+};
+
 
 function editProject(user_id, project_id, changes) {
 	return db('projects')

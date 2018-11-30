@@ -7,7 +7,7 @@ const ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn(
 const db = require('../models/categoryModel');
 
 // add category to project by id
-router.post('/', ensureLoggedIn,  function(req, res, next) {
+router.post('/', function(req, res, next) {
 	const { user_id, project_id, category_name } = req.body;
 	console.log(req.body)
 	if (!category_name) {

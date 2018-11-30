@@ -64,8 +64,8 @@ class NewProject extends Component {
     project_name: '',
     img_url: null,
     text: '',
-    category_name: '2',
-    project: '104'
+    // category_name: '2',
+    // project: '104'
   };
 
 
@@ -148,11 +148,11 @@ class NewProject extends Component {
       text: this.state.text
     });
 
-    this.props.addCATEGORY({
-      category_name: this.state.category_name,
-      project_id: this.state.project,
-      user_id: this.props.userInfo.user_id,
-    });
+    // this.props.addCATEGORY({
+    //   category_name: this.state.category_name,
+    //   project_id: this.state.project,
+    //   user_id: this.props.userInfo.user_id,
+    // });
   };
 
   // Cancel new project (with confirmation prompt)
