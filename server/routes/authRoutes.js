@@ -33,7 +33,8 @@ router.get('/callback', function(req, res, next) {
 			}
 			const returnTo = req.session.returnTo;
 			delete req.session.returnTo;
-			const role = req.user._json['https://ratemydiy.herokuapp.com/roles'];
+			const role =
+				req.user.profile._json['https://ratemydiy.herokuapp.com/roles'];
 			if (role[0] === 'new') {
 				res.redirect(
 					(process.env.FRONTEND_URL || `http://localhost:3000`) + `/signin`
