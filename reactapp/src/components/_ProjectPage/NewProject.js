@@ -42,7 +42,7 @@ const CancelButton = styled.button``;
 
 const SubmitInput = styled.input``;
 
-const ImgUrlInput = styled.input``;
+// const ImgUrlInput = styled.input``; // 'ImgUrlInput' is assigned a value but never used
 
 const ProjectHeader = styled.div`
   display: flex;
@@ -90,7 +90,7 @@ class NewProject extends Component {
             'Content-Type': `multipart/form-data; boundary=${data._boundary}`
           }
         })
-        
+
         .then(response => {
           if (200 === response.status) {
             // If file size is larger than expected.
@@ -140,7 +140,7 @@ class NewProject extends Component {
       project_name: this.state.project_name,
       img_url: this.state.img_url,
       text: this.state.text,
-     
+
     });
   };
 
@@ -148,7 +148,7 @@ class NewProject extends Component {
   cancelHandler = event => {
     event.preventDefault();
 
-    if (this.state.project_name || this.state.img_url || this.state.text ) {
+    if (this.state.project_name || this.state.img_url || this.state.text) {
       this.setState({
         confirm: {
           text: ['Do you want to discard these changes?'],
@@ -197,7 +197,7 @@ class NewProject extends Component {
               <input
                 type="file"
                 onChange={this.singleFileChangedHandler}
-               
+
               />
               <div className="mt-5">
                 <button

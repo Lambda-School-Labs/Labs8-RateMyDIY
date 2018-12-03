@@ -20,7 +20,6 @@ import {
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio,
 	Footer,
 	LogInPopUp
 } from '../../components';
@@ -120,9 +119,9 @@ class LandingPage extends Component {
 							toggleLogInPopUp={this.state.toggleLogInPopUp}
 						/>
 					) : (
-						//  'hey please log in'
-						''
-					)}
+							//  'hey please log in'
+							''
+						)}
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers
