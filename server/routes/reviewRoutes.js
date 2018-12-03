@@ -47,7 +47,7 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 	if (!rating || !text) {
 		res.status(422).json({ error: 'Missing parameters.' });
 	} else if (rating < 1 || 5 < rating || !Number.isInteger(rating)) {
-		res.status(422).json({ error: 'Nice try.' });
+		res.status(403).json({ error: 'Nice try.' });
 	} else {
 		const review = { user_id, project_id, rating, text };
 		console.log(
@@ -62,7 +62,7 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 					);
 				} else if (alreadyReviewed) {
 					res
-						.status(422)
+						.status(403)
 						.json({ error: `You've already reviewed this project.` });
 					console.log(
 						`Rejected with error: "You've already reviewed this project.\n`
