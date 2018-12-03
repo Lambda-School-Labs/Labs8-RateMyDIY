@@ -19,29 +19,26 @@ class ProjectList extends Component {
 			<div className="projectPage">
 				<AccountSideBar />
 
-				<div className="myProjectDisplay">
-					{this.props.myProjects.map(myProjects => {
-						return (
-							<div className="myProjectsDisplay" key={myProjects.project_id}>
-								<h2>{myProjects.project_name}</h2>
-								<p>{myProjects.project_rating}</p>
-								<img src={myProjects.img_url} alt="" />
-							</div>
-						);
-					})}
-					<div className="addNew">
-						<h2>New Project</h2>
-						<Link to="">
-							<img
-								alt="PLACEHOLDER! alt text"
-								src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-							/>
-						</Link>
-					</div>
-				</div>
-			</div>
-		);
-	}
+        <div className="myProjectDisplay">
+          {this.props.myProjects.map(myProjects => {
+            return (
+              <div className="myProjectsDisplay" key={myProjects.project_id}>
+                <Link to={`project/${myProjects.project_id}`}><h2>{myProjects.project_name}</h2></Link>
+                <p>{myProjects.project_rating}</p>
+                <img src={myProjects.img_url} alt="" />
+              </div>
+            );
+          })}
+          <div className="addNew">
+            <h2>New Project</h2>
+            <Link to="">
+              <img alt="PLACEHOLDER! alt text" src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {

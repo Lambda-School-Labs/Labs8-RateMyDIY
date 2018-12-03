@@ -14,20 +14,20 @@ router.get(
 	passport.authenticate('auth0', {
 		scope: 'openid email profile'
 	}),
-	function(req, res) {
+	function (req, res) {
 		res.redirect('/');
 	}
 );
 
-router.get('/callback', function(req, res, next) {
-	passport.authenticate('auth0', function(err, user, info) {
+router.get('/callback', function (req, res, next) {
+	passport.authenticate('auth0', function (err, user, info) {
 		if (err) {
 			return next(err);
 		}
 		if (!user) {
 			return res.redirect('/signin');
 		}
-		req.logIn(user, function(err) {
+		req.logIn(user, function (err) {
 			if (err) {
 				return next(err);
 			}
@@ -48,7 +48,7 @@ router.get('/callback', function(req, res, next) {
 	})(req, res, next);
 });
 
-router.get('/loggedIn', function(req, res, next) {
+router.get('/loggedIn', function (req, res, next) {
 	// console.log('cookies:', req.cookies);
 	// console.log('user:', req.user);
 
@@ -75,7 +75,7 @@ router.get('/signout', (req, res) => {
 	res.redirect(process.env.FRONTEND_URL || `http://localhost:3000`);
 });
 
-router.post('/test', ensureLoggedIn, function(req, res, next) {
+router.post('/test', ensureLoggedIn, function (req, res, next) {
 	console.log('cookies:', req.cookies);
 	console.log('user:', req.user);
 
@@ -84,7 +84,7 @@ router.post('/test', ensureLoggedIn, function(req, res, next) {
 	res.status(200).json({ message: 'it works' });
 });
 
-router.get('/cookie', function(req, res, next) {
+router.get('/cookie', function (req, res, next) {
 	console.log(req.cookies);
 	res.status(200).json(req.cookies);
 });

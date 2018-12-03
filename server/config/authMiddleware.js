@@ -6,7 +6,6 @@ function authorize(req, res, next) {
 	if (!user_id) {
 		res.status(403).json({ error: 'Not logged in.' });
 	}
-
 	if (!req.user) {
 		res.status(403).json({ error: 'No login cookie.' });
 	}
