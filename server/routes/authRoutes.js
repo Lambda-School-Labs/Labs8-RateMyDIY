@@ -71,6 +71,7 @@ router.get('/loggedIn', function(req, res, next) {
 
 router.get('/signout', (req, res) => {
 	req.logout();
+	req.session.destroy();
 	res.redirect(process.env.FRONTEND_URL || `http://localhost:3000`);
 });
 
