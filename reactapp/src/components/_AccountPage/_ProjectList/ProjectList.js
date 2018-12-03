@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchMyProjects } from '../../../actions';
 import { AccountSideBar, Nav } from '../../../components';
+import icon_plus_circle from '../../../images/icon_plus_circle.png';
 import './ProjectList.css';
 
 class ProjectList extends Component {
@@ -38,7 +39,7 @@ class ProjectList extends Component {
 							<Link to="">
 								<img
 									alt="PLACEHOLDER! alt text"
-									src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
+									src={icon_plus_circle}
 								/>
 							</Link>
 						</div>
