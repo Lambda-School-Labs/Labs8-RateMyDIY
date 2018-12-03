@@ -23,6 +23,7 @@ class SearchPage extends Component {
 
 	handleChange = e => {
 		this.setState({ ...this.state, input: e.target.value });
+		
 	};
 
 	handleSearch = e => {
@@ -43,7 +44,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 	handleFilterCategoryTech = e => {
@@ -53,7 +54,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 	handleFilterCategoryHome = e => {
@@ -63,7 +64,7 @@ class SearchPage extends Component {
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
-		this.props.history.push(`/search?query=${searchTerm}`);
+		
 	};
 
 	render() {

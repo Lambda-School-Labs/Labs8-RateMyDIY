@@ -104,7 +104,6 @@ class LandingPage extends Component {
 	};
 
 	render() {
-		console.log(this.state.modal);
 		return (
 			<LandingPageWrapper>
 				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
@@ -122,7 +121,6 @@ class LandingPage extends Component {
 						//  'hey please log in'
 						''
 					)}
-					<Twillio />
 					<FeaturedProjects />
 					<PopularMakers fetchSearchResults={this.searchClick} />
 					<PopularReviewers
