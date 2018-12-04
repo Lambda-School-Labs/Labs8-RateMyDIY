@@ -44,11 +44,16 @@ function getReviewID(project_id, user_id) {
 // This is big and ugly but it works. It would be easier to read with async/await
 function addReview({ user_id, project_id, rating, text }) {
 	return db('projects')
-		.where({ user_id, project_id })
+		.where({ project_id })
 		.first()
 		.then(project => {
+			// Does this project exist?
+			if (!project) {
+				// Project not found
+				return { projectNotFound: true };
+			}
 			// Are you the author of this project?
-			if (project) {
+			else if (project.user_id === user_id) {
 				// Can't review your own project
 				return { ownProject: true };
 			} else {

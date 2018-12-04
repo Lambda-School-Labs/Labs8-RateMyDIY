@@ -54,7 +54,7 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 			`\nUser ${user_id} attempting to add a review to project ${project_id} with rating = ${rating}, text = "${text}"\n...`
 		);
 		db.addReview(review)
-			.then(({ review_id, ownProject, alreadyReviewed }) => {
+			.then(({ review_id, ownProject, alreadyReviewed, projectNotFound }) => {
 				if (ownProject) {
 					res.status(403).json({ error: `You can't review your own project.` });
 					console.log(
@@ -67,6 +67,9 @@ router.post('/', ensureLoggedIn, authorize, function(req, res, next) {
 					console.log(
 						`Rejected with error: "You've already reviewed this project.\n`
 					);
+				} else if (projectNotFound) {
+					res.status(404).json({ error: `Project not found.` });
+					console.log(`Rejected with error: "Project not found.\n`);
 				} else {
 					res.status(201).json(review_id);
 				}
