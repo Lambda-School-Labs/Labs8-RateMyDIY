@@ -34,12 +34,43 @@ const LandingPageContentWrapper = styled.div`
 `;
 const LandingPageWrapper = styled.div`
 	width: 100%;
-
 	@media (max-width: 500px) {
 		width: 100vw;
 	}
 `;
 
+const imgUrl =
+	'http://talebgroup.wwwnlssr4.supercp.com/wp-content/uploads/2018/01/carpentary-3-1-1024x648.jpg';
+
+const HeroImageContainer = styled.div`
+	  width: 100%;
+	height: 560px;
+	  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url(${imgUrl});
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  background-position: bottom;
+`;
+
+const HeroSearchContainer = styled.div`
+	width: 60%;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const HeroTitle = styled.h1`
+	text-align: center;
+	font-weight: bolder;
+	color: white;
+	font-size: 32px;
+	margin-bottom: 30px;
+`;
 class LandingPage extends Component {
 	constructor() {
 		super();
@@ -106,12 +137,17 @@ class LandingPage extends Component {
 	render() {
 		return (
 			<LandingPageWrapper>
-				{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
+				<HeroImageContainer>
+					{window.innerWidth <= 500 ? <MenuDrawer /> : <Nav />}
+					<HeroSearchContainer>
+						<HeroTitle>Find a project to build</HeroTitle>
+						<SearchBar
+							handleChange={this.handleChange}
+							handleSearch={this.handleSearch}
+						/>
+					</HeroSearchContainer>
+				</HeroImageContainer>
 				<LandingPageContentWrapper>
-					<SearchBar
-						handleChange={this.handleChange}
-						handleSearch={this.handleSearch}
-					/>
 					{this.state.toggleLogInPopUp ? (
 						<LogInPopUp
 							searchWithoutLogin={this.searchWithoutLogin}
