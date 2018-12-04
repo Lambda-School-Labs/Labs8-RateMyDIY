@@ -9,12 +9,12 @@ const usersDB = require('../models/usersModel');
 
 const authenticate = require('../config/authMiddleware');
 
-router.get('/user', function (req, res, next) {
+router.get('/user', function(req, res, next) {
 	res.status(200).json(req.cookies);
 });
 
 router.post('/change', function(req, res, next) {
-	console.log(req.user.profile)
+	console.log(req.user.profile);
 	const sub = req.user.profile._json.sub;
 	const auth_id = sub.split('|')[1];
 	const { username } = req.body;
@@ -33,7 +33,7 @@ router.post('/change', function(req, res, next) {
 				usersDB
 					.addUser(user)
 					.then(dbRes => {
-						console.log('DB SUCCESS');
+						console.log(`\nUser ${username} signed up!\n`);
 						res.status(200).json({ message: 'Username has been set' });
 					})
 					.catch(dbErr => {
