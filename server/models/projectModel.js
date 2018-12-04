@@ -58,7 +58,7 @@ function addProject({ categories, ...project }) {
 	return db('projects')
 		.insert(project, 'project_id')
 		.then(([project_id]) => {
-			if ((project_id, categories.length)) {
+			if (project_id && categories.length) {
 				return db
 					.transaction(trx => {
 						return Promise.map(categories, category_id => {
@@ -109,12 +109,82 @@ function addProject({ categories, ...project }) {
 // 		});
 // }
 
-function editProject(user_id, project_id, changes) {
+function editProject(user_id, project_id, { categories, ...changes }) {
+	// Update the project table
 	return db('projects')
 		.where({ user_id, project_id })
-		.returning('project_id')
-		.update(changes)
-		.then(ids => ids.length);
+		.update(changes, 'project_id')
+		.then(ids => {
+			const count = ids.length;
+			if (!count || (count && !categories.length)) {
+				// No project by that id or no categories associated with that project
+				return { count };
+			} else {
+				// Return the old categories
+				return db('project_categories')
+					.where({ project_id })
+					.select('category_id')
+					.then(project_categories => {
+						// Let's make that an array
+						const previous_categories = project_categories.map(
+							({ category_id }) => category_id
+						);
+						// Any new categories to add?
+						const toAdd = categories.filter(
+							category => !previous_categories.includes(category)
+						);
+						// Any old categories to remove?
+						const toRemove = previous_categories.filter(
+							category => !categories.includes(category)
+						);
+						if (toAdd.length || toRemove.length) {
+							// Update project_categories table
+							return db
+								.transaction(trx => {
+									return Promise.map(
+										toAdd.concat(toRemove),
+										(category_id, index) => {
+											const project_category = { project_id, category_id };
+											if (index < toAdd.length) {
+												console.log(
+													'Adding project_category',
+													project_category
+												);
+												return trx('project_categories').insert(
+													project_category
+												);
+											} else {
+												console.log(
+													'Removing project_category',
+													project_category
+												);
+												return trx('project_categories')
+													.where(project_category)
+													.del();
+											}
+										}
+									);
+								})
+								.then(categories_modified => {
+									// Return the number of categories changed
+									return categories_modified.length;
+								});
+						} else {
+							return 0;
+						}
+					})
+					.then(category_count => {
+						console.log(
+							`${category_count} categories modified for project ${project_id}`
+						);
+						return { count };
+					})
+					.catch(error => {
+						console.error(error);
+						return { count, failedToUpdateCategories: true };
+					});
+			}
+		});
 }
 
 function removeProject(user_id, project_id) {
