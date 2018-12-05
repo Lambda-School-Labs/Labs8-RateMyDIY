@@ -1,8 +1,9 @@
 // Dependencies
 import React, { Component } from 'react';
-
+import ModalImage from 'react-modal-image';
+import { Button } from 'reactstrap';
 // Components
-import {Fileupload} from '../../components';
+import { Fileupload } from '../../components';
 
 // Styles
 import styled from 'styled-components';
@@ -19,33 +20,43 @@ const SubmitInput = styled.input``;
 
 const ImgUrlInput = styled.div``;
 
-const Img = styled.img`
+const Img = styled(ModalImage)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: lightblue;
-	margin-bottom: 20px;
+	max-height: 600px;
+	max-width: 100%;
+	height: auto;
+	width: auto;
+	margin: 0 auto 12px auto;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
 	width: 100%;
 	background: lightblue;
 	padding: 10px 10px;
-	margin-bottom: 20px;
+	margin: 0 auto 20px auto;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const OtherButtonContainer = styled.div`
+const EditDeleteButtonContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: -12px auto 20px auto;
 `;
 
-const EditButton = styled.button``;
+const EditButton = styled(Button)`
+	display: flex;
+	width: auto;
+	margin: 0 auto 0 auto;
+`;
 
-const DeleteButton = styled.button``;
+const DeleteButton = styled(Button)`
+	display: flex;
+	width: auto;
+	margin: 0 auto 0 auto;
+`;
 
 class Post extends Component {
 	state = {};
@@ -146,26 +157,27 @@ class Post extends Component {
 						/>
 					</PostForm>
 				) : (
-					<React.Fragment>
-						{this.props.post.img_url && (
-							<Img
-								src={this.props.post.img_url}
-								alt={this.props.post.img_url}
-							/>
-						)}
-						{this.props.post.text && <Text>{this.props.post.text}</Text>}
-						{this.props.owner && (
-							<OtherButtonContainer>
-								<EditButton disabled={this.props.disabled}>
-									Edit Post
+								<React.Fragment>
+									{this.props.post.img_url && (
+										<Img
+											small={props.project.img_url}
+											large={props.project.img_url}
+											alt={props.project.project_name}
+										/>
+									)}
+									{this.props.post.text && <Text>{this.props.post.text}</Text>}
+									{this.props.owner && (
+										<EditDeleteButtonContainer>
+											<EditButton disabled={this.props.disabled}>
+												Edit Post
 								</EditButton>
-								<DeleteButton disabled={this.props.disabled}>
-									Delete Post
+											<DeleteButton disabled={this.props.disabled}>
+												Delete Post
 								</DeleteButton>
-							</OtherButtonContainer>
-						)}
-					</React.Fragment>
-				)}
+										</EditDeleteButtonContainer>
+									)}
+								</React.Fragment>
+							)}
 			</PostContainer>
 		);
 	}

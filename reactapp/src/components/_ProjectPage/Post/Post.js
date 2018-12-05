@@ -1,7 +1,8 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import ModalImage from 'react-modal-image';
+import { Button } from 'reactstrap';
 // Components
 import { ConfirmModal } from '../../../components';
 
@@ -11,35 +12,42 @@ import { deletePost } from '../../../actions';
 // Styles
 import styled from 'styled-components';
 
-const PostContainer = styled.div``;
+const PostContainer = styled.div`
+`;
 
-const Img = styled.img`
+const Img = styled(ModalImage)`
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
-	background: lightblue;
-	margin-bottom: 20px;
+	max-width: 100%;
+	height: auto;
+	width: auto;
+	margin: 0 auto 12px auto;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
-	width: 100%;
-	background: lightblue;
-	padding: 10px 10px;
-	margin-bottom: 20px;
+	width: 600px;
+	background: #E9DED4;
+	padding: 16px 16px 8px 16px;
+	margin: 0 0 24px 0;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const OtherButtonContainer = styled.div`
+const EditDeleteButtonContainer = styled.div`
+	width: 36%;
 	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: 8px 0 0 auto;
+	justify-content: space-between;
 `;
 
-const EditButton = styled.button``;
+const EditButton = styled(Button)`
+	display: flex;
+	margin: 0 auto 0 auto;
+`;
 
-const DeleteButton = styled.button``;
+const DeleteButton = styled(Button)`
+	display: flex;
+	margin: 0 auto 0 auto;
+`;
 
 const StatusMessage = styled.p``;
 
@@ -77,25 +85,31 @@ class Post extends Component {
 		return (
 			<PostContainer>
 				{this.props.post.img_url && (
-					<Img src={this.props.post.img_url} alt={this.props.post.img_url} />
+					<Img
+						small={this.props.post.img_url}
+						large={this.props.post.img_url}
+						alt={this.props.post.img_url}
+						hideZoom='true'
+					/>
 				)}
-				{this.props.post.text && <Text>{this.props.post.text}</Text>}
-				{this.props.owner && (
-					<OtherButtonContainer>
-						<EditButton
-							onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
-							disabled={this.props.disabled}
-						>
-							Edit Post
+				{this.props.post.text && <Text>{this.props.post.text}
+					{this.props.owner && (
+						<EditDeleteButtonContainer>
+							<EditButton
+								onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
+								disabled={this.props.disabled}
+							>
+								Edit Post
 						</EditButton>
-						<DeleteButton
-							onClick={this.deleteHandler}
-							disabled={this.props.disabled}
-						>
-							Delete Post
+							<DeleteButton
+								onClick={this.deleteHandler}
+								disabled={this.props.disabled}
+							>
+								Delete Post
 						</DeleteButton>
-					</OtherButtonContainer>
-				)}
+						</EditDeleteButtonContainer>
+					)}
+				</Text>}
 
 				{this.props.postToDelete && this.props.deletingPost && (
 					<StatusMessage small>Deleting post...</StatusMessage>

@@ -1,79 +1,122 @@
 // Dependencies
 import React from 'react';
-
+import ModalImage from 'react-modal-image'
+import { Button } from 'reactstrap';
 // Components
 import { StarCount } from '../../components';
 
 // Styles
 import styled from 'styled-components';
 
-const ProjectHeader = styled.div`
+const ProjectWrapper = styled.div`
 	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
 `;
 
-const ProjectName = styled.h2``;
+const ProjectContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+`;
 
-const ReviewsButton = styled.button``;
+const ProjectHeader = styled.div`
+	display: flex;
+	position: 50%;
+	margin-bottom: 20px;
+	flex-direction: column;
+`;
+
+const ProjectName = styled.h2`
+	display: flex;
+	font-size: 32px;
+	font-weight: bold;
+	width: auto;
+	padding: 10px 10px;
+	margin: 0 auto 24px auto;
+	text-align: center;
+`;
+
+// const Img = styled(ModalImage)`
+// 	display: flex;
+// 	max-height: 600px;
+// 	max-width: 100%;
+// 	height: auto;
+// 	width: auto;
+// 	background: #cceeee;
+// 	margin: 0 0 12px 0;
+// 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+// `;
 
 const Img = styled.img`
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 380px;
-	width: 100%;
+	max-height: 600px;
+	max-width: 100%;
+	height: auto;
+	width: auto;
 	background: #cceeee;
-	margin-bottom: 20px;
+	margin: 0 0 12px 0;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
-	width: 100%;
-	background: #cceeee;
-	padding: 10px 10px;
-	margin-bottom: 20px;
+	width: 600px;
+	background: #E9DED8;
+	padding: 16px 16px 8px 16px;
+	margin: 0 0 24px 0;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const EditButton = styled.button``;
-
-const DeleteButton = styled.button``;
-
-const ProjectContainer = styled.div``;
-
 const ProjectButtonContainer = styled.div`
+	width: 36%;
 	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: 8px 0 0 auto;
+	justify-content: space-between;
+`;
+
+const ReviewsButton = styled(Button)`
+	display: flex;
+`;
+
+const EditButton = styled(Button)`
+	display: flex;
+`;
+
+const DeleteButton = styled(Button)`
+	display: flex;
 `;
 
 const Project = props => {
 	return (
-		<ProjectContainer>
-			<ProjectHeader>
-				<ProjectName>{props.project.project_name}</ProjectName>
-				<StarCount rating={props.project.project_rating} />
-				<ReviewsButton disabled={props.disabled}>Reviews</ReviewsButton>
-			</ProjectHeader>
-			<Img
-				src={props.project.img_url}
-				alt={props.project.img_url || 'project image'}
-			/>
-			<Text>{props.project.text}</Text>
-			{props.owner && (
-				<ProjectButtonContainer>
-					<EditButton
-						onClick={() => props.willUpdateProject(true)}
-						disabled={props.disabled}
-					>
-						Edit Project
-					</EditButton>
-					<DeleteButton onClick={props.deleteHandler} disabled={props.disabled}>
-						Delete Project
+		<ProjectWrapper>
+			<ProjectContainer>
+				<ProjectHeader>
+					<ProjectName>{props.project.project_name}</ProjectName>
+					<StarCount rating={props.project.project_rating} />
+				</ProjectHeader>
+
+				<Img
+					small={props.project.img_url}
+					large={props.project.img_url}
+					alt={props.project.project_name}
+					src={props.project.img_url}
+				/>
+				<Text>{props.project.text}
+					{props.owner && (
+						<ProjectButtonContainer>
+							<ReviewsButton disabled={props.disabled}>View Reviews</ReviewsButton>
+							<EditButton
+								onClick={() => props.willUpdateProject(true)}
+								disabled={props.disabled}
+							>
+								Edit
+						</EditButton>
+							<DeleteButton color="danger" onClick={props.deleteHandler} disabled={props.disabled}>
+								Delete Project
 					</DeleteButton>
-				</ProjectButtonContainer>
-			)}
-		</ProjectContainer>
+						</ProjectButtonContainer>
+					)}
+				</Text>
+			</ProjectContainer>
+		</ProjectWrapper>
 	);
 };
 
