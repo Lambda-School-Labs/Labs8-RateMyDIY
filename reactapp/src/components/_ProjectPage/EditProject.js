@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+
 // Components
 import { StarCount, ConfirmModal } from '../../components';
 
@@ -19,10 +20,11 @@ const Img = styled.img`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 380px;
-	width: 100%;
+	height: 600px;
+	width: auto;
 	background: #cceeee;
-	margin-bottom: 20px;
+	margin: 0 auto 20px auto;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const TextInput = styled.input``;
@@ -76,7 +78,7 @@ class EditProject extends Component {
 			axios
 				.post(
 					process.env.REACT_APP_BACKEND ||
-						'http://localhost:5000/api/projects/image-upload',
+					'http://localhost:5000/api/projects/image-upload',
 					data,
 					{
 						headers: {
