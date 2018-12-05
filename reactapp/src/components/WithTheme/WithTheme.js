@@ -17,11 +17,15 @@ import PropTypes from 'prop-types';
 
 const muiTheme = createMuiTheme({
   palette: {
-    primary: '#4290CA', // shakespeare
-    main: '#5DB7D9', // viking
-    light: '#D5CDC2', // sisal
-    secondary: '#62554B', // soyabean
-    dark: '#263842', // pickledbluewood
+    primary: {
+        light: '#5DB7D9', // viking
+        main: '#4290CA', // shakespeare
+        dark: '#263842' // pickledbluewood
+    },
+    secondary: {
+        light: '#D5CDC2', // sisal
+        main: '#62554B', // soyabean
+    }
   },
 });
 

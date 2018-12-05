@@ -41,8 +41,8 @@ class App extends Component {
 
 	render() {
 		return (
+			<WithTheme>
 			<AppContainer>
-				<WithTheme>
 				{/* <h1>Navigation</h1> */}
 				{/* <ul>
           <li>
@@ -73,8 +73,8 @@ class App extends Component {
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
 				<Route path="/about" component={AboutTheTeam} />
-				</WithTheme>
 			</AppContainer>
+			</WithTheme>
 		);
 	}
 }
