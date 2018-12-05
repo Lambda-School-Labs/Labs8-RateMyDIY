@@ -11,7 +11,6 @@ import { getFeaturedProjects } from '../../../actions/landingPageActions';
 const FeaturedProjectsWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #fff;
 
 	@media (max-width: 500px) {
 		width: 100%;
@@ -33,6 +32,7 @@ const FeaturedProjectTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
 	margin: 10px 25px;
+	color: ${props => props.theme.dark}
 
 	@media (max-width: 500px) {
 		width: 80%;

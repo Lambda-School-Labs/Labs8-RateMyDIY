@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom'; // removed Link from impor
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../actions/index';
+import { ThemeProvider } from 'styled-components';
 
 // Components
 import {
@@ -20,6 +21,14 @@ import {
 	NewProject,
 	AboutTheTeam
 } from '../../components';
+
+const theme = {
+	primary: '#4290CA', // shakespeare
+	accent: '#5DB7D9', // viking
+	light: '#D5CDC2', // sisal
+	secondary: '#62554B', // soyabean
+	dark: '#263842', // pickledbluewood
+}
 
 //Styles
 const AppContainer = styled.div`
@@ -40,6 +49,7 @@ class App extends Component {
 
 	render() {
 		return (
+			<ThemeProvider theme={theme}>
 			<AppContainer>
 				{/* <h1>Navigation</h1> */}
 				{/* <ul>
@@ -72,6 +82,7 @@ class App extends Component {
 				<Route path="/newproject" component={NewProject} />
 				<Route path="/about" component={AboutTheTeam} />
 			</AppContainer>
+			</ThemeProvider>
 		);
 	}
 }
