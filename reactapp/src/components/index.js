@@ -54,3 +54,4 @@ export { default as AboutTheTeam } from './AboutTheTeam/AboutTheTeam';
 export { default as Footer } from './Footer/Footer';
 export { default as LogInPopUp } from './LogInPopUp/LogInPopUp';
 export { default as Header } from './Header/Header';
+export { default as WithTheme } from './WithTheme/WithTheme';

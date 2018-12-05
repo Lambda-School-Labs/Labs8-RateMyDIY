@@ -4,7 +4,7 @@ import { Route, withRouter } from 'react-router-dom'; // removed Link from impor
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../actions/index';
-import { ThemeProvider } from 'styled-components';
+import WithTheme from '../WithTheme/WithTheme';
 
 // Components
 import {
@@ -21,14 +21,6 @@ import {
 	NewProject,
 	AboutTheTeam
 } from '../../components';
-
-const theme = {
-	primary: '#4290CA', // shakespeare
-	accent: '#5DB7D9', // viking
-	light: '#D5CDC2', // sisal
-	secondary: '#62554B', // soyabean
-	dark: '#263842', // pickledbluewood
-}
 
 //Styles
 const AppContainer = styled.div`
@@ -49,8 +41,8 @@ class App extends Component {
 
 	render() {
 		return (
-			<ThemeProvider theme={theme}>
 			<AppContainer>
+				<WithTheme>
 				{/* <h1>Navigation</h1> */}
 				{/* <ul>
           <li>
@@ -81,8 +73,8 @@ class App extends Component {
 				<Route path="/project/:id" component={ProjectPage} />
 				<Route path="/newproject" component={NewProject} />
 				<Route path="/about" component={AboutTheTeam} />
+				</WithTheme>
 			</AppContainer>
-			</ThemeProvider>
 		);
 	}
 }

@@ -32,11 +32,14 @@ const LandingPageContentWrapper = styled.div`
   flex-direction: column;
   margin: 5% auto;
   width: 80%;
-  background-color: ${props => props.theme.accent}
+  background-color: ${props => {
+	  console.log('styledprops', props)
+	  }
+	}
 `;
 const LandingPageWrapper = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.accent}
+//   background-color: ${props => props.theme.accent}
   @media (max-width: 500px) {
     width: 100vw;
   }
@@ -142,7 +145,7 @@ class LandingPage extends Component {
 	};
 
 	render() {
-    console.log(this.props)
+    console.log('MUITHEME', this.props)
 		return (
 			<LandingPageWrapper>
 				<HeroImageContainer>
