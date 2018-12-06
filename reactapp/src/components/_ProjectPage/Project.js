@@ -53,8 +53,8 @@ const ImgContainer = styled.div`
 
 const Text = styled.p`
 	width: auto;
-	background: #E9DED8;
 	padding: 16px 16px 8px 16px;
+	font-size: 16px;
 `;
 
 const OptionsContainer = styled.div`
