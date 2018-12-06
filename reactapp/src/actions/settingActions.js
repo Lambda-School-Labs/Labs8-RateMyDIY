@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { loggedIn } from '../actions';
 axios.defaults.withCredentials = true;
 
 // get userInfo
@@ -27,6 +28,8 @@ export const getUsername = (username) => {
 				}
 			})
 
+			.then(() => dispatch(loggedIn()))
+
             .catch(error => {
                 console.log('error', error);
                 dispatch({ type: GET_USERNAME_ERROR, payload: error.response.data.error })
@@ -47,6 +50,8 @@ export const getProfilePic = (img_url) => {
 				console.log('success', data);
 				dispatch({ type: GOT_PROFILE_PIC, payload: data.success });
 			})
+
+			.then(() => dispatch(loggedIn()))
 
             .catch(({error}) => {
                 console.log('error', error);
