@@ -83,6 +83,7 @@ router.post('/editusername', function (req, res, next) {
 							})
 							.catch(editError => {
 								console.log('EDIT ERROR', editError);
+								res.status(500).json({ error: 'Please choose a different username' });
 							});
 					} else {
 						res.status(500).json({ error: 'Please choose a different username' });

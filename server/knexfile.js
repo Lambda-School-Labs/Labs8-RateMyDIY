@@ -2,7 +2,7 @@
 const dotenv = require('dotenv');
 
 const pg = require('pg');
-// pg.defaults.ssl = true;
+pg.defaults.ssl = true;
 
 dotenv.load();
 
