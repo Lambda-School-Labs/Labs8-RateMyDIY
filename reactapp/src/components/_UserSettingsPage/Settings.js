@@ -7,10 +7,51 @@ import axios from 'axios';
 
 import { Nav, Twillio } from '../../components';
 //Styles
-const SettingsContainer = styled.div`
+const SettingsPageContainer = styled.div`
     width: 100%;
     min-width: 550px;
-	background-color: ${props => props.theme.mui.palette.secondary.light};
+	background-color: ${props => props.theme.mui.palette.primary.main};
+`;
+
+const SettingsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 30px;
+    background-color: ${props => props.theme.mui.palette.primary.light}
+`;
+
+const CustomLabel = styled.label`
+    color: ${props => props.theme.mui.palette.primary.dark};
+`;
+
+const CustomFileInput = styled.input`
+    ::-webkit-file-upload-button {
+        background: ${props => props.theme.mui.palette.secondary.light}
+        color: ${props => props.theme.mui.palette.secondary.main}
+        padding: 1em;
+        border-radius: 20px;
+    }
+`;
+
+const ImgButton = styled.button`
+    background-color: white;
+    border: 1px solid ${props => props.theme.mui.palette.primary.main};
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.6rem;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+
+    &:hover {
+        background-color: ${props => props.theme.mui.palette.primary.main}
+        color: white;
+    }
 `;
 
 class UserSettings extends Component {
@@ -100,9 +141,26 @@ class UserSettings extends Component {
 
 	render() {
 		return (
-			<SettingsContainer>
+			<SettingsPageContainer>
 				<Nav />
-				<Twillio />
+                <SettingsContainer>
+				
+                <img src={this.props.userInfo.img_url} />
+				<form>
+                    <CustomLabel>
+					    <CustomFileInput type="file" onChange={this.singleFileChangedHandler} />
+					</CustomLabel>
+                    <div>
+						<ImgButton
+							onClick={this.singleFileUploadHandler}
+						>
+							Upload!
+						</ImgButton>
+					</div>
+				</form>
+                {this.props.img_url ? this.props.img_url : this.props.profilepic_error}
+
+                Current Username: {this.props.userInfo.username} {this.props.username_error ? this.props.username_error : null}
 				<form onSubmit={this.submitHandler}>
 					<input
 						type="text"
@@ -112,19 +170,10 @@ class UserSettings extends Component {
 					/>
 					<input type="submit" value="Change Username" />
 				</form>
-				Current Username: {this.props.userInfo.username} {this.props.username_error ? this.props.username_error : null}
-				<form>
-					<input type="file" onChange={this.singleFileChangedHandler} />
-					<div>
-						<button
-							onClick={this.singleFileUploadHandler}
-						>
-							Upload!
-						</button>
-					</div>
-				</form>
-				{this.props.img_url ? this.props.img_url : this.props.profilepic_error}
-			</SettingsContainer>
+                
+                <Twillio />
+                </SettingsContainer>
+			</SettingsPageContainer>
 		);
 	}
 }

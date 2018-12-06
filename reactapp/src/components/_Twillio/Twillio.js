@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const TwillioContainer = styled.div`
-	display: flex;
-	justify-content: center;
+	width: 20%;
+	background-color: blue;
 `;
 
 class Twillio extends Component {
