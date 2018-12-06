@@ -1,87 +1,79 @@
 // Dependencies
 import React from 'react';
-import ModalImage from 'react-modal-image'
+import ModalImage from 'react-modal-image';
 import { Button } from 'reactstrap';
 // Components
-import { StarCount } from '../../components';
+import StarRatings from 'react-star-ratings';
 
 // Styles
 import styled from 'styled-components';
 
 const ProjectWrapper = styled.div`
-	display: flex;
+	margin: 0 0 24px 0;
 `;
 
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	background: #E9DED8;
 	width: 100%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
-	margin-bottom: 20px;
 	flex-direction: column;
+	background: #E9DED8;
+	padding: 24px 24px 12px 24px;
 `;
 
 const ProjectName = styled.h2`
 	display: flex;
 	font-size: 32px;
 	font-weight: bold;
-	width: auto;
-	padding: 10px 10px;
-	margin: 0 auto 24px auto;
-	text-align: center;
 `;
 
-// const Img = styled(ModalImage)`
-// 	display: flex;
-// 	max-height: 600px;
-// 	max-width: 100%;
-// 	height: auto;
-// 	width: auto;
-// 	background: #cceeee;
-// 	margin: 0 0 12px 0;
-// 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-// `;
+const ProjectAuthor = styled.div`
+	margin: 0 0 0 2px;
+`;
 
-const Img = styled.img`
-	display: flex;
-	max-height: 600px;
-	max-width: 100%;
+const Img = styled(ModalImage)`
+  margin: 0 auto;
+	background: white;
+  width: auto;
+  height: auto;
+`;
+
+const ImgContainer = styled.div`
+  margin: auto;
+	max-width: 700px;
 	height: auto;
-	width: auto;
-	background: #cceeee;
-	margin: 0 0 12px 0;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
-	width: 600px;
+	width: auto;
 	background: #E9DED8;
 	padding: 16px 16px 8px 16px;
-	margin: 0 0 24px 0;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const ProjectButtonContainer = styled.div`
-	width: 36%;
+const OptionsContainer = styled.div`
 	display: flex;
 	margin: 8px 0 0 auto;
-	justify-content: space-between;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
 `;
 
-const ReviewsButton = styled(Button)`
-	display: flex;
+const ReviewsLink = styled.a`
+	margin-right: 8px;
 `;
 
-const EditButton = styled(Button)`
-	display: flex;
+const EditLink = styled.a`
+	margin-right: 8px;
 `;
 
-const DeleteButton = styled(Button)`
-	display: flex;
+const DeleteButton = styled.a`
+	
 `;
 
 const Project = props => {
@@ -90,29 +82,42 @@ const Project = props => {
 			<ProjectContainer>
 				<ProjectHeader>
 					<ProjectName>{props.project.project_name}</ProjectName>
-					<StarCount rating={props.project.project_rating} />
+					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+					{props.project.project_rating ?
+						<StarRatings
+							rating={props.project.project_rating}
+							starRatedColor="black"
+							starEmptyColor="grey"
+							// changeRating={this.changeRating}
+							starDimension="20px"
+							starSpacing="5px"
+							numberOfStars={5}
+						/> : null}
 				</ProjectHeader>
-
-				<Img
-					small={props.project.img_url}
-					large={props.project.img_url}
-					alt={props.project.project_name}
-					src={props.project.img_url}
-				/>
+				<ImgContainer>
+					<Img
+						small={props.project.img_url}
+						large={props.project.img_url}
+						alt={props.project.project_name}
+						src={props.project.img_url}
+					/>
+				</ImgContainer>
 				<Text>{props.project.text}
 					{props.owner && (
-						<ProjectButtonContainer>
-							<ReviewsButton disabled={props.disabled}>View Reviews</ReviewsButton>
-							<EditButton
+						<OptionsContainer>
+							<ReviewsLink disabled={props.disabled}>
+								reviews
+							</ReviewsLink>
+							<EditLink
 								onClick={() => props.willUpdateProject(true)}
 								disabled={props.disabled}
 							>
-								Edit
-						</EditButton>
+								edit
+						</EditLink>
 							<DeleteButton color="danger" onClick={props.deleteHandler} disabled={props.disabled}>
-								Delete Project
+								delete
 					</DeleteButton>
-						</ProjectButtonContainer>
+						</OptionsContainer>
 					)}
 				</Text>
 			</ProjectContainer>

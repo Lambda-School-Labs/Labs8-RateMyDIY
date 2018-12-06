@@ -13,40 +13,51 @@ import { deletePost } from '../../../actions';
 import styled from 'styled-components';
 
 const PostContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	background: #E9DED8;
+	width: 100%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin: 12px 0;
+	padding-top: 12px;
+`;
+
+const ImgTextContainer = styled.div`
+	background: #E9DED4;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Img = styled(ModalImage)`
-	display: flex;
-	max-width: 100%;
+  margin: 0 auto;
+	background: white;
+  width: auto;
+  height: auto;
+`;
+
+const ImgContainer = styled.div`
+  margin: auto;
+	max-width: 700px;
 	height: auto;
-	width: auto;
-	margin: 0 auto 12px auto;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
-	width: 600px;
-	background: #E9DED4;
+	width: auto;
 	padding: 16px 16px 8px 16px;
-	margin: 0 0 24px 0;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const EditDeleteButtonContainer = styled.div`
-	width: 36%;
+const OptionsContainer = styled.div`
 	display: flex;
 	margin: 8px 0 0 auto;
-	justify-content: space-between;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
 `;
 
-const EditButton = styled(Button)`
-	display: flex;
-	margin: 0 auto 0 auto;
+const EditLink = styled.a`
+	margin-right: 8px;
 `;
 
-const DeleteButton = styled(Button)`
-	display: flex;
-	margin: 0 auto 0 auto;
+const DeleteLink = styled.a`
+	margin-right: 8px;
 `;
 
 const StatusMessage = styled.p``;
@@ -84,43 +95,48 @@ class Post extends Component {
 	render() {
 		return (
 			<PostContainer>
-				{this.props.post.img_url && (
-					<Img
-						small={this.props.post.img_url}
-						large={this.props.post.img_url}
-						alt={this.props.post.img_url}
-						hideZoom='true'
-					/>
-				)}
-				{this.props.post.text && <Text>{this.props.post.text}
-					{this.props.owner && (
-						<EditDeleteButtonContainer>
-							<EditButton
-								onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
-								disabled={this.props.disabled}
-							>
-								Edit Post
-						</EditButton>
-							<DeleteButton
-								onClick={this.deleteHandler}
-								disabled={this.props.disabled}
-							>
-								Delete Post
-						</DeleteButton>
-						</EditDeleteButtonContainer>
+				<ImgTextContainer>
+					{this.props.post.img_url && (
+
+						<ImgContainer>
+							<Img
+								small={this.props.post.img_url}
+								large={this.props.post.img_url}
+								alt={this.props.post.img_url}
+								hideZoom='true'
+							/>
+						</ImgContainer>
 					)}
-				</Text>}
+					{this.props.post.text && <Text>{this.props.post.text}
+						{this.props.owner && (
+							<OptionsContainer>
+								<EditLink
+									onClick={() => this.props.willUpdatePost(this.props.post.post_id)}
+									disabled={this.props.disabled}
+								>
+									edit
+						</EditLink>
+								<DeleteLink
+									onClick={this.deleteHandler}
+									disabled={this.props.disabled}
+								>
+									delete
+						</DeleteLink>
+							</OptionsContainer>
+						)}
+					</Text>}
 
-				{this.props.postToDelete && this.props.deletingPost && (
-					<StatusMessage small>Deleting post...</StatusMessage>
-				)}
-				{this.props.postToDelete && this.props.deletingPostError && (
-					<StatusMessage small error>
-						{this.props.deletingPostError}
-					</StatusMessage>
-				)}
+					{this.props.postToDelete && this.props.deletingPost && (
+						<StatusMessage small>Deleting post...</StatusMessage>
+					)}
+					{this.props.postToDelete && this.props.deletingPostError && (
+						<StatusMessage small error>
+							{this.props.deletingPostError}
+						</StatusMessage>
+					)}
 
-				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+				</ImgTextContainer>
 			</PostContainer>
 		);
 	}

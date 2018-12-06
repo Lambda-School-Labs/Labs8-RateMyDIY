@@ -8,7 +8,8 @@ import { Fileupload } from '../../components';
 // Styles
 import styled from 'styled-components';
 
-const PostContainer = styled.div``;
+const PostContainer = styled.div`
+`;
 
 const PostForm = styled.form``;
 
@@ -21,15 +22,16 @@ const SubmitInput = styled.input``;
 const ImgUrlInput = styled.div``;
 
 const Img = styled(ModalImage)`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	max-height: 600px;
-	max-width: 100%;
+  margin: 0 auto;
+	background: white;
+  width: auto;
+  height: auto;
+`;
+
+const ImgContainer = styled.div`
+  margin: auto;
+	width: 700px;
 	height: auto;
-	width: auto;
-	margin: 0 auto 12px auto;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
 const Text = styled.p`
@@ -159,11 +161,13 @@ class Post extends Component {
 				) : (
 								<React.Fragment>
 									{this.props.post.img_url && (
-										<Img
-											small={props.project.img_url}
-											large={props.project.img_url}
-											alt={props.project.project_name}
-										/>
+										<ImgContainer>
+											<Img
+												small={props.project.img_url}
+												large={props.project.img_url}
+												alt={props.project.project_name}
+											/>
+										</ImgContainer>
 									)}
 									{this.props.post.text && <Text>{this.props.post.text}</Text>}
 									{this.props.owner && (
