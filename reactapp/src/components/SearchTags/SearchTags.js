@@ -11,21 +11,26 @@ const Container = styled.div`
 const SuggestedCategories = styled.a`
 	font-size: 14px;
 	color: white;
-	margin: 0 5px;
-	text-decoration: underline;
+	margin: 0 3px;
+
+	&:hover {
+		background-color: transparent;
+		color: white;
+		text-decoration: underline;
+	}
 `;
 
-const SuggestedSearch = props => {
+const SearchTags = props => {
 	return (
 		<Container>
 			<span>Suggested:</span>{' '}
-			{props.categories.map(category => (
-				<SuggestedCategories href={`/search?query=${category}`}>
-					{category + ', '}
+			{props.tags.map(tag => (
+				<SuggestedCategories href={`/search?query=${tag}`}>
+					{tag + ', '}
 				</SuggestedCategories>
 			))}
 		</Container>
 	);
 };
 
-export default SuggestedSearch;
+export default SearchTags;

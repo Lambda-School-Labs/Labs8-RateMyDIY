@@ -23,7 +23,7 @@ import {
 	Twillio,
 	Footer,
 	LogInPopUp,
-	SuggestedSearch
+	SearchTags
 } from '../../components';
 
 // styled-components
@@ -150,7 +150,7 @@ class LandingPage extends Component {
 							handleChange={this.handleChange}
 							handleSearch={this.handleSearch}
 						/>
-						<SuggestedSearch categories={['carpentry', 'home', 'garden']} />
+						<SearchTags tags={['carpentry', 'home', 'garden']} />
 					</HeroSearchContainer>
 				</HeroImageContainer>
 				<LandingPageContentWrapper>

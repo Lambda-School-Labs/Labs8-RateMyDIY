@@ -56,6 +56,4 @@ export { default as Footer } from './Footer/Footer';
 export { default as LogInPopUp } from './LogInPopUp/LogInPopUp';
 export { default as Header } from './Header/Header';
 export { default as WithTheme } from './WithTheme/WithTheme';
-export {
-	default as SuggestedSearch
-} from './SuggestedSearch/SuggestedSearchBar';
+export { default as SearchTags } from './SearchTags/SearchTags';
