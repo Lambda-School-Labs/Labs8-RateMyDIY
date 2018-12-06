@@ -2,20 +2,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getUsername, getProfilePic } from '../../../actions/settingActions';
+import { getUsername, getProfilePic } from '../../actions/settingActions';
 import axios from 'axios';
 
-import { Nav, Twillio } from '../../../components';
+import { Nav, Twillio } from '../../components';
 //Styles
 const SettingsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	min-width: 550px;
-	width: 84%;
-	background: #bbb;
+    width: 100%;
+    min-width: 550px;
+	background-color: ${props => props.theme.mui.palette.secondary.light};
 `;
 
-class UserSettingSettings extends Component {
+class UserSettings extends Component {
 	state = {
 		username: '',
 		img_url: null
@@ -144,4 +142,4 @@ const mapStateToProps = state => ({
 export default connect(
 	mapStateToProps,
 	{ getUsername, getProfilePic }
-)(UserSettingSettings);
+)(UserSettings);
