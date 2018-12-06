@@ -26,13 +26,8 @@ const Img = styled.img`
 	margin: 0 auto 20px auto;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
-const ChooseFileButtonHidden = styled.input`
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+const HiddenInputFileForm = styled.input`
+	display: none;
 `;
 
 const FileLabel = styled.label`
@@ -72,7 +67,8 @@ class EditProject extends Component {
 	state = {
 		project_name: '',
 		img_url: null,
-		text: ''
+		text: '',
+		selectedFile: null
 	};
 
 	singleFileChangedHandler = event => {
@@ -95,7 +91,12 @@ class EditProject extends Component {
 				.post(
 					process.env.REACT_APP_BACKEND ||
 					'http://localhost:5000/api/projects/image-upload',
-					data,
+					data, {
+						onUploadProgress: progressEvent => {
+							// display progress percentage in console 
+							console.log('Upload Progress: ' + Math.round((progressEvent.loaded / progressEvent.total) * 100) + '%')
+						}
+					},
 					{
 						headers: {
 							accept: 'application/json',
@@ -212,8 +213,13 @@ class EditProject extends Component {
 					alt={this.props.project.img_url || 'project image'}
 				/>
 				<form>
-					<ChooseFileButtonHidden type="file" name="file" onChange={this.singleFileChangedHandler} />
-					<FileLabel for="file">Choose a file</FileLabel>
+					<HiddenInputFileForm
+						type="file"
+						name="file"
+						onChange={this.singleFileChangedHandler}
+						ref={fileInput => this.fileInput = fileInput} />
+					{/* <FileLabel for="file">Choose a file</FileLabel> */}
+					<button onClick={() => this.fileInput.click()}>{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}</button>
 					<div className="mt-5">
 						<button
 							className="btn btn-info"
