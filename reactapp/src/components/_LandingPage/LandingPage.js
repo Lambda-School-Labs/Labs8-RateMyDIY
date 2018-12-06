@@ -150,7 +150,7 @@ class LandingPage extends Component {
 							handleChange={this.handleChange}
 							handleSearch={this.handleSearch}
 						/>
-						<SearchTags tags={['carpentry', 'home', 'garden']} />
+						<SearchTags tags={['carpentry', 'home', 'garden', 'tech']} />
 					</HeroSearchContainer>
 				</HeroImageContainer>
 				<LandingPageContentWrapper>

@@ -24,9 +24,10 @@ const SearchTags = props => {
 	return (
 		<Container>
 			<span>Suggested:</span>{' '}
-			{props.tags.map(tag => (
+			{props.tags.map((tag, index) => (
 				<SuggestedCategories href={`/search?query=${tag}`}>
-					{tag + ', '}
+					{tag}
+					{props.tags.length > index + 1 ? ', ' : ''}
 				</SuggestedCategories>
 			))}
 		</Container>
