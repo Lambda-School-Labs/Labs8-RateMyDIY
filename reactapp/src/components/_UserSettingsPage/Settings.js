@@ -23,20 +23,58 @@ const SettingsContainer = styled.div`
     background-color: ${props => props.theme.mui.palette.primary.light}
 `;
 
-const CustomLabel = styled.label`
-    color: ${props => props.theme.mui.palette.primary.dark};
+const ProfileImgHolder = styled.div`
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
 `;
 
-const CustomFileInput = styled.input`
-    ::-webkit-file-upload-button {
-        background: ${props => props.theme.mui.palette.secondary.light}
-        color: ${props => props.theme.mui.palette.secondary.main}
-        padding: 1em;
-        border-radius: 20px;
+const ProfileImg = styled.img`
+    width: 100%;
+    height: 100%;
+`;
+
+const ProfileForm = styled.form`
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    height: 100%;
+    margin: 3% 0%;
+`;
+
+const UsernameHeader = styled.h1`
+    color: ${props => props.theme.mui.palette.secondary.main};
+`;
+
+// const CustomFileInput = styled.input`
+//     // ::-webkit-file-upload-button {
+//     //     background: ${props => props.theme.mui.palette.secondary.light}
+//     //     color: ${props => props.theme.mui.palette.secondary.main}
+//     //     padding: 1em;
+//     //     border-radius: 20px;
+//     // }
+//     display: none;
+// `;
+
+const FileButton = styled.label`
+    background-color: white;
+    border: 1px solid ${props => props.theme.mui.palette.primary.main};
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.6rem;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+
+    &:hover {
+        background-color: ${props => props.theme.mui.palette.primary.main}
+        color: white;
     }
 `;
 
-const ImgButton = styled.button`
+const UploadButton = styled.button`
     background-color: white;
     border: 1px solid ${props => props.theme.mui.palette.primary.main};
     border-radius: 5px;
@@ -144,23 +182,25 @@ class UserSettings extends Component {
 			<SettingsPageContainer>
 				<Nav />
                 <SettingsContainer>
-				
-                <img src={this.props.userInfo.img_url} />
-				<form>
-                    <CustomLabel>
-					    <CustomFileInput type="file" onChange={this.singleFileChangedHandler} />
-					</CustomLabel>
+				<ProfileImgHolder>
+                    <ProfileImg src={this.props.userInfo.img_url} />
+                </ProfileImgHolder>
+				<ProfileForm>
                     <div>
-						<ImgButton
+                    <FileButton for='fileupload'>Choose File</FileButton>
+					<input id='fileupload' type="file" style={{display: 'none'}} onChange={this.singleFileChangedHandler} />
+                    </div>
+                    <div>
+						<UploadButton
 							onClick={this.singleFileUploadHandler}
 						>
 							Upload!
-						</ImgButton>
+						</UploadButton>
 					</div>
-				</form>
+				</ProfileForm>
                 {this.props.img_url ? this.props.img_url : this.props.profilepic_error}
 
-                Current Username: {this.props.userInfo.username} {this.props.username_error ? this.props.username_error : null}
+                <UsernameHeader>{this.props.userInfo.username}</UsernameHeader> 
 				<form onSubmit={this.submitHandler}>
 					<input
 						type="text"
@@ -170,6 +210,7 @@ class UserSettings extends Component {
 					/>
 					<input type="submit" value="Change Username" />
 				</form>
+                {this.props.username_error ? this.props.username_error : null}
                 
                 <Twillio />
                 </SettingsContainer>
