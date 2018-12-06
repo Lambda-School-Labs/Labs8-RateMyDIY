@@ -18,8 +18,7 @@ const PostContainer = styled.div`
 	background: #E9DED8;
 	width: 100%;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-	margin: 12px 0;
-	padding-top: 12px;
+	margin: 8px 0;
 `;
 
 const ImgTextContainer = styled.div`
@@ -35,6 +34,7 @@ const Img = styled(ModalImage)`
 `;
 
 const ImgContainer = styled.div`
+	padding-top: 12px;
   margin: auto;
 	max-width: 700px;
 	height: auto;
@@ -43,6 +43,7 @@ const ImgContainer = styled.div`
 const Text = styled.p`
 	width: auto;
 	padding: 16px 16px 8px 16px;
+	font-size: 16px;
 `;
 
 const OptionsContainer = styled.div`
