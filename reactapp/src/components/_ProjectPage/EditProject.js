@@ -213,12 +213,12 @@ class EditProject extends Component {
 					alt={this.props.project.img_url || 'project image'}
 				/>
 				<form>
+					{/* HiddenInputFileForm is hidden */}
 					<HiddenInputFileForm
 						type="file"
 						name="file"
 						onChange={this.singleFileChangedHandler}
 						ref={fileInput => this.fileInput = fileInput} />
-					{/* <FileLabel for="file">Choose a file</FileLabel> */}
 					<button onClick={() => this.fileInput.click()}>{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}</button>
 					<div className="mt-5">
 						<button
