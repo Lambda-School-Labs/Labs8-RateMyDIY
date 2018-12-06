@@ -42,7 +42,7 @@ router.post('/myreviews', function(req, res, next) {
 		});
 });
 
-router.post('/change', function (req, res, next) {
+router.post('/editusername', function (req, res, next) {
 	const sub = req.user.profile._json.sub;
 	const auth_id = sub.split('|')[1];
 	const { username } = req.body;
@@ -102,6 +102,22 @@ router.post('/change', function (req, res, next) {
 		console.log('tokenError', tokenError)
 		res.status(500).json(tokenError);
 	})
+});
+
+router.post('/editprofilepic', function (req, res, next) {
+	const sub = req.user.profile._json.sub;
+	const auth_id = sub.split('|')[1];
+	const { img_url } = req.body;
+	usersDB
+		.editProfilePic(auth_id, img_url)
+		.then(picSuccess => {
+			console.log('PIC SUCCESS', picSuccess);
+			res.status(200).json({ success: 'Profile picture changed' });
+		})
+		.catch(picError => {
+			console.log('PIC ERROR', picError);
+			res.status(500).json({ error: 'Error changing profile picture' });
+		});
 });
 
 module.exports = router;

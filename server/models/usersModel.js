@@ -5,7 +5,8 @@ module.exports = {
 	getUserProjects,
 	getUserReviews,
 	checkUsernames,
-	editUsername
+	editUsername,
+	editProfilePic
 };
 
 function addUser(user) {
@@ -34,4 +35,10 @@ function editUsername(auth_id, username) {
 	return db('users')
 		.where({ auth_id: auth_id })
 		.update({ username: username });
+}
+
+function editProfilePic(auth_id, img_url) {
+	return db('users')
+		.where({ auth_id: auth_id })
+		.update({ img_url: img_url });
 }

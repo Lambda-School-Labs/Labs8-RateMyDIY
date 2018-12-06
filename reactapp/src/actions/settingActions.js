@@ -5,6 +5,9 @@ axios.defaults.withCredentials = true;
 export const GETTING_USERNAME = 'GETTING_USERNAME';
 export const GOT_USERNAME = 'GOT_USERNAME';
 export const GET_USERNAME_ERROR = 'GET_USERNAME_ERROR';
+export const GETTING_PROFILE_PIC = 'GETTING_PROFILE_PIC';
+export const GOT_PROFILE_PIC = 'GOT_PROFILE_PIC';
+export const GET_PROFILE_PIC_ERROR = 'GET_PROFILE_PIC_ERROR';
 
 export const getUsername = (username) => {
 	return dispatch => {
@@ -12,7 +15,7 @@ export const getUsername = (username) => {
 
 		axios
 			.post(
-				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/change`, { username: username }
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/editusername`, { username: username }
 			)
 
 			.then(({data}) => {
@@ -30,3 +33,24 @@ export const getUsername = (username) => {
             });
 	};
 };
+
+export const getProfilePic = (img_url) => {
+	return dispatch => {
+		dispatch({ type: GETTING_PROFILE_PIC });
+
+		axios
+			.post(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/editprofilepic`, { img_url: img_url }
+			)
+
+			.then(({data}) => {
+				console.log('success', data);
+				dispatch({ type: GOT_PROFILE_PIC, payload: data.success });
+			})
+
+            .catch(({error}) => {
+                console.log('error', error);
+                dispatch({ type: GET_PROFILE_PIC_ERROR, payload: error })
+            });
+	}
+}

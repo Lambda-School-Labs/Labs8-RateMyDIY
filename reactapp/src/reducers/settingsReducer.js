@@ -1,13 +1,19 @@
 import {
   GETTING_USERNAME,
   GOT_USERNAME,
-  GET_USERNAME_ERROR
+  GET_USERNAME_ERROR,
+  GETTING_PROFILE_PIC,
+  GOT_PROFILE_PIC,
+  GET_PROFILE_PIC_ERROR
 } from "../actions";
 
 const initialState = {
   gettingUsername: false,
   username: '',
-  error: null
+  username_error: null,
+  gettingProfilePic: false,
+  img_url: null,
+  profilepic_error: null
 };
 
 const settingsReducer = (state = initialState, action) => {
@@ -27,8 +33,25 @@ const settingsReducer = (state = initialState, action) => {
       return {
         ...state,
         gettingUserInfo: false,
-        error: action.payload
+        username_error: action.payload
       };
+
+    case GETTING_PROFILE_PIC:
+      return { ...state, gettingProfile: true };
+
+    case GOT_PROFILE_PIC:
+      return {
+        ...state,
+        gettingProfile: false,
+        img_url: action.payload
+      }
+    
+    case GET_PROFILE_PIC_ERROR:
+      return {
+        ...state,
+        gettingProfile: false,
+        profilepic_error: action.payload
+      }
 
     default:
       return state;
