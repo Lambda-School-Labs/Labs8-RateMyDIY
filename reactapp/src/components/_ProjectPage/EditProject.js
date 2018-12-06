@@ -26,6 +26,22 @@ const Img = styled.img`
 	margin: 0 auto 20px auto;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
+const ChooseFileButtonHidden = styled.input`
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+`;
+
+const FileLabel = styled.label`
+	  font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+`;
 
 const TextInput = styled.input``;
 
@@ -196,7 +212,8 @@ class EditProject extends Component {
 					alt={this.props.project.img_url || 'project image'}
 				/>
 				<form>
-					<input type="file" onChange={this.singleFileChangedHandler} />
+					<ChooseFileButtonHidden type="file" name="file" onChange={this.singleFileChangedHandler} />
+					<FileLabel for="file">Choose a file</FileLabel>
 					<div className="mt-5">
 						<button
 							className="btn btn-info"
