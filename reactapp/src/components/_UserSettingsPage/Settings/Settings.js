@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { getEmail, updateEmail } from '../../../actions/settingActions';
+import { getUsername } from '../../../actions/settingActions';
 
 import { Nav, Twillio } from '../../../components';
 //Styles
@@ -16,19 +16,14 @@ const SettingsContainer = styled.div`
 
 class UserSettingSettings extends Component {
 	state = {
-		email: 'test@email.com',
-		fetching: ''
+		username: ''
 	};
-
-	componentDidMount() {
-		this.props.getEmail();
-	}
 
 	submitHandler = event => {
 		event.preventDefault();
-		this.props.updateEmail(this.state);
+		this.props.getUsername(this.state.username);
 		this.setState({
-			email: ''
+			username: ''
 		});
 	};
 
@@ -44,24 +39,26 @@ class UserSettingSettings extends Component {
 				<form onSubmit={this.submitHandler}>
 					<input
 						type="text"
-						value={this.state.email}
-						name="email"
+						value={this.state.username}
+						name="username"
 						onChange={this.changeHandler}
 					/>
-					<input type="submit" value="Change Email" />
+					<input type="submit" value="Change Username" />
 				</form>
-				Current Email: {this.state.email}
+				Current Username: {this.props.userInfo.username}
 			</SettingsContainer>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-	user: state.settingsReducer.users,
-	error: state.settingsReducer.error
+	gettingUsername: state.settingsReducer.gettingUsername,
+	username: state.settingsReducer.username,
+	error: state.settingsReducer.error,
+	userInfo: state.loggedInReducer.userInfo
 });
 
 export default connect(
 	mapStateToProps,
-	{ getEmail, updateEmail }
+	{ getUsername }
 )(UserSettingSettings);

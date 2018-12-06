@@ -2,7 +2,7 @@
 const dotenv = require('dotenv');
 
 const pg = require('pg');
-pg.defaults.ssl = true;
+// pg.defaults.ssl = true;
 
 dotenv.load();
 
@@ -12,26 +12,22 @@ const dbPassword = process.env.DB_PASSWORD;
 const dbName = process.env.DB_NAME;
 module.exports = {
 	development: {
-		client: 'mssql',
+		// client: 'mssql',
 		// connection: {
-		// 	host: 'localhost\\SQLEXPRESS',
-		// 	user: 'sa',
-		// 	password: 'admin',
-		// 	database: 'diydb',
+		// 	host: 'localhost',
+		// 	user: 'SA',
+		// 	password: 'SqlServer2017',
+		// 	database: 'TutorialDB',
 		// 	options: {
 		// 		port: 1433,
 		// 		encrypt: true
 		// 	}
 		// },
+		client: 'pg',
 		connection: {
 			host: 'localhost',
-			user: 'SA',
-			password: 'SqlServer2017',
-			database: 'TutorialDB',
-			options: {
-				port: 1433,
-				encrypt: true
-			}
+			user: 'postgres',
+			database: 'postgres'
 		},
 		useNullAsDefault: true,
 		migrations: {

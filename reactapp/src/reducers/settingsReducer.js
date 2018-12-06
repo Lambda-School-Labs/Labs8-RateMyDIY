@@ -1,54 +1,38 @@
 import {
-  GET_EMAIL,
-  GET_EMAIL_ERROR,
-  GET_EMAIL_SUCCESS,
-  UPDATE_EMAIL,
-  UPDATE_EMAIL_ERROR,
-  UPDATE_EMAIL_SUCCESS
-} from '../actions';
+  GETTING_USERNAME,
+  GOT_USERNAME,
+  GET_USERNAME_ERROR
+} from "../actions";
 
-const initialState = { email: '', error: '' }
+const initialState = {
+  gettingUsername: false,
+  username: '',
+  error: null
+};
 
 const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
+    // get userInfo
+    case GETTING_USERNAME:
+      return { ...state, gettingUsername: true };
 
-    case GET_EMAIL:
-      return { ...state, fetching: true };
-
-    case GET_EMAIL_SUCCESS:
+    case GOT_USERNAME:
       return {
         ...state,
-        users: action.payload,
-        fetching: false
+        gettingUsername: false,
+        username: action.payload
       };
 
-    case GET_EMAIL_ERROR:
+    case GET_USERNAME_ERROR:
       return {
         ...state,
-        fetching: false,
-        error: `${action.payload}`
-      };
-
-    case UPDATE_EMAIL:
-      return { ...state, fetching: true };
-
-    case UPDATE_EMAIL_SUCCESS:
-      return {
-        ...state,
-        users: action.payload,
-        fetching: false
-      };
-
-    case UPDATE_EMAIL_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        error: `${action.payload}`
+        gettingUserInfo: false,
+        error: action.payload
       };
 
     default:
       return state;
   }
-}
+};
 
-export default settingsReducer
+export default settingsReducer;
