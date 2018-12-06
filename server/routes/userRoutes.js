@@ -69,8 +69,7 @@ router.post('/change', function (req, res, next) {
 		.then(changeSuccess => {
 			console.log('USERNAME CHANGED', changeSuccess);
 			// res.status(200).json(changeSuccess.data);
-			const originalUsername = changeSuccess.data.data.nickname;
-			const editedUsername = changeSuccess.data.data.username;
+			const editedUsername = changeSuccess.data.username;
 			usersDB
 				.checkUsernames(editedUsername)
 				.then(usernameList => {
@@ -86,12 +85,12 @@ router.post('/change', function (req, res, next) {
 								console.log('EDIT ERROR', editError);
 							});
 					} else {
-						res.status(500).json({ error: originalUsername});
+						res.status(500).json({ error: 'Please choose a different username' });
 					}
 				})
 				.catch(usernameListError => {
 					console.log('usernameListError', usernameListError);
-					res.status(500).json({ error: originalUsername });
+					res.status(500).json({ error: 'Please choose a different username' });
 				});
 		})
 		.catch(changeError => {

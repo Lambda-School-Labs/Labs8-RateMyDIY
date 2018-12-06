@@ -45,7 +45,7 @@ class UserSettingSettings extends Component {
 					/>
 					<input type="submit" value="Change Username" />
 				</form>
-				Current Username: {this.props.userInfo.username}
+				Current Username: {this.props.userInfo.username} {this.props.error ? this.props.error : null}
 			</SettingsContainer>
 		);
 	}

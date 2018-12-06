@@ -17,16 +17,16 @@ export const getUsername = (username) => {
 
 			.then(({data}) => {
 				console.log('success', data);
-				// if (data.username) {
-				// 	dispatch({ type: GOT_USERNAME, payload: data.username });
-				// } else {
-				// 	dispatch({ type: GET_USERNAME_ERROR, payload: data.nickname });
-				// }
+				if (data.success) {
+					dispatch({ type: GOT_USERNAME, payload: data.success });
+				} else {
+					dispatch({ type: GET_USERNAME_ERROR, payload: data.error });
+				}
 			})
 
             .catch(error => {
                 console.log('error', error);
-                dispatch({ type: GET_USERNAME_ERROR, payload: error.response.data })
+                dispatch({ type: GET_USERNAME_ERROR, payload: error.response.data.error })
             });
 	};
 };
