@@ -51,7 +51,7 @@ const Img = styled(ModalImage)`
   height: auto;
 `;
 
-const Text = styled.p`
+const TextContainer = styled.div`
 	width: auto;
 	padding: 16px 16px 8px 16px;
 	font-size: 16px;
@@ -102,7 +102,7 @@ const Project = props => {
 						src={props.project.img_url}
 					/>
 				</ImgContainer>
-				<Text>{props.project.text}
+				<TextContainer>{props.project.text}
 					{props.owner && (
 						<OptionsContainer>
 							<ReviewsLink disabled={props.disabled}>
@@ -119,7 +119,7 @@ const Project = props => {
 					</DeleteButton>
 						</OptionsContainer>
 					)}
-				</Text>
+				</TextContainer>
 			</ProjectContainer>
 		</ProjectWrapper>
 	);
