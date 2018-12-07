@@ -300,7 +300,7 @@ class UserSettings extends Component {
                 </ProfileImgHolder>
 				<ProfileForm>
                     <div>
-                    <FileButton for='fileupload'>Choose File</FileButton>
+                    <FileButton htmlFor='fileupload'>Choose File</FileButton>
 					<input id='fileupload' type="file" style={{display: 'none'}} onChange={this.singleFileChangedHandler} />
                     </div>
                     <div>
