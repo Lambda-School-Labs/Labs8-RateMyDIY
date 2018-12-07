@@ -136,14 +136,20 @@ class EditProject extends Component {
 		project_name: '',
 		img_url: null,
 		text: '',
-		selectedFile: null
+		selectedFile: null,
+		selectedFilePreview: null,
+		categories: []
+
 	};
 
 	singleFileChangedHandler = event => {
 		if (this.fileInput) {
 			this.setState({
-				selectedFile: event.target.files[0]
+				selectedFile: event.target.files[0],
+				selectedFilePreview: URL.createObjectURL(event.target.files[0])
 			});
+
+			console.log('Selected file!', this)
 		}
 	};
 
@@ -182,7 +188,7 @@ class EditProject extends Component {
 							if ('LIMIT_FILE_SIZE' === response.data.error.code) {
 								// this.ocShowAlert("Max size: 2MB", "red");
 							} else {
-								console.log(response.data.location);
+								// console.log(response.data.location);
 								// If not the given file type
 								// this.ocShowAlert(response.data.error, "red");
 							}
@@ -194,19 +200,19 @@ class EditProject extends Component {
 							this.setState({
 								img_url: photo
 							});
-							console.log('filedata', fileName);
+							// console.log('filedata', fileName);
 
-							console.log('photo', photo);
+							// console.log('photo', photo);
 
 							//   this.ocShowAlert("File Uploaded", "#3089cf");
 						}
 					} else {
-						console.log('error');
+						// console.log('error');
 					}
 				})
 				.catch(error => {
 					// If another error
-					console.log('error');
+					// console.log('error');
 				});
 		}
 	};
@@ -219,23 +225,24 @@ class EditProject extends Component {
 	// Submit changes
 	submitHandler = event => {
 		event.preventDefault();
-
-		this.props.updateProject(this.props.project.project_id, {
-			user_id: this.props.user_id,
-			project_name: this.state.project_name,
-			img_url: this.state.img_url,
-			text: this.state.text
-		});
+		this.props.updateProject(
+			this.props.project.project_id, {
+				user_id: this.props.user_id,
+				project_name: this.state.project_name,
+				img_url: this.state.img_url,
+				text: this.state.text,
+				categories: this.state.categories
+			});
 	};
 
 	// Discard changes (with confirmation prompt)
 	cancelHandler = event => {
 		event.preventDefault();
-
 		if (
 			this.state.project_name === this.props.project.project_name &&
 			this.state.img_url === this.props.project.img_url &&
-			this.state.text === this.props.project.text
+			this.state.text === this.props.project.text &&
+			this.state.selectedFile === null
 		) {
 			this.props.willUpdateProject(false);
 		} else {
@@ -281,10 +288,16 @@ class EditProject extends Component {
 					</ProjectHeader>
 					<ImgContainer>
 						<ImgOverlay src={addImageImg} onClick={() => this.fileInput.click()} />
-						<Img
-							alt={this.props.project.project_name}
-							src={this.props.project.img_url}
-						/>
+						{this.state.selectedFile ?
+							<Img
+								alt={this.props.project.project_name}
+								src={this.state.selectedFilePreview}
+							/> :
+							<Img
+								alt={this.props.project.project_name}
+								src={this.props.project.img_url}
+							/>
+						}
 					</ImgContainer>
 					<TextInputContainer>
 						<TextInput
@@ -304,16 +317,13 @@ class EditProject extends Component {
 						name="file"
 						onChange={this.singleFileChangedHandler}
 						ref={fileInput => this.fileInput = fileInput} />
-					{/* <button onClick={() => this.fileInput.click()}>
-						{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}
-					</button> */}
 					<OptionsContainer>
-						<CancelLink onClick={this.cancelHandler}>
-							cancel
-						</CancelLink>
 						<SubmitButton type="submit" value="Submit Changes">
 							submit
 						</SubmitButton>
+						<CancelLink onClick={this.cancelHandler}>
+							cancel
+						</CancelLink>
 						<UploadLink onClick={this.singleFileUploadHandler}>
 							upload image
 						</UploadLink>
