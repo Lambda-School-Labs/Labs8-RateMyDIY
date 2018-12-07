@@ -4,8 +4,35 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getUsername, getProfilePic } from '../../actions/settingActions';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
+import { compose } from 'redux';
 
 import { Nav, Twillio } from '../../components';
+
+const styles = theme => ({
+    paper: {
+      position: 'absolute',
+      width: theme.spacing.unit * 50,
+      height: '75%',
+      backgroundColor: theme.palette.primary.main,
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing.unit * 4,
+    //   marginLeft: 'auto',
+    //   marginRight: 'auto',
+    //   left: 0,
+    //   right: 0,
+      margin: 'auto',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      borderRadius: '5px'
+    },
+});
+
 //Styles
 const SettingsPageContainer = styled.div`
     width: 100%;
@@ -39,11 +66,7 @@ const ProfileForm = styled.form`
     justify-content: space-around;
     width: 30%;
     height: 100%;
-    margin: 3% 0%;
-`;
-
-const UsernameHeader = styled.h1`
-    color: ${props => props.theme.mui.palette.secondary.main};
+    margin: 2% 0%;
 `;
 
 // const CustomFileInput = styled.input`
@@ -58,7 +81,7 @@ const UsernameHeader = styled.h1`
 
 const FileButton = styled.label`
     background-color: white;
-    border: 1px solid ${props => props.theme.mui.palette.primary.main};
+    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
     border-radius: 5px;
     padding: 15px;
     text-align: center;
@@ -67,16 +90,17 @@ const FileButton = styled.label`
     font-size: 1.6rem;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+    outline: none;
 
     &:hover {
-        background-color: ${props => props.theme.mui.palette.primary.main}
+        background-color: ${props => props.theme.mui.palette.primary.dark}
         color: white;
     }
 `;
 
 const UploadButton = styled.button`
     background-color: white;
-    border: 1px solid ${props => props.theme.mui.palette.primary.main};
+    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
     border-radius: 5px;
     padding: 15px;
     text-align: center;
@@ -85,18 +109,91 @@ const UploadButton = styled.button`
     font-size: 1.6rem;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+    outline: none;
 
     &:hover {
-        background-color: ${props => props.theme.mui.palette.primary.main}
+        background-color: ${props => props.theme.mui.palette.primary.dark}
         color: white;
+    }
+`;
+
+const StatusMessage = styled.h2`
+    color: ${props => props.theme.mui.palette.secondary.main};
+    font-size: 2.5rem;
+    margin: 2% 0%;
+`;
+
+const UsernameContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 3%;
+    background-color: ${props => props.theme.mui.palette.secondary.light}
+    border-radius: 5px;
+`;
+
+const UsernameHeader = styled.h1`
+    align-self: center;
+    color: ${props => props.theme.mui.palette.secondary.main};
+    font-size: 4rem;
+`;
+
+const UsernameForm = styled.form`
+    display: flex;
+    flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+    padding: 12px 20px;
+    margin: 8px 0;
+
+    &:focus {
+        outline: none;
+    }
+`;
+
+const UsernameButton = styled.input`
+    background-color: white;
+    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.6rem;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    outline: none;
+
+    &:hover {
+        background-color: ${props => props.theme.mui.palette.primary.dark}
+        color: white;
+    }
+`;
+
+const TextButton = styled.p`
+    font-size: 1.6rem;
+    margin: 2% 0%;
+
+    &:hover {
+        cursor: pointer;
     }
 `;
 
 class UserSettings extends Component {
 	state = {
 		username: '',
-		img_url: null
-	};
+        img_url: null,
+        open: false
+    };
+    
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
 	singleFileChangedHandler = event => {
 		this.setState({
@@ -178,6 +275,7 @@ class UserSettings extends Component {
 	};
 
 	render() {
+        const { classes } = this.props;
 		return (
 			<SettingsPageContainer>
 				<Nav />
@@ -194,30 +292,46 @@ class UserSettings extends Component {
 						<UploadButton
 							onClick={this.singleFileUploadHandler}
 						>
-							Upload!
+							Upload
 						</UploadButton>
 					</div>
 				</ProfileForm>
-                {this.props.img_url ? this.props.img_url : this.props.profilepic_error}
+                <StatusMessage>{this.props.img_url ? this.props.img_url : this.props.profilepic_error}</StatusMessage>
 
+                <UsernameContainer>
                 <UsernameHeader>{this.props.userInfo.username}</UsernameHeader> 
-				<form onSubmit={this.submitHandler}>
-					<input
+				<UsernameForm onSubmit={this.submitHandler}>
+					<StyledInput
 						type="text"
 						value={this.state.username}
 						name="username"
 						onChange={this.changeHandler}
 					/>
-					<input type="submit" value="Change Username" />
-				</form>
-                {this.props.username_error ? this.props.username_error : null}
+					<UsernameButton type="submit" value="Change Username" />
+				</UsernameForm>
+                <StatusMessage>{this.props.username_error ? this.props.username_error : null}</StatusMessage>
+                </UsernameContainer>
                 
-                <Twillio />
+                <TextButton onClick={this.handleOpen}>Configure Text Nofications</TextButton>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                >
+                <div className={classes.paper}>
+                    <Twillio />
+                </div>
+                </Modal>
                 </SettingsContainer>
 			</SettingsPageContainer>
 		);
 	}
 }
+
+UserSettings.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
 
 const mapStateToProps = state => ({
 	gettingUsername: state.settingsReducer.gettingUsername,
@@ -229,7 +343,4 @@ const mapStateToProps = state => ({
 	userInfo: state.loggedInReducer.userInfo
 });
 
-export default connect(
-	mapStateToProps,
-	{ getUsername, getProfilePic }
-)(UserSettings);
+export default compose(connect(mapStateToProps, { getUsername, getProfilePic }), withStyles(styles))(UserSettings);
