@@ -38,17 +38,17 @@ const ProjectAuthor = styled.div`
 	margin: 0 0 0 2px;
 `;
 
+const ImgContainer = styled.div`
+  margin: auto;
+	max-width: 700px;
+	height: auto;
+`;
+
 const Img = styled(ModalImage)`
   margin: 0 auto;
 	background: white;
   width: auto;
   height: auto;
-`;
-
-const ImgContainer = styled.div`
-  margin: auto;
-	max-width: 700px;
-	height: auto;
 `;
 
 const Text = styled.p`
