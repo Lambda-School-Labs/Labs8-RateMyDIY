@@ -117,6 +117,14 @@ const UploadButton = styled.button`
     }
 `;
 
+const ProfileHeader = styled.h2`
+    width: 80%;
+    color: ${props => props.theme.mui.palette.secondary.main};
+    font-size: 2.5rem;
+    margin: 2% auto;
+    text-align: center;
+`;
+
 const StatusMessage = styled.h2`
     width: 80%;
     color: ${props => props.theme.mui.palette.secondary.main};
@@ -249,7 +257,11 @@ class UserSettings extends Component {
 
 							console.log('photo', photo);
 
-							this.props.getProfilePic(this.state.img_url);
+                            this.props.getProfilePic(this.state.img_url);
+                            
+                            this.setState({
+                                selectedFile: null
+                            });
 
 							//   this.ocShowAlert("File Uploaded", "#3089cf");
 						}
@@ -298,8 +310,8 @@ class UserSettings extends Component {
 						</UploadButton>
 					</div>
 				</ProfileForm>
+                {this.state.selectedFile ? <ProfileHeader>{this.state.selectedFile.name}</ProfileHeader> : null }
                 <StatusMessage>{this.props.img_url ? this.props.img_url : this.props.profilepic_error}</StatusMessage>
-
                 <UsernameContainer>
                 <UsernameHeader>{this.props.userInfo.username}</UsernameHeader> 
 				<UsernameForm onSubmit={this.submitHandler}>
