@@ -96,12 +96,12 @@ router.post('/editusername', function (req, res, next) {
 		})
 		.catch(changeError => {
 			console.log('USERNAME ERROR', changeError.response.data);
-			res.status(500).json(changeError.response.data);
+			res.status(200).json(changeError.response.data);
 		});
 	})
 	.catch(tokenError => {
-		console.log('tokenError', tokenError)
-		res.status(500).json(tokenError.response.data);
+		console.log('tokenError', tokenError.response.data)
+		res.status(200).json(tokenError.response.data);
 	})
 });
 

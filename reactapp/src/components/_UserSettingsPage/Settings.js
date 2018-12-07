@@ -118,9 +118,11 @@ const UploadButton = styled.button`
 `;
 
 const StatusMessage = styled.h2`
+    width: 80%;
     color: ${props => props.theme.mui.palette.secondary.main};
     font-size: 2.5rem;
-    margin: 2% 0%;
+    margin: 2% auto;
+    text-align: center;
 `;
 
 const UsernameContainer = styled.div`

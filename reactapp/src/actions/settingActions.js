@@ -22,9 +22,9 @@ export const getUsername = (username) => {
 			.then(({data}) => {
 				console.log('success', data);
 				if (data.message === username) {
-					// dispatch({ type: GOT_USERNAME, payload: data.message });
+					dispatch({ type: GOT_USERNAME, payload: data.message });
 				} else {
-					// dispatch({ type: GET_USERNAME_ERROR, payload: data.message });
+					dispatch({ type: GET_USERNAME_ERROR, payload: data.message })
 				}
 			})
 
@@ -32,7 +32,7 @@ export const getUsername = (username) => {
 
             .catch(error => {
                 console.log('error', error);
-                // dispatch({ type: GET_USERNAME_ERROR, payload: error.message })
+                dispatch({ type: GET_USERNAME_ERROR, payload: error.message })
             });
 	};
 };
@@ -48,14 +48,18 @@ export const getProfilePic = (img_url) => {
 
 			.then(({data}) => {
 				console.log('success', data);
-				// dispatch({ type: GOT_PROFILE_PIC, payload: data.message });
+				if (data.message === img_url) {
+					dispatch({ type: GOT_PROFILE_PIC, payload: data.message });
+				} else {
+					dispatch({ type: GET_PROFILE_PIC_ERROR, payload: data.message })
+				}
 			})
 
 			.then(() => dispatch(loggedIn()))
 
             .catch(error => {
-                console.log('error', error.message);
-                // dispatch({ type: GET_PROFILE_PIC_ERROR, payload: error })
+                console.log('error', error);
+                dispatch({ type: GET_PROFILE_PIC_ERROR, payload: error.message });
             });
 	}
 }
