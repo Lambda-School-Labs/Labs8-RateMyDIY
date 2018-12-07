@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import { compose } from 'redux';
+import ReactLoading from 'react-loading';
 
 import { Nav, Twillio } from '../../components';
 
@@ -311,6 +312,7 @@ class UserSettings extends Component {
 					</div>
 				</ProfileForm>
                 {this.state.selectedFile ? <ProfileHeader>{this.state.selectedFile.name}</ProfileHeader> : null }
+                {this.props.gettingProfilePic ? <ReactLoading type='bubbles' color='#000' /> : null }
                 <StatusMessage>{this.props.img_url ? this.props.img_url : this.props.profilepic_error}</StatusMessage>
                 <UsernameContainer>
                 <UsernameHeader>{this.props.userInfo.username}</UsernameHeader> 

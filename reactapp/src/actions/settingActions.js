@@ -10,6 +10,10 @@ export const GETTING_PROFILE_PIC = 'GETTING_PROFILE_PIC';
 export const GOT_PROFILE_PIC = 'GOT_PROFILE_PIC';
 export const GET_PROFILE_PIC_ERROR = 'GET_PROFILE_PIC_ERROR';
 
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export const getUsername = (username) => {
 	return dispatch => {
 		dispatch({ type: GETTING_USERNAME });
@@ -46,13 +50,9 @@ export const getProfilePic = (img_url) => {
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) + `/api/users/editprofilepic`, { img_url: img_url }
 			)
 
-			.then(({data}) => {
-				console.log('success', data);
-				if (data.message === img_url) {
-					dispatch({ type: GOT_PROFILE_PIC, payload: data.message });
-				} else {
-					dispatch({ type: GET_PROFILE_PIC_ERROR, payload: data.message })
-				}
+			.then(async ({data}) => {
+				await sleep(3000);
+				dispatch({ type: GOT_PROFILE_PIC, payload: data.message });
 			})
 
 			.then(() => dispatch(loggedIn()))
