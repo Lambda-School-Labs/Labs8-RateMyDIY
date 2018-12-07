@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-
+import TextareaAutosize from 'react-autosize-textarea';
+import addImageImg from './circleplus.png';
 // Components
 import { StarCount, ConfirmModal } from '../../components';
 
@@ -12,53 +13,120 @@ import { updateProject } from '../../actions';
 // Styles
 import styled from 'styled-components';
 
-const ProjectForm = styled.form`
-	background: #ffcccc;
+const EditProjectWrapper = styled.div`
+	margin: 0 0 24px 0;
+	background: #E9DED8;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+`;
+
+const ProjectTitleDescriptionForm = styled.form`
+`;
+
+const ProjectAuthor = styled.div`
+	margin: 0 0 0 2px;
+`;
+
+const ProjectImageForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+`;
+
+const ImgContainer = styled.div`
+	position: relative;
+  margin: auto;
+	height: auto;
+	max-width: 700px;
 `;
 
 const Img = styled.img`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 600px;
-	width: auto;
-	background: #cceeee;
-	margin: 0 auto 20px auto;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin: 0 auto;
+	background: white;
+  width: 100%;
+  height: auto;
 `;
+
+const ImgOverlay = styled.img`
+	position: absolute;
+	opacity: 0.7;
+	top: 35%;
+	left: 50%;
+	width: 20%;
+	height: auto;
+	max-width: 120px;
+	max-height: 120px;
+	transform: translateX(-50%);
+	:hover {
+		opacity: 0.9;
+	}
+`;
+
 const HiddenInputFileForm = styled.input`
 	display: none;
 `;
-
-const FileLabel = styled.label`
-	  font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: black;
-    display: inline-block;
+let isFirefox = typeof InstallTrigger !== 'undefined';
+const TextInputContainer = styled.div`
+	font-size: 16px;
+	margin: ${isFirefox === true ? '10px 10px 1px 10px' : '10px 10px -1px 10px'};
 `;
 
-const TextInput = styled.input``;
-
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
+/*  */
+const TextInput = styled(TextareaAutosize)`
+	border: 0;
+	font-size: 16px;
+	padding: 6px 6px 6px 6px;
+	background-color: white;
+	width: 100%;
+`;
 
 const ProjectHeader = styled.div`
 	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
+	position: 50%;
+	flex-direction: column;
+	background: #E9DED8;
+	padding: 24px 24px 12px 24px;
 `;
 
-const ReviewsButton = styled.button``;
+// check if browser is firefox
+const OptionsContainer = styled.div`
+	padding: 0 0 8px 16px;
+	margin: 0 auto 0 0;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
+`;
 
-const ProjectNameInput = styled.input``;
+const LeftOptionsContainer = styled.div`
+	
+`;
 
-const ProjectButtonContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+const RightOptionContainer = styled.div`
+	
+`;
+const CancelLink = styled.a`
+	margin-right: 8px;
+`;
+
+const SubmitButton = styled.button`
+	margin-right: 8px;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	text-decoration: none;
+	background-color: transparent;
+	:hover {
+		background-color: #add8e6;
+	}
+`;
+
+const UploadLink = styled.a`
+`;
+
+const ProjectNameInput = styled.input`
+	height: 32px;
+	font-size: 32px;
+	font-weight: bold;
+	border: 0;
+	background-color: #E9DED8;
 `;
 
 const StatusMessage = styled.p``;
@@ -72,9 +140,11 @@ class EditProject extends Component {
 	};
 
 	singleFileChangedHandler = event => {
-		this.setState({
-			selectedFile: event.target.files[0]
-		});
+		if (this.fileInput) {
+			this.setState({
+				selectedFile: event.target.files[0]
+			});
+		}
 	};
 
 	singleFileUploadHandler = event => {
@@ -195,53 +265,60 @@ class EditProject extends Component {
 
 	render() {
 		return (
-			<ProjectForm onSubmit={this.submitHandler}>
-				<ProjectHeader>
-					<ProjectNameInput
-						name="project_name"
-						type="text"
-						placeholder="project title"
-						value={this.state.project_name}
-						onChange={this.changeHandler}
-						required
-					/>
-					<StarCount rating={this.props.project.rating} />
-					<ReviewsButton disabled>Reviews</ReviewsButton>
-				</ProjectHeader>
-				<Img
-					src={this.props.project.img_url}
-					alt={this.props.project.img_url || 'project image'}
-				/>
-				<form>
+			<EditProjectWrapper>
+				<ProjectTitleDescriptionForm onSubmit={this.submitHandler}>
+					<ProjectHeader>
+						<ProjectNameInput
+							name="project_name"
+							type="textbody"
+							placeholder="project title"
+							value={this.state.project_name}
+							onChange={this.changeHandler}
+							required
+						/>
+						<StarCount rating={this.props.project.rating} />
+						<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
+					</ProjectHeader>
+					<ImgContainer>
+						<ImgOverlay src={addImageImg} onClick={() => this.fileInput.click()} />
+						<Img
+							alt={this.props.project.project_name}
+							src={this.props.project.img_url}
+						/>
+					</ImgContainer>
+					<TextInputContainer>
+						<TextInput
+							name="text"
+							type="text"
+							placeholder="project description"
+							value={this.state.text}
+							onChange={this.changeHandler}
+							required
+						/>
+					</TextInputContainer>
+				</ProjectTitleDescriptionForm>
+				<ProjectImageForm onSubmit={this.submitHandler}>
 					{/* HiddenInputFileForm is hidden */}
 					<HiddenInputFileForm
 						type="file"
 						name="file"
 						onChange={this.singleFileChangedHandler}
 						ref={fileInput => this.fileInput = fileInput} />
-					<button onClick={() => this.fileInput.click()}>{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}</button>
-					<div className="mt-5">
-						<button
-							className="btn btn-info"
-							onClick={this.singleFileUploadHandler}
-						>
-							Upload!
-						</button>
-					</div>
-				</form>
-				<TextInput
-					name="text"
-					type="text"
-					placeholder="project description"
-					value={this.state.text}
-					onChange={this.changeHandler}
-					required
-				/>
-				<ProjectButtonContainer>
-					<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-					<SubmitInput type="submit" value="Submit Changes" />
-				</ProjectButtonContainer>
-
+					{/* <button onClick={() => this.fileInput.click()}>
+						{this.state.selectedFile ? this.state.selectedFile.name : 'Pick File'}
+					</button> */}
+					<OptionsContainer>
+						<CancelLink onClick={this.cancelHandler}>
+							cancel
+						</CancelLink>
+						<SubmitButton type="submit" value="Submit Changes">
+							submit
+						</SubmitButton>
+						<UploadLink onClick={this.singleFileUploadHandler}>
+							upload image
+						</UploadLink>
+					</OptionsContainer>
+				</ProjectImageForm>
 				{this.props.updatingProject && (
 					<StatusMessage small>Updating project...</StatusMessage>
 				)}
@@ -255,7 +332,7 @@ class EditProject extends Component {
 				)}
 
 				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-			</ProjectForm>
+			</EditProjectWrapper>
 		);
 	}
 }
