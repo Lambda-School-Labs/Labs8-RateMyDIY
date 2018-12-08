@@ -136,4 +136,30 @@ router.delete('/:review_id', ensureLoggedIn, authorize, function(
 		});
 });
 
+// like review by id
+router.put('/:review_id/like', ensureLoggedIn, authorize, function(
+	req,
+	res,
+	next
+) {
+	const { user_id, like } = req.body;
+	const { review_id } = req.params;
+
+	db.likeReview({ user_id, review_id, like })
+		.then(({ liked, reviewNotFound, ownReview }) => {
+			if (reviewNotFound) {
+				res.status(404).json({ error: 'Review not found.' });
+			} else if (ownReview) {
+				res.status(403).json({ error: `You can't like your own review.` });
+			} else if (liked) {
+				res.status(200).json(liked);
+			} else {
+				res.status(500).json({ error: `Failed to update like value` });
+			}
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
+});
+
 module.exports = router;
