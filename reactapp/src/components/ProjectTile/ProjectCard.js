@@ -51,50 +51,60 @@ class ProjectCard extends React.Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
+	handleClick = project_id => {
+		console.log('project' + project_id + ' was clicked!!!');
+		console.log(this.props);
+		this.props.history.push(`/project/${project_id}`);
+	};
+
 	render() {
 		const { classes, theme } = this.props;
 		console.log(this.props.project);
 		console.log('THEME', theme);
 		return (
-			<CardLink
-				className="project-card"
-				href={`project/${this.props.project.project_id}`}
+			// <CardLink
+			// 	className="project-card"
+			// 	href={`project/${this.props.project.project_id}`}
+			// >
+			<Card
+				onClick={e => this.handleClick(this.props.project.project_id)}
+				style={{}}
+				className={classes.card}
 			>
-				<Card style={{}} className={classes.card}>
-					<CardHeader
-						avatar={
-							<Avatar
-								src={this.props.project.maker_photo_url}
-								className={classes.avatar}
-							/>
-						}
-						action={null}
-						title={this.props.project.project_name}
-						subheader={<div>{this.props.project.username} </div>}
-					/>
-
-					<CardMedia
-						className={classes.media}
-						image={this.props.project.img_url}
-						title={this.props.project.project_name}
-					/>
-					<CardContent>
-						<StarRatings
-							rating={Math.round(this.props.project.project_rating)}
-							// starRatedColor="yellow"
-							starDimension="14px"
-							starSpacing="4px"
-							starRatedColor="black"
+				<CardHeader
+					avatar={
+						<Avatar
+							src={this.props.project.maker_photo_url}
+							className={classes.avatar}
 						/>
-					</CardContent>
-					<CardContent>
-						<Typography component="p">
-							[THIS IS THE PROJECT DESCRIPTION]
-						</Typography>
-					</CardContent>
-					<CardActions className={classes.actions} disableActionSpacing />
-				</Card>
-			</CardLink>
+					}
+					action={null}
+					title={this.props.project.project_name}
+					subheader={<div>{this.props.project.username} </div>}
+				/>
+
+				<CardMedia
+					className={classes.media}
+					image={this.props.project.img_url}
+					title={this.props.project.project_name}
+				/>
+				<CardContent>
+					<StarRatings
+						rating={Math.round(this.props.project.project_rating)}
+						// starRatedColor="yellow"
+						starDimension="14px"
+						starSpacing="4px"
+						starRatedColor="black"
+					/>
+				</CardContent>
+				<CardContent>
+					<Typography component="p">
+						[THIS IS THE PROJECT DESCRIPTION]
+					</Typography>
+				</CardContent>
+				<CardActions className={classes.actions} disableActionSpacing />
+			</Card>
+			// </CardLink>
 		);
 	}
 }
