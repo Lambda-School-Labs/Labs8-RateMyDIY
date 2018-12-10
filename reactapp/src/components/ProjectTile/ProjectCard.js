@@ -100,9 +100,7 @@ class ProjectCard extends React.Component {
 						/>
 					</CardContent>
 					<CardContent>
-						<Typography component="p">
-							[THIS IS THE PROJECT DESCRIPTION]
-						</Typography>
+						<Typography component="p">{this.props.project.text}</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing />
 				</Card>
