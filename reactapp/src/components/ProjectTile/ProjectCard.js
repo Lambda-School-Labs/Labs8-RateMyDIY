@@ -39,6 +39,15 @@ const styles = theme => ({
 	}
 });
 
+const StyledLink = styled(Link)`
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: none;
+		backgounrd: none;
+	}
+`;
+
 class ProjectCard extends React.Component {
 	state = { expanded: false };
 
@@ -46,61 +55,58 @@ class ProjectCard extends React.Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
-	handleClick = (e, project_id) => {
-		console.log('project' + project_id + ' was clicked!!!');
-		console.log(this.props);
-		console.log(e.target.tagName.toLowerCase());
-
-		if (e.target.tagName.toLowerCase() != 'a') {
-			this.props.history.push(`/project/${project_id}`);
-		}
-	};
-
 	render() {
 		const { classes, theme } = this.props;
+		console.log(this.props.project);
 		return (
-			<Card
-				onClick={e => this.handleClick(e, this.props.project.project_id)}
-				style={{}}
-				className={classes.card}
+			<StyledLink
+				style={{
+					textDecoration: 'none',
+					outline: 'none',
+					'&hover': { background: 'none' }
+				}}
+				to={`/project/${this.props.project.project_id}`}
 			>
-				<CardHeader
-					avatar={
-						<Avatar
-							src={this.props.project.maker_photo_url}
-							className={classes.avatar}
-						/>
-					}
-					action={null}
-					title={this.props.project.project_name}
-					subheader={
-						<Link to={`/search?query=${this.props.project.username}`}>
-							{this.props.project.username}
-						</Link>
-					}
-				/>
-
-				<CardMedia
-					className={classes.media}
-					image={this.props.project.img_url}
-					title={this.props.project.project_name}
-				/>
-				<CardContent>
-					<StarRatings
-						rating={Math.round(this.props.project.project_rating)}
-						// starRatedColor="yellow"
-						starDimension="14px"
-						starSpacing="4px"
-						starRatedColor="black"
+				<Card className={classes.card}>
+					<CardHeader
+						style={{ fontSize: '24px' }}
+						avatar={
+							<Avatar
+								src={this.props.project.maker_photo_url}
+								className={classes.avatar}
+							/>
+						}
+						action={null}
+						title={this.props.project.project_name}
+						subheader={
+							<Link to={`/search?query=${this.props.project.username}`}>
+								{this.props.project.username}
+							</Link>
+						}
 					/>
-				</CardContent>
-				<CardContent>
-					<Typography component="p">
-						[THIS IS THE PROJECT DESCRIPTION]
-					</Typography>
-				</CardContent>
-				<CardActions className={classes.actions} disableActionSpacing />
-			</Card>
+
+					<CardMedia
+						className={classes.media}
+						image={this.props.project.img_url}
+						title={this.props.project.project_name}
+					/>
+					<CardContent>
+						<StarRatings
+							rating={Math.round(this.props.project.project_rating)}
+							// starRatedColor="yellow"
+							starDimension="14px"
+							starSpacing="4px"
+							starRatedColor="black"
+						/>
+					</CardContent>
+					<CardContent>
+						<Typography component="p">
+							[THIS IS THE PROJECT DESCRIPTION]
+						</Typography>
+					</CardContent>
+					<CardActions className={classes.actions} disableActionSpacing />
+				</Card>
+			</StyledLink>
 		);
 	}
 }
