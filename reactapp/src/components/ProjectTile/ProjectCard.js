@@ -18,7 +18,8 @@ const styles = theme => ({
 		margin: '25px',
 		marginBottom: '30px',
 		'&:hover': {
-			backgroundColor: '0'
+			color: theme.palette.secondary.main,
+			boxShadow: '4px 4px 4px'
 		},
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: '35px',
@@ -35,14 +36,6 @@ const styles = theme => ({
 		backgroundColor: red[500]
 	}
 });
-
-const CardLink = styled.a`
-	text-decoration: none;
-	color:black &:hover {
-		text-decoration: none;
-		color: black;
-	}
-`;
 
 class ProjectCard extends React.Component {
 	state = { expanded: false };
@@ -62,10 +55,6 @@ class ProjectCard extends React.Component {
 		console.log(this.props.project);
 		console.log('THEME', theme);
 		return (
-			// <CardLink
-			// 	className="project-card"
-			// 	href={`project/${this.props.project.project_id}`}
-			// >
 			<Card
 				onClick={e => this.handleClick(this.props.project.project_id)}
 				style={{}}
@@ -104,7 +93,6 @@ class ProjectCard extends React.Component {
 				</CardContent>
 				<CardActions className={classes.actions} disableActionSpacing />
 			</Card>
-			// </CardLink>
 		);
 	}
 }
