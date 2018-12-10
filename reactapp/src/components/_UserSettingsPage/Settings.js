@@ -81,41 +81,41 @@ const ProfileForm = styled.form`
 // `;
 
 const FileButton = styled.label`
-    background-color: white;
-    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.6rem;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    outline: none;
+	background-color: white;
+	border: 1px solid ${props => props.theme.mui.palette.primary.dark};
+	border-radius: 5px;
+	padding: 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.6rem;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+	outline: none;
 
-    &:hover {
-        background-color: ${props => props.theme.mui.palette.primary.dark}
-        color: white;
-    }
+	&:hover {
+		background-color: ${props => props.theme.mui.palette.primary.dark};
+		color: white;
+	}
 `;
 
 const UploadButton = styled.button`
-    background-color: white;
-    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.6rem;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    outline: none;
+	background-color: white;
+	border: 1px solid ${props => props.theme.mui.palette.primary.dark};
+	border-radius: 5px;
+	padding: 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.6rem;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+	outline: none;
 
-    &:hover {
-        background-color: ${props => props.theme.mui.palette.primary.dark}
-        color: white;
-    }
+	&:hover {
+		background-color: ${props => props.theme.mui.palette.primary.dark};
+		color: white;
+	}
 `;
 
 const ProfileHeader = styled.h2`
@@ -135,12 +135,12 @@ const StatusMessage = styled.h2`
 `;
 
 const UsernameContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    padding: 3%;
-    background-color: ${props => props.theme.mui.palette.secondary.light}
-    border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	padding: 3%;
+	background-color: ${props => props.theme.mui.palette.secondary.light};
+	border-radius: 5px;
 `;
 
 const UsernameHeader = styled.h1`
@@ -164,22 +164,22 @@ const StyledInput = styled.input`
 `;
 
 const UsernameButton = styled.input`
-    background-color: white;
-    border: 1px solid ${props => props.theme.mui.palette.primary.dark};
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.6rem;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    outline: none;
+	background-color: white;
+	border: 1px solid ${props => props.theme.mui.palette.primary.dark};
+	border-radius: 5px;
+	padding: 15px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 1.6rem;
+	-webkit-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+	outline: none;
 
-    &:hover {
-        background-color: ${props => props.theme.mui.palette.primary.dark}
-        color: white;
-    }
+	&:hover {
+		background-color: ${props => props.theme.mui.palette.primary.dark};
+		color: white;
+	}
 `;
 
 const TextButton = styled.p`
