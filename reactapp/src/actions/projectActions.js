@@ -21,9 +21,9 @@ export const DELETED_PROJECT = 'DELETED_PROJECT';
 export const DELETE_PROJECT_ERROR = 'DELETE_PROJECT_ERROR';
 
 // Loading message tester
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 // // get project by project_id
 export const getProject = project_id => {
@@ -56,8 +56,7 @@ export const getProjectLite = (project_id, callback) => {
 					`/api/projects/${project_id}`
 			)
 
-			.then(async ({ data }) => {
-				await sleep(500);
+			.then(({ data }) => {
 				dispatch({ type: GOT_PROJECT, payload: data });
 				callback();
 			})
@@ -103,8 +102,7 @@ export const addProject = (project, callback) => {
 					`/api/projects/`,
 				project
 			)
-			.then(async ({ data }) => {
-				await sleep(500);
+			.then(({ data }) => {
 				dispatch({ type: ADDED_PROJECT, payload: data });
 				callback(`/project/${data}`);
 			})
@@ -124,8 +122,7 @@ export const updateProject = (project_id, changes, callback) => {
 				changes
 			)
 
-			.then(async () => {
-				await sleep(500);
+			.then(() => {
 				dispatch({ type: UPDATED_PROJECT });
 			})
 
@@ -147,8 +144,7 @@ export const deleteProject = (project_id, user_id, callback) => {
 				{ data: { user_id } } // Have to use { data: body } for DELETE
 			)
 
-			.then(async () => {
-				await sleep(500);
+			.then(() => {
 				dispatch({ type: DELETED_PROJECT });
 				callback();
 			})

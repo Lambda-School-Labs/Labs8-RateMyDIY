@@ -16,9 +16,9 @@ export const DELETED_POST = 'DELETED_POST';
 export const DELETE_POST_ERROR = 'DELETE_POST_ERROR';
 
 // Loading message tester
-function sleep(ms) {
-	return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+// 	return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 // add post
 export const addPost = (post, callback) => {
@@ -32,8 +32,7 @@ export const addPost = (post, callback) => {
 				post
 			)
 
-			.then(async () => {
-				await sleep(500);
+			.then(() => {
 				dispatch({ type: ADDED_POST });
 			})
 
@@ -55,8 +54,7 @@ export const updatePost = (post_id, changes, callback) => {
 				changes
 			)
 
-			.then(async () => {
-				await sleep(500);
+			.then(() => {
 				dispatch({ type: UPDATED_POST });
 			})
 
@@ -78,8 +76,7 @@ export const deletePost = (post_id, project_id, user_id, callback) => {
 				{ data: { project_id, user_id } } // Have to use { data: body } for DELETE
 			)
 
-			.then(async () => {
-				await sleep(500);
+			.then(() => {
 				dispatch({ type: DELETED_POST, payload: {} });
 			})
 
