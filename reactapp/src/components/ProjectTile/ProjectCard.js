@@ -11,12 +11,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
 		width: '300px',
 		margin: '25px',
 		marginBottom: '30px',
+		cursor: 'pointer',
 		'&:hover': {
 			color: theme.palette.secondary.main,
 			boxShadow: '4px 4px 4px'
@@ -44,19 +46,21 @@ class ProjectCard extends React.Component {
 		this.setState(state => ({ expanded: !state.expanded }));
 	};
 
-	handleClick = project_id => {
+	handleClick = (e, project_id) => {
 		console.log('project' + project_id + ' was clicked!!!');
 		console.log(this.props);
-		this.props.history.push(`/project/${project_id}`);
+		console.log(e.target.tagName.toLowerCase());
+
+		if (e.target.tagName.toLowerCase() != 'a') {
+			this.props.history.push(`/project/${project_id}`);
+		}
 	};
 
 	render() {
 		const { classes, theme } = this.props;
-		console.log(this.props.project);
-		console.log('THEME', theme);
 		return (
 			<Card
-				onClick={e => this.handleClick(this.props.project.project_id)}
+				onClick={e => this.handleClick(e, this.props.project.project_id)}
 				style={{}}
 				className={classes.card}
 			>
@@ -69,7 +73,11 @@ class ProjectCard extends React.Component {
 					}
 					action={null}
 					title={this.props.project.project_name}
-					subheader={<div>{this.props.project.username} </div>}
+					subheader={
+						<Link to={`/search?query=${this.props.project.username}`}>
+							{this.props.project.username}
+						</Link>
+					}
 				/>
 
 				<CardMedia
