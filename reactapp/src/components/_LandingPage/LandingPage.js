@@ -20,7 +20,7 @@ import {
 	PopularMakers,
 	PopularReviewers,
 	SearchBar,
-	Twillio,
+	// Twillio,
 	Footer,
 	LogInPopUp,
 	SearchTags
