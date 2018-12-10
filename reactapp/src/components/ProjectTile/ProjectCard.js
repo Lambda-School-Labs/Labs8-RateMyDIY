@@ -18,6 +18,7 @@ const styles = theme => ({
 		width: '300px',
 		margin: '25px',
 		marginBottom: '30px',
+		fontSize: '24px',
 		cursor: 'pointer',
 		'&:hover': {
 			color: theme.palette.secondary.main,
@@ -48,6 +49,8 @@ const StyledLink = styled(Link)`
 	}
 `;
 
+const CardTitle = styled.h3``;
+const CardUsername = styled.p``;
 class ProjectCard extends React.Component {
 	state = { expanded: false };
 
@@ -57,11 +60,11 @@ class ProjectCard extends React.Component {
 
 	render() {
 		const { classes, theme } = this.props;
-		console.log(this.props.project);
 		return (
 			<StyledLink
 				style={{
 					textDecoration: 'none',
+					background: 'none',
 					outline: 'none',
 					'&hover': { background: 'none' }
 				}}
@@ -77,9 +80,19 @@ class ProjectCard extends React.Component {
 							/>
 						}
 						action={null}
-						title={this.props.project.project_name}
+						title={
+							<CardTitle style={{ fontSize: '2rem' }}>
+								{this.props.project.project_name}
+							</CardTitle>
+						}
 						subheader={
-							<Link to={`/search?query=${this.props.project.username}`}>
+							<Link
+								style={{ fontSize: '1.5rem', background: 'none' }}
+								onClick={e => {
+									e.stopPropagation();
+								}}
+								to={`/search?query=${this.props.project.username}`}
+							>
 								{this.props.project.username}
 							</Link>
 						}
@@ -100,7 +113,12 @@ class ProjectCard extends React.Component {
 						/>
 					</CardContent>
 					<CardContent>
-						<Typography component="p">{this.props.project.text}</Typography>
+						<Typography
+							style={{ fontSize: '1.5rem', background: 'none' }}
+							component="p"
+						>
+							{this.props.project.text}
+						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing />
 				</Card>

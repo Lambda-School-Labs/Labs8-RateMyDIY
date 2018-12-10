@@ -72,7 +72,6 @@ class SearchPage extends Component {
 		//push to search page
 	};
 	render() {
-		console.log(this.props);
 		return (
 			<SearchPageWrapper>
 				<Header
