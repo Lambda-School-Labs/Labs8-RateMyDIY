@@ -1,53 +1,90 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchMyReviews } from '../../../actions';
+import { fetchMyReviews, fetchSearchResults, loggedIn } from '../../../actions';
 import { AccountSideBar } from '../../../components';
-
+import { Header } from '../../../components';
 import './ReviewList.css';
+// import styled from 'styled-components';
+import { ReviewRender } from '../../../components';
+// const CardLink = styled.a`
+//   text-decoration: none;
+//   color:black &:hover {
+//     text-decoration: none;
+//     color: black;
+//   }
+// `;
 
 class ReviewList extends Component {
-	componentDidUpdate(prevProps) {
-		if (prevProps.userInfo !== this.props.userInfo) {
-			console.log('USERINFO', this.props.userInfo);
-			this.props.fetchMyReviews(this.props.userInfo.user_id);
-		}
-		console.log(this.props.myReviews);
+	constructor() {
+		super();
+		this.state = { input: '' };
+	}
+
+	handleChange = e => {
+		this.setState({ ...this.state, input: e.target.value });
+	};
+
+	handleSearch = e => {
+		e.preventDefault();
+		const searchTerm = this.state.input;
+		console.log(searchTerm);
+		//call featch search results action
+		//push to search page
+		this.props.fetchSearchResults(searchTerm);
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
+
+	componentDidMount() {
+		this.props.loggedIn(fetchMyReviews);
 	}
 
 	render() {
 		if (!this.props.myReviews || this.props.myReviews.length === 0) {
 			return (
-				<div className="reviewPage">
-					<div className="sideBar">
-						<AccountSideBar />
-					</div>
-					<div className="addNewReview">
-						<h2>Add a new review</h2>
-						<Link to="">
-							<img
-								alt="PLACEHOLDER! alt text"
-								src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-							/>
-						</Link>
+				<div>
+					<Header
+						handleChange={this.handleChange}
+						handleSearch={this.handleSearch}
+					/>
+					<div className="reviewPage">
+						<div className="sideBar">
+							<AccountSideBar />
+						</div>
+						<div className="addNewReview">
+							<h2>Add a new review</h2>
+							<Link to="">
+								<img
+									alt="PLACEHOLDER! alt text"
+									src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
+								/>
+							</Link>
+						</div>
 					</div>
 				</div>
 			);
 		} else {
 			return (
-				<div className="reviewPage">
-					<AccountSideBar />
+				<div>
+					<Header
+						handleChange={this.handleChange}
+						handleSearch={this.handleSearch}
+					/>
 
-					<div className="myReviewDisplay">
-						{this.props.myReviews.map(myReviews => {
-							return (
-								<div className="myReviewsDisplay" key={myReviews.review_id}>
-									<h2>{myReviews.text}</h2>
-									<p>{myReviews.rating}</p>
-									<img src={myReviews.img_url} alt="" />
-								</div>
-							);
-						})}
+					<div className="reviewPage">
+						<AccountSideBar />
+
+						<div className="myReviewDisplay">
+							{this.props.myReviews.map(myReviews => (
+								<ReviewRender
+									key={myReviews.review_id}
+									myReview_id={myReviews.review_id}
+									myReviewsText={myReviews.text}
+									myReviewsImg_url={myReviews.img_url}
+									myReviewsRating={myReviews.rating}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
 			);
@@ -64,5 +101,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ fetchMyReviews }
+	{ fetchMyReviews, fetchSearchResults, loggedIn }
 )(ReviewList);

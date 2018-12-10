@@ -24,6 +24,8 @@ export const WILL_DELETE_REVIEW = 'WILL_DELETE_REVIEW';
 export const DELETING_REVIEW = 'DELETING_REVIEW';
 export const DELETED_REVIEW = 'DELETED_REVIEW';
 export const DELETE_REVIEW_ERROR = 'DELETE_REVIEW_ERROR';
+// showReviewModal
+export const SHOW_REVIEW_MODAL = 'SHOW_REVIEW_MODAL';
 
 // Loading message tester
 function sleep(ms) {
@@ -117,12 +119,12 @@ export const updateReview = (review_id, changes) => {
 				changes
 			)
 
-			.then(() => dispatch(getReview(review_id)))
-
 			.then(async () => {
 				await sleep(500);
 				dispatch({ type: UPDATED_REVIEW });
 			})
+
+			.then(() => dispatch(getReview(review_id)))
 
 			.catch(error => dispatch({ type: UPDATE_REVIEW_ERROR, payload: error }));
 	};
@@ -136,7 +138,7 @@ export const willDeleteReview = value => {
 };
 
 // delete review
-export const deleteReview = (review_id, user_id) => {
+export const deleteReview = (user_id, review_id) => {
 	return dispatch => {
 		dispatch({ type: DELETING_REVIEW });
 
@@ -153,5 +155,11 @@ export const deleteReview = (review_id, user_id) => {
 			})
 
 			.catch(error => dispatch({ type: DELETE_REVIEW_ERROR, payload: error }));
+	};
+};
+
+export const showReviewModal = value => {
+	return dispatch => {
+		dispatch({ type: SHOW_REVIEW_MODAL, payload: value });
 	};
 };

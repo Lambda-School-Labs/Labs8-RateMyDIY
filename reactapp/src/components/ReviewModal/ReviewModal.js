@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Components
-import { NewReview } from '../../components';
+import { NewReview, EditReview, ConfirmModal } from '../../components';
 
 // Actions
 import {
-	getReview
-	// willUpdateReview,
-	// willDeleteReview,
-	// deleteReview
+	getReview,
+	willUpdateReview,
+	deleteReview,
+	showReviewModal
 } from '../../actions';
 
 // Styles
@@ -92,6 +92,37 @@ const StatusMessage = styled.p``;
 class ReviewModal extends Component {
 	state = {};
 
+	// Delete project (with confirmation prompt)
+	deleteHandler = event => {
+		event.preventDefault();
+
+		this.setState({
+			confirm: {
+				text: [
+					'Are you sure? This cannot be undone.',
+					'Cancel',
+					'Delete Review'
+				],
+				cancel: event => {
+					event.preventDefault();
+					this.setState({ confirm: undefined });
+				},
+				submit: event => {
+					event.preventDefault();
+
+					this.props.deleteReview(
+						this.props.userInfo.user_id,
+						this.props.review.review_id
+					);
+					this.setState({ confirm: undefined });
+				}
+			}
+		});
+	};
+
+	// Like, dislike, or remove like from review
+	likeHandler = (event, like) => {};
+
 	componentDidMount() {
 		if (this.props.review_id) this.props.getReview(this.props.review_id);
 	}
@@ -102,45 +133,67 @@ class ReviewModal extends Component {
 				{/* todo: click outside modal to close it */}
 				<ModalBox>
 					{this.props.review_id ? (
-						<React.Fragment>
-							<CloseModalButton onClick={this.props.closeModal}>
-								x
-							</CloseModalButton>
-							{this.props.gettingReview && !this.props.review ? (
-								<StatusMessage>Loading review...</StatusMessage>
-							) : this.props.gettingReviewError ? (
-								<StatusMessage>{this.props.gettingReviewError}</StatusMessage>
-							) : (
-								<React.Fragment>
-									<ProjectTitle>{`@${this.props.review.maker_name}'s ${
-										this.props.review.project_name
-									}`}</ProjectTitle>
-									<Reviewer>{`Review by: @${
-										this.props.review.reviewer_name
-									}`}</Reviewer>
-									<Img
-										src={this.props.review.img_url}
-										alt={this.props.review.img_url || 'project image'}
-									/>
-									<StarCount rating={this.props.review.rating} />
-									<ReviewText>{this.props.review.text}</ReviewText>
+						this.props.reviewToUpdate ? (
+							<EditReview
+								user_id={this.props.userInfo.user_id}
+								review={this.props.review}
+								willUpdateReview={this.props.willUpdateReview}
+							/>
+						) : (
+							<React.Fragment>
+								<CloseModalButton
+									onClick={() => this.props.showReviewModal(false)}
+								>
+									x
+								</CloseModalButton>
+								{this.props.gettingReview ? (
+									<StatusMessage>Loading review...</StatusMessage>
+								) : this.props.gettingReviewError ? (
+									<StatusMessage>{this.props.gettingReviewError}</StatusMessage>
+								) : (
+									<React.Fragment>
+										<ProjectTitle>{`@${this.props.review.maker_name}'s ${
+											this.props.review.project_name
+										}`}</ProjectTitle>
+										<Reviewer>{`Review by: @${
+											this.props.review.reviewer_name
+										}`}</Reviewer>
+										<Img
+											src={this.props.review.img_url}
+											alt={this.props.review.img_url || 'project image'}
+										/>
+										<StarCount rating={this.props.review.rating} />
+										<ReviewText>{this.props.review.text}</ReviewText>
 
-									{this.props.review.reviewer_id ===
-									this.props.userInfo.user_id ? (
-										<ButtonContainer>
-											<EditButton>Edit Review</EditButton>
-											<DeleteButton>Delete Review</DeleteButton>
-										</ButtonContainer>
-									) : (
-										<LikeContainer>
-											<Like>*thumbsup*</Like>
-											<p>Helpful?</p>
-											<Dislike>*thumbsdown*</Dislike>
-										</LikeContainer>
-									)}
-								</React.Fragment>
-							)}
-						</React.Fragment>
+										{this.props.deletingReviewError && (
+											<StatusMessage error>
+												{this.props.deletingReviewError}
+											</StatusMessage>
+										)}
+
+										{this.props.review.reviewer_id ===
+										this.props.userInfo.user_id ? (
+											<ButtonContainer>
+												<EditButton
+													onClick={() => this.props.willUpdateReview(true)}
+												>
+													Edit Review
+												</EditButton>
+												<DeleteButton onClick={this.deleteHandler}>
+													Delete Review
+												</DeleteButton>
+											</ButtonContainer>
+										) : (
+											<LikeContainer>
+												<Like>*thumbsup*</Like>
+												<p>Helpful?</p>
+												<Dislike>*thumbsdown*</Dislike>
+											</LikeContainer>
+										)}
+									</React.Fragment>
+								)}
+							</React.Fragment>
+						)
 					) : this.props.project_id && this.props.userInfo.user_id ? (
 						<NewReview
 							user_id={this.props.userInfo.user_id}
@@ -149,12 +202,16 @@ class ReviewModal extends Component {
 							project_name={this.props.project_name}
 							maker_name={this.props.maker_name}
 							img_url={this.props.img_url}
-							closeModal={this.props.closeModal}
 						/>
 					) : (
 						<StatusMessage>How did you get here? Tell Max.</StatusMessage>
 					)}
 				</ModalBox>
+
+				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+				{this.props.deletingReview && (
+					<ConfirmModal statusMessage={'Deleting review...'} />
+				)}
 			</ModalShade>
 		);
 	}
@@ -173,16 +230,18 @@ const mapStateToProps = state => {
 
 		reviewToDelete: state.reviewReducer.reviewToDelete,
 		deletingReview: state.reviewReducer.deletingReview,
-		deletingReviewError: state.reviewReducer.deletingReviewError
+		deletingReviewError: state.reviewReducer.deletingReviewError,
+
+		reviewModal: state.reviewReducer.reviewModal
 	};
 };
 
 export default connect(
 	mapStateToProps,
 	{
-		getReview
-		// willUpdateReview,
-		// willDeleteReview,
-		// deleteReview
+		getReview,
+		willUpdateReview,
+		deleteReview,
+		showReviewModal
 	}
 )(ReviewModal);

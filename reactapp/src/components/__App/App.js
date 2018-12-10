@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom'; // removed Link from impor
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loggedIn } from '../../actions/index';
+import WithTheme from '../WithTheme/WithTheme';
 
 // Components
 import {
@@ -11,9 +12,7 @@ import {
 	LandingPage,
 	ProjectList,
 	CreateEditPage,
-	UserSettingsSideBar,
-	UserSettingsSummaries,
-	UserSettingSettings,
+	UserSettings,
 	//  SearchBar, // not used
 	SearchPage,
 	ProjectPage,
@@ -40,9 +39,10 @@ class App extends Component {
 
 	render() {
 		return (
-			<AppContainer>
-				{/* <h1>Navigation</h1> */}
-				{/* <ul>
+			<WithTheme>
+				<AppContainer>
+					{/* <h1>Navigation</h1> */}
+					{/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -59,19 +59,19 @@ class App extends Component {
             <Link to="/signin">Sign Up or Sign In</Link>
           </li>
         </ul> */}
-				{/* <Navbar /> */}
-				<Route exact path="/" component={LandingPage} />
-				<Route path="/settings" component={UserSettingsSideBar} />
-				<Route path="/settings/summaries" component={UserSettingsSummaries} />
-				<Route exact path="/ReviewList" component={ReviewList} />
-				<Route exact path="/ProjectList" component={ProjectList} />
-				<Route exact path="/CreateEditPage" component={CreateEditPage} />
-				<Route path="/settings/settings" component={UserSettingSettings} />
-				<Route path="/search" component={SearchPage} />
-				<Route path="/project/:id" component={ProjectPage} />
-				<Route path="/newproject" component={NewProject} />
-				<Route path="/about" component={AboutTheTeam} />
-			</AppContainer>
+					{/* <Navbar /> */}
+					<Route exact path="/" component={LandingPage} />
+
+					<Route exact path="/ReviewList" component={ReviewList} />
+					<Route exact path="/ProjectList" component={ProjectList} />
+					<Route exact path="/CreateEditPage" component={CreateEditPage} />
+					<Route path="/settings" component={UserSettings} />
+					<Route path="/search" component={SearchPage} />
+					<Route path="/project/:project_id" component={ProjectPage} />
+					<Route path="/newproject" component={NewProject} />
+					<Route path="/about" component={AboutTheTeam} />
+				</AppContainer>
+			</WithTheme>
 		);
 	}
 }

@@ -1,9 +1,9 @@
 // Dependencies
 import React from 'react';
 import ModalImage from 'react-modal-image';
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap';
 // Components
-import StarRatings from 'react-star-ratings';
+// import StarRatings from 'react-star-ratings';
 
 // Styles
 import styled from 'styled-components';
@@ -15,16 +15,16 @@ const ProjectWrapper = styled.div`
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #E9DED8;
+	background: #e9ded8;
 	width: 100%;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: column;
-	background: #E9DED8;
+	background: #e9ded8;
 	padding: 24px 24px 12px 24px;
 `;
 
@@ -38,20 +38,20 @@ const ProjectAuthor = styled.div`
 	margin: 0 0 0 2px;
 `;
 
+const Img = styled(ModalImage)`
+	margin: 0 auto;
+	background: white;
+	width: auto;
+	height: auto;
+`;
+
 const ImgContainer = styled.div`
-  margin: auto;
+	margin: auto;
 	max-width: 700px;
 	height: auto;
 `;
 
-const Img = styled(ModalImage)`
-  margin: 0 auto;
-	background: white;
-  width: auto;
-  height: auto;
-`;
-
-const TextContainer = styled.div`
+const Text = styled.p`
 	width: auto;
 	padding: 16px 16px 8px 16px;
 	font-size: 16px;
@@ -64,16 +64,30 @@ const OptionsContainer = styled.div`
 	color: rgb(42, 43, 45);
 `;
 
-const ReviewsLink = styled.a`
+const ReviewsLink = styled.button`
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 0;
 	margin-right: 8px;
 `;
 
-const EditLink = styled.a`
+const EditLink = styled.button`
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 0;
 	margin-right: 8px;
 `;
 
-const DeleteButton = styled.a`
-	
+const DeleteButton = styled.button`
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 0;
 `;
 
 const Project = props => {
@@ -83,7 +97,7 @@ const Project = props => {
 				<ProjectHeader>
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
-					{props.project.project_rating ?
+					{/* {props.project.project_rating ?
 						<StarRatings
 							rating={props.project.project_rating}
 							starRatedColor="black"
@@ -92,7 +106,7 @@ const Project = props => {
 							starDimension="20px"
 							starSpacing="5px"
 							numberOfStars={5}
-						/> : null}
+						/> : null} */}
 				</ProjectHeader>
 				<ImgContainer>
 					<Img
@@ -102,24 +116,25 @@ const Project = props => {
 						src={props.project.img_url}
 					/>
 				</ImgContainer>
-				<TextContainer>{props.project.text}
-					{props.owner && (
-						<OptionsContainer>
-							<ReviewsLink disabled={props.disabled}>
-								reviews
-							</ReviewsLink>
-							<EditLink
-								onClick={() => props.willUpdateProject(true)}
-								disabled={props.disabled}
-							>
-								edit
+				<Text>{props.project.text}</Text>
+				{props.owner && (
+					<OptionsContainer>
+						<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
+						<EditLink
+							onClick={() => props.willUpdateProject(true)}
+							disabled={props.disabled}
+						>
+							edit
 						</EditLink>
-							<DeleteButton color="danger" onClick={props.deleteHandler} disabled={props.disabled}>
-								delete
-					</DeleteButton>
-						</OptionsContainer>
-					)}
-				</TextContainer>
+						<DeleteButton
+							color="danger"
+							onClick={props.deleteHandler}
+							disabled={props.disabled}
+						>
+							delete
+						</DeleteButton>
+					</OptionsContainer>
+				)}
 			</ProjectContainer>
 		</ProjectWrapper>
 	);
