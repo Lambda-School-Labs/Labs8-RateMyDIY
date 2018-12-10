@@ -51,12 +51,14 @@ const ImgContainer = styled.div`
 	height: auto;
 `;
 
-const Text = styled.p`
+const DescriptionContainer = styled.div`
 	width: auto;
-	padding: 16px 16px 8px 16px;
+	padding: 24px 24px 12px 24px;
+`;
+const Description = styled.p`
+	width: 100%
 	font-size: 16px;
 `;
-
 const OptionsContainer = styled.div`
 	display: flex;
 	margin: 8px 0 0 auto;
@@ -116,7 +118,7 @@ const Project = props => {
 						src={props.project.img_url}
 					/>
 				</ImgContainer>
-				<Text>{props.project.text}</Text>
+				<DescriptionContainer>{props.project.text}</DescriptionContainer>
 				{props.owner && (
 					<OptionsContainer>
 						<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
