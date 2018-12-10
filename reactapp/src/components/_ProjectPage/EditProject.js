@@ -1,7 +1,6 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 // Components
 import { StarCount, ConfirmModal } from '../../components';
@@ -11,54 +10,6 @@ import { updateProject } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
-
-const ProjectForm = styled.form`
-	background: #ffcccc;
-`;
-
-const Img = styled.img`
-	display: block;
-	width: 100%;
-	background: #cceeee;
-	margin: 0 auto 20px auto;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-`;
-const HiddenInputFileForm = styled.input`
-	display: none;
-`;
-
-// const FileLabel = styled.label`
-// 	font-size: 1.25em;
-// 	font-weight: 700;
-// 	color: white;
-// 	background-color: black;
-// 	display: inline-block;
-// `;
-
-const TextInput = styled.input``;
-
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
-
-const ProjectHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
-`;
-
-const ReviewsButton = styled.button``;
-
-const ProjectNameInput = styled.input``;
-
-const ProjectButtonContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
-`;
-
-const StatusMessage = styled.p``;
 
 class EditProject extends Component {
 	state = {
@@ -77,73 +28,6 @@ class EditProject extends Component {
 
 	singleFileUploadHandler = event => {
 		event.preventDefault();
-		const data = new FormData();
-		// If file selected
-		if (this.state.selectedFile) {
-			data.append(
-				'image',
-				this.state.selectedFile,
-				this.state.selectedFile.name
-			);
-			axios
-				.post(
-					process.env.REACT_APP_BACKEND ||
-						'http://localhost:5000/api/projects/image-upload',
-					data,
-					{
-						onUploadProgress: progressEvent => {
-							// display progress percentage in console
-							console.log(
-								'Upload Progress: ' +
-									Math.round(
-										(progressEvent.loaded / progressEvent.total) * 100
-									) +
-									'%'
-							);
-						}
-					},
-					{
-						headers: {
-							accept: 'application/json',
-							'Accept-Language': 'en-US,en;q=0.8',
-							'Content-Type': `multipart/form-data; boundary=${data._boundary}`
-						}
-					}
-				)
-				.then(response => {
-					if (200 === response.status) {
-						// If file size is larger than expected.
-						if (response.data.error) {
-							if ('LIMIT_FILE_SIZE' === response.data.error.code) {
-								// this.ocShowAlert("Max size: 2MB", "red");
-							} else {
-								console.log(response.data.location);
-								// If not the given file type
-								// this.ocShowAlert(response.data.error, "red");
-							}
-						} else {
-							// Success
-							let fileName = response.data;
-
-							let photo = response.data.location;
-							this.setState({
-								img_url: photo
-							});
-							console.log('filedata', fileName);
-
-							console.log('photo', photo);
-
-							//   this.ocShowAlert("File Uploaded", "#3089cf");
-						}
-					} else {
-						console.log('error');
-					}
-				})
-				.catch(error => {
-					// If another error
-					console.log('error');
-				});
-		}
 	};
 
 	// Keep form data in the state
@@ -205,7 +89,7 @@ class EditProject extends Component {
 
 	render() {
 		return (
-			<ProjectForm onSubmit={this.submitHandler}>
+			<EditProjectFormContainer onSubmit={this.submitHandler}>
 				<ProjectHeader>
 					<ProjectNameInput
 						name="project_name"
@@ -222,32 +106,31 @@ class EditProject extends Component {
 					src={this.props.project.img_url}
 					alt={this.props.project.img_url || 'project image'}
 				/>
-				<form>
-					{/* HiddenInputFileForm is hidden */}
-					<HiddenInputFileForm
-						type="file"
-						name="file"
-						onChange={this.singleFileChangedHandler}
-						ref={fileInput => (this.fileInput = fileInput)}
-					/>
+				{/* HiddenFileInput is hidden */}
+				<HiddenFileInput
+					type="file"
+					name="file"
+					id="file"
+					class="inputfile"
+					ref={fileInput => (this.fileInput = fileInput)}
+				/>
+				<LabelForHiddenFileInput for="file"
+					onClick={() => this.fileInput}
+					disabled={this.props.updatingProject || this.props.gettingProject}
+				>
+					{this.state.selectedFile
+						? this.state.selectedFile.name
+						: 'Pick File'}
+				</LabelForHiddenFileInput>
+				<div className="mt-5">
 					<button
-						onClick={() => this.fileInput.click()}
+						className="btn btn-info"
+						onClick={this.singleFileUploadHandler}
 						disabled={this.props.updatingProject || this.props.gettingProject}
 					>
-						{this.state.selectedFile
-							? this.state.selectedFile.name
-							: 'Pick File'}
-					</button>
-					<div className="mt-5">
-						<button
-							className="btn btn-info"
-							onClick={this.singleFileUploadHandler}
-							disabled={this.props.updatingProject || this.props.gettingProject}
-						>
-							Upload!
+						Upload!
 						</button>
-					</div>
-				</form>
+				</div>
 				<TextInput
 					name="text"
 					type="text"
@@ -280,7 +163,7 @@ class EditProject extends Component {
 				)}
 
 				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-			</ProjectForm>
+			</EditProjectFormContainer>
 		);
 	}
 }
@@ -300,3 +183,49 @@ export default connect(
 		updateProject
 	}
 )(EditProject);
+
+
+// Styled-components
+const EditProjectFormContainer = styled.form`
+	background: #ffcccc;
+`;
+
+const Img = styled.img`
+	display: block;
+	width: 100%;
+	background: #cceeee;
+	margin: 0 auto 20px auto;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+`;
+
+const HiddenFileInput = styled.input`
+	display: none;
+`;
+
+const LabelForHiddenFileInput = styled.label`
+`;
+
+const TextInput = styled.input``;
+
+const CancelButton = styled.button``;
+
+const SubmitInput = styled.input``;
+
+const ProjectHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+`;
+
+const ReviewsButton = styled.button``;
+
+const ProjectNameInput = styled.input``;
+
+const ProjectButtonContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -12px;
+	margin-bottom: 20px;
+`;
+
+const StatusMessage = styled.p``;
