@@ -151,10 +151,9 @@ class ProjectPage extends Component {
 									this.setState({ projectToUpdate: value })
 								}
 							/>
-						) : (this.props.gettingUserInfo ||
-								this.props.gettingProject ||
-								this.props.gettingReviewId) &&
-						  !this.props.project.project_id ? (
+						) : ((this.props.gettingUserInfo || this.props.gettingProject) &&
+								!this.props.project.project_id) ||
+						  this.props.gettingReviewId ? (
 							<React.Fragment>
 								<StatusMessage>Loading project...</StatusMessage>
 							</React.Fragment>
@@ -186,6 +185,7 @@ class ProjectPage extends Component {
 
 						{/* Display posts */}
 						{this.props.project.posts &&
+							!this.props.gettingReviewId &&
 							this.props.project.posts.map(post =>
 								// Could probably move this logic to Post
 								post.post_id === this.state.postToUpdate ? (
@@ -229,6 +229,7 @@ class ProjectPage extends Component {
 
 						{/* Bottom buttons */}
 						{this.props.project.project_id &&
+							!this.props.gettingReviewId &&
 							!this.props.gettingProjectError &&
 							!this.state.postToAdd &&
 							(owner ? (
