@@ -49,7 +49,9 @@ const StyledLink = styled(Link)`
 	}
 `;
 
-const CardTitle = styled.h3``;
+const CardTitle = styled.h3`
+	fontsize: 2rem;
+`;
 const CardUsername = styled.p``;
 class ProjectCard extends React.Component {
 	state = { expanded: false };
