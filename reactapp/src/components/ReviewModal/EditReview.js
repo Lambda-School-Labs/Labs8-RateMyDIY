@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { updateReview, showReviewModal } from '../../actions';
+import { updateReview } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -74,12 +74,16 @@ class EditReview extends Component {
 	submitHandler = event => {
 		event.preventDefault();
 
-		this.props.updateReview(this.props.review.review_id, {
-			user_id: this.props.user_id,
-			project_id: this.props.review.project_id,
-			rating: this.state.rating,
-			text: this.state.text
-		});
+		this.props.updateReview(
+			this.props.review.review_id,
+			{
+				user_id: this.props.user_id,
+				project_id: this.props.review.project_id,
+				rating: this.state.rating,
+				text: this.state.text
+			},
+			() => this.props.willUpdateReview(false)
+		);
 	};
 
 	// Cancel new review (with confirmation prompt)
@@ -125,7 +129,6 @@ class EditReview extends Component {
 					},
 					submit: event => {
 						event.preventDefault();
-						this.props.willUpdateReview(false);
 						this.props.showReviewModal(false);
 					}
 				}
@@ -246,7 +249,6 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		updateReview,
-		showReviewModal
+		updateReview
 	}
 )(EditReview);
