@@ -3,17 +3,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Assets
-import thumbup from '../../assets/images/thumbup-blue.png';
-import thumbdown from '../../assets/images/thumbdown-red.png';
+import thumbup from '../../assets/images/thumbup.png';
+import thumbupBlue from '../../assets/images/thumbup-blue.png';
+import thumbdown from '../../assets/images/thumbdown.png';
+import thumbdownRed from '../../assets/images/thumbdown-red.png';
 
 // Components
 import { NewReview, EditReview, ConfirmModal } from '../../components';
 
 // Actions
-import { getReview, deleteReview } from '../../actions';
+import { getReview, deleteReview, likeReview } from '../../actions';
 
 // Styles
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import StarCount from '../StarCount/StarCount';
 
 const ReviewModalContainer = styled.div``;
@@ -95,15 +97,29 @@ const HelpfulText = styled.p`
 `;
 
 const Like = styled.img`
+	height: 30px;
+	width: 24px;
 	padding-bottom: 6px;
 	margin-right: 16px;
 	cursor: pointer;
+	${props =>
+		props.small &&
+		css`
+			padding: 2px 2px 8px;
+		`};
 `;
 
 const Dislike = styled.img`
+	height: 30px;
+	width: 24px;
 	padding-top: 6px;
 	margin-left: 16px;
 	cursor: pointer;
+	${props =>
+		props.small &&
+		css`
+			padding: 8px 2px 2px;
+		`};
 `;
 
 const StatusMessage = styled.p``;
@@ -141,12 +157,16 @@ class ReviewModal extends Component {
 	};
 
 	// Like, dislike, or remove like from review
-	likeHandler = (event, like) => {};
+	likeHandler = like => {
+		this.props.likeReview({
+			user_id: this.props.userInfo.user_id,
+			review_id: this.props.review_id,
+			like: like === this.props.review.like ? undefined : like
+		});
+	};
 
 	componentDidMount() {
-		this.props.review_id
-			? this.props.getReview(this.props.review_id)
-			: this.setState({ reviewToAdd: true });
+		if (this.props.review_id) this.props.getReview(this.props.review_id);
 	}
 
 	// Todo:
@@ -193,8 +213,13 @@ class ReviewModal extends Component {
 												{this.props.deletingReviewError}
 											</StatusMessage>
 										)}
+										{this.props.likingReviewError && (
+											<StatusMessage>
+												Error: could not update like data
+											</StatusMessage>
+										)}
 
-										{this.props.review.reviewer_id ===
+										{this.props.review.reviewer_id !==
 										this.props.userInfo.user_id ? (
 											<ButtonContainer>
 												<EditButton
@@ -211,15 +236,23 @@ class ReviewModal extends Component {
 										) : (
 											<LikeContainer>
 												<Like
-													src={thumbup}
+													src={this.props.review === 1 ? thumbupBlue : thumbup}
+													small={this.props.likingReview}
 													alt="thumbup"
-													onClick={() => this.likeHandler(1)}
+													onClick={() => {
+														if (!this.props.likingReview) this.likeHandler(1);
+													}}
 												/>
 												<HelpfulText>Helpful?</HelpfulText>
 												<Dislike
-													src={thumbdown}
+													src={
+														this.props.review === -1 ? thumbdownRed : thumbdown
+													}
+													small={this.props.likingReview}
 													alt="thumbdown"
-													onClick={() => this.likeHandler(0)}
+													onClick={() => {
+														if (!this.props.likingReview) this.likeHandler(-1);
+													}}
 												/>
 											</LikeContainer>
 										)}
@@ -264,7 +297,10 @@ const mapStateToProps = state => {
 		gettingReviewError: state.reviewReducer.gettingReviewError,
 
 		deletingReview: state.reviewReducer.deletingReview,
-		deletingReviewError: state.reviewReducer.deletingReviewError
+		deletingReviewError: state.reviewReducer.deletingReviewError,
+
+		likingReview: state.reviewReducer.likingReview,
+		likingReviewError: state.reviewReducer.likingReviewError
 	};
 };
 
@@ -272,6 +308,7 @@ export default connect(
 	mapStateToProps,
 	{
 		getReview,
-		deleteReview
+		deleteReview,
+		likeReview
 	}
 )(ReviewModal);
