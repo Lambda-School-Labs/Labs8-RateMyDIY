@@ -170,6 +170,8 @@ class EditReview extends Component {
 	}
 
 	render() {
+		const disabled = this.props.updatingReview || this.props.gettingReview;
+
 		return (
 			<ModalShade
 				onClick={event => {
@@ -254,8 +256,14 @@ class EditReview extends Component {
 						)}
 
 						<ButtonContainer>
-							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Submit Changes" />
+							<CancelButton onClick={this.cancelHandler} disabled={disabled}>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Submit Changes"
+								disabled={disabled}
+							/>
 						</ButtonContainer>
 
 						{this.state.confirm && (

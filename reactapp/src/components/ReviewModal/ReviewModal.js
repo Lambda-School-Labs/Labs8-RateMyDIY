@@ -150,8 +150,7 @@ class ReviewModal extends Component {
 	}
 
 	// Todo:
-	// Set up button disabling.
-	// Don't close NewReview or EditReview until !gettingReview.
+	// Don't close EditReview until !gettingReview.
 
 	render() {
 		return (

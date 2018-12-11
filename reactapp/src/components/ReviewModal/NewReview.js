@@ -130,6 +130,8 @@ class NewReview extends Component {
 	};
 
 	render() {
+		const disabled = this.props.addingReview || this.props.gettingReview;
+
 		return (
 			<ModalShade
 				onClick={event => {
@@ -209,8 +211,14 @@ class NewReview extends Component {
 						)}
 
 						<ButtonContainer>
-							<CancelButton onClick={this.cancelHandler}>Cancel</CancelButton>
-							<SubmitInput type="submit" value="Submit Review" />
+							<CancelButton onClick={this.cancelHandler} disabled={disabled}>
+								Cancel
+							</CancelButton>
+							<SubmitInput
+								type="submit"
+								value="Submit Review"
+								disabled={disabled}
+							/>
 						</ButtonContainer>
 
 						{this.state.confirm && (
