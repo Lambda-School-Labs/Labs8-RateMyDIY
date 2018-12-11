@@ -12,20 +12,14 @@ export const GET_REVIEW_ID_ERROR = 'GET_REVIEW_ID_ERROR';
 export const ADDING_REVIEW = 'ADDING_REVIEW';
 export const ADDED_REVIEW = 'ADDED_REVIEW';
 export const ADD_REVIEW_ERROR = 'ADD_REVIEW_ERROR';
-// willUpdateReview
-export const WILL_UPDATE_REVIEW = 'WILL_UPDATE_REVIEW';
 // updateReview
 export const UPDATING_REVIEW = 'UPDATING_REVIEW';
 export const UPDATED_REVIEW = 'UPDATED_REVIEW';
 export const UPDATE_REVIEW_ERROR = 'UPDATE_REVIEW_ERROR';
-// willDeleteReview
-export const WILL_DELETE_REVIEW = 'WILL_DELETE_REVIEW';
 // deleteReview
 export const DELETING_REVIEW = 'DELETING_REVIEW';
 export const DELETED_REVIEW = 'DELETED_REVIEW';
 export const DELETE_REVIEW_ERROR = 'DELETE_REVIEW_ERROR';
-// showReviewModal
-export const SHOW_REVIEW_MODAL = 'SHOW_REVIEW_MODAL';
 
 // Loading message tester
 function sleep(ms) {
@@ -100,15 +94,8 @@ export const addReview = review => {
 	};
 };
 
-// willUpdateReview
-export const willUpdateReview = value => {
-	return dispatch => {
-		dispatch({ type: WILL_UPDATE_REVIEW, payload: value });
-	};
-};
-
 // update review
-export const updateReview = (review_id, changes) => {
+export const updateReview = (review_id, changes, callback) => {
 	return dispatch => {
 		dispatch({ type: UPDATING_REVIEW });
 
@@ -124,21 +111,17 @@ export const updateReview = (review_id, changes) => {
 				dispatch({ type: UPDATED_REVIEW });
 			})
 
-			.then(() => dispatch(getReview(review_id)))
+			.then(() => {
+				dispatch(getReview(review_id));
+				callback();
+			})
 
 			.catch(error => dispatch({ type: UPDATE_REVIEW_ERROR, payload: error }));
 	};
 };
 
-// willDeleteReview
-export const willDeleteReview = value => {
-	return dispatch => {
-		dispatch({ type: WILL_DELETE_REVIEW, payload: value });
-	};
-};
-
 // delete review
-export const deleteReview = (user_id, review_id) => {
+export const deleteReview = (user_id, review_id, callback) => {
 	return dispatch => {
 		dispatch({ type: DELETING_REVIEW });
 
@@ -152,14 +135,9 @@ export const deleteReview = (user_id, review_id) => {
 			.then(async () => {
 				await sleep(500);
 				dispatch({ type: DELETED_REVIEW });
+				callback();
 			})
 
 			.catch(error => dispatch({ type: DELETE_REVIEW_ERROR, payload: error }));
-	};
-};
-
-export const showReviewModal = value => {
-	return dispatch => {
-		dispatch({ type: SHOW_REVIEW_MODAL, payload: value });
 	};
 };
