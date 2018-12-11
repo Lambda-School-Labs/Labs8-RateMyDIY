@@ -50,7 +50,8 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				review: action.payload.review,
 				reviewId: action.payload.review_id,
-				gettingReview: false
+				gettingReview: false,
+				likingReviewError: undefined
 			};
 
 		case GET_REVIEW_ERROR:
