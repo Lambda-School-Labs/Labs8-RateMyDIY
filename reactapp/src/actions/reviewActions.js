@@ -20,6 +20,10 @@ export const UPDATE_REVIEW_ERROR = 'UPDATE_REVIEW_ERROR';
 export const DELETING_REVIEW = 'DELETING_REVIEW';
 export const DELETED_REVIEW = 'DELETED_REVIEW';
 export const DELETE_REVIEW_ERROR = 'DELETE_REVIEW_ERROR';
+// likeReview
+export const LIKING_REVIEW = 'LIKING_REVIEW';
+export const LIKED_REVIEW = 'LIKED_REVIEW';
+export const LIKE_REVIEW_ERROR = 'LIKE_REVIEW_ERROR';
 
 // Loading message tester
 function sleep(ms) {
@@ -139,5 +143,26 @@ export const deleteReview = (user_id, review_id, callback) => {
 			})
 
 			.catch(error => dispatch({ type: DELETE_REVIEW_ERROR, payload: error }));
+	};
+};
+
+// like review
+export const likeReview = ({ user_id, review_id, like }) => {
+	return dispatch => {
+		dispatch({ type: LIKING_REVIEW });
+
+		axios
+			.put(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+					`/api/reviews/${review_id}/like`,
+				{ user_id, like }
+			)
+
+			.then(async ({ data }) => {
+				await sleep(500);
+				dispatch({ type: LIKED_REVIEW, payload: data });
+			})
+
+			.catch(error => dispatch({ type: LIKE_REVIEW_ERROR, payload: error }));
 	};
 };
