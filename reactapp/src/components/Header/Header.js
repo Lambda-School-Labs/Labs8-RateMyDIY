@@ -28,6 +28,7 @@ const Logo = styled.img`
 `;
 
 const Header = props => {
+	console.log(props);
 	return (
 		<HeaderContainer>
 			<HeaderContainerWraper>
@@ -43,6 +44,7 @@ const Header = props => {
 					<SearchBar
 						handleChange={props.handleChange}
 						handleSearch={props.handleSearch}
+						searchTerm={props.searchTerm}
 					/>
 				</HeaderSearchContainer>
 				<Nav />

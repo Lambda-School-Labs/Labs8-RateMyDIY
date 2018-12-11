@@ -23,16 +23,28 @@ const SearchPageWrapper = styled.div`
 class SearchPage extends Component {
 	constructor() {
 		super();
-		this.state = { input: '' };
+		this.state = { input: '', searchTerm: '' };
 	} // useless constructor
 
 	componentDidMount() {
 		const values = queryString.parse(this.props.location.search);
+
+		if (values.query) {
+			console.log('dbug---');
+			console.log(values.query);
+			this.setState({ searchTerm: values.query });
+		}
+
 		this.props.fetchSearchResults(values.query);
 	}
 
 	handleChange = e => {
-		this.setState({ ...this.state, input: e.target.value });
+		console.log(e.target.value);
+		this.setState({
+			...this.state,
+			input: e.target.value,
+			searchTerm: e.target.value
+		});
 	};
 
 	handleSearch = e => {
@@ -77,6 +89,7 @@ class SearchPage extends Component {
 				<Header
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
+					searchTerm={this.state.searchTerm}
 				/>
 				<div className="search-page-container">
 					<div className="search-options" />
