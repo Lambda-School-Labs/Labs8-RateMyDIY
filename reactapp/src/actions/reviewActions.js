@@ -38,7 +38,7 @@ export const getReview = review_id => {
 			)
 
 			.then(({ data }) => {
-				dispatch({ type: GOT_REVIEW, payload: data });
+				dispatch({ type: GOT_REVIEW, payload: { review: data, review_id } });
 			})
 
 			.catch(error => dispatch({ type: GET_REVIEW_ERROR, payload: error }));
