@@ -219,7 +219,7 @@ class ReviewModal extends Component {
 											</StatusMessage>
 										)}
 
-										{this.props.review.reviewer_id !==
+										{this.props.review.reviewer_id ===
 										this.props.userInfo.user_id ? (
 											<ButtonContainer>
 												<EditButton
