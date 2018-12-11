@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { addReview, getReview } from '../../actions';
+import { addReview } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -237,7 +237,6 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		addReview,
-		getReview
+		addReview
 	}
 )(NewReview);
