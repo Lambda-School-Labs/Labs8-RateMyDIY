@@ -142,7 +142,6 @@ class ProjectPage extends Component {
 				<Header />
 				<ProjectPageContainer>
 					<ProjectContainer>
-						{/* Might be a good idea to replace these with a switch */}
 						{this.state.projectToUpdate ? (
 							<EditProject
 								user_id={this.props.userInfo.user_id}
@@ -274,8 +273,9 @@ class ProjectPage extends Component {
 
 						{this.state.reviewModal && (
 							<ReviewModal
-								review_id={this.state.reviewModal}
-								closeModal={this.setState({ reviewModal: null })}
+								review_id={this.props.reviewId}
+								showReviewModal={value => this.setState({ reviewModal: value })}
+								project={this.props.project}
 							/>
 						)}
 
