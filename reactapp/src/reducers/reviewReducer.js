@@ -13,7 +13,10 @@ import {
 	UPDATE_REVIEW_ERROR,
 	DELETING_REVIEW,
 	DELETED_REVIEW,
-	DELETE_REVIEW_ERROR
+	DELETE_REVIEW_ERROR,
+	LIKING_REVIEW,
+	LIKED_REVIEW,
+	LIKE_REVIEW_ERROR
 } from '../actions';
 
 const initialState = {
@@ -126,6 +129,24 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				deletingReview: false,
 				deletingReviewError: `${action.payload}`
+			};
+
+		// likeReview
+		case LIKING_REVIEW:
+			return { ...state, likingReview: true };
+
+		case LIKED_REVIEW:
+			return {
+				...state,
+				likingReview: false,
+				review: { ...state.review, like: action.payload }
+			};
+
+		case LIKE_REVIEW_ERROR:
+			return {
+				...state,
+				likingReview: false,
+				likingReviewError: `${action.payload}`
 			};
 
 		default:
