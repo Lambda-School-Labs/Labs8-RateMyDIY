@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 
 // Actions
-import { addReview, showReviewModal } from '../../actions';
+import { addReview, getReview } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -76,7 +76,7 @@ class NewReview extends Component {
 
 		this.props.addReview({
 			user_id: this.props.user_id,
-			project_id: this.props.project_id,
+			project_id: this.props.project.project_id,
 			rating: this.state.rating,
 			text: this.state.text
 		});
@@ -112,15 +112,15 @@ class NewReview extends Component {
 
 				{/* todo: click outside modal to trigger cancelHandler */}
 				<ReviewForm onSubmit={this.submitHandler}>
-					<ProjectTitle>{`@${this.props.maker_name}'s ${
-						this.props.project_name
+					<ProjectTitle>{`@${this.props.project.username}'s ${
+						this.props.project.project_name
 					}`}</ProjectTitle>
 
 					<Reviewer>{`Review by: @${this.props.username}`}</Reviewer>
 
 					<Img
-						src={this.props.img_url}
-						alt={this.props.img_url || 'project image'}
+						src={this.props.project.img_url}
+						alt={this.props.project.img_url || 'project image'}
 					/>
 
 					<StarContainer>
@@ -205,6 +205,6 @@ export default connect(
 	mapStateToProps,
 	{
 		addReview,
-		showReviewModal
+		getReview
 	}
 )(NewReview);
