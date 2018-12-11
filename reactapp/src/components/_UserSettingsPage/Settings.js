@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getUsername, getProfilePic } from '../../actions/settingActions';
+import { fetchSearchResults } from '../../actions';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,7 +12,7 @@ import Modal from '@material-ui/core/Modal';
 import { compose } from 'redux';
 import ReactLoading from 'react-loading';
 
-import { Nav, Twillio } from '../../components';
+import { Header, Twillio } from '../../components';
 
 const styles = theme => ({
 	paper: {
@@ -47,6 +48,7 @@ const SettingsContainer = styled.div`
 	align-items: center;
 	width: 80%;
 	margin: 0 auto;
+	margin-top: 100px;
 	border-radius: 30px;
 	background-color: ${props => props.theme.mui.palette.primary.light};
 `;
@@ -195,9 +197,22 @@ class UserSettings extends Component {
 	state = {
 		username: '',
 		img_url: null,
-		open: false
+		open: false,
+		input: ''
+	};
+	handleChange = e => {
+		this.setState({ ...this.state, input: e.target.value });
 	};
 
+	handleSearch = e => {
+		e.preventDefault();
+		const searchTerm = this.state.input;
+		console.log(searchTerm);
+		//call featch search results action
+		//push to search page
+		this.props.fetchSearchResults(searchTerm);
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
 	handleOpen = () => {
 		this.setState({ open: true });
 	};
@@ -293,7 +308,10 @@ class UserSettings extends Component {
 		const { classes } = this.props;
 		return (
 			<SettingsPageContainer>
-				<Nav />
+				<Header
+					handleChange={this.handleChange}
+					handleSearch={this.handleSearch}
+				/>
 				<SettingsContainer>
 					<ProfileImgHolder>
 						<ProfileImg src={this.props.userInfo.img_url} />
@@ -377,7 +395,7 @@ const mapStateToProps = state => ({
 export default compose(
 	connect(
 		mapStateToProps,
-		{ getUsername, getProfilePic }
+		{ getUsername, getProfilePic, fetchSearchResults }
 	),
 	withStyles(styles)
 )(UserSettings);
