@@ -16,6 +16,8 @@ import { getReview, deleteReview } from '../../actions';
 import styled from 'styled-components';
 import StarCount from '../StarCount/StarCount';
 
+const ReviewModalContainer = styled.div``;
+
 const ModalShade = styled.div`
 	position: fixed;
 	top: 0;
@@ -146,32 +148,30 @@ class ReviewModal extends Component {
 	}
 
 	// Todo:
-	// Move ModalShade to NewReview and EditReview. Also wrap ReviewContainer.
 	// Set up button disabling.
 	// Don't close NewReview or EditReview until !gettingReview.
 
 	render() {
 		return (
-			<ModalShade
-				onClick={event => {
-					event.stopPropagation();
-					// if (!this.state.confirm) this.props.showReviewModal(false);
-				}}
-			>
-				{/* todo: click outside modal to close it */}
-				<ModalBox onClick={event => event.stopPropagation()}>
-					{this.props.review_id ? (
-						this.state.reviewToUpdate ? (
-							<EditReview
-								user_id={this.props.userInfo.user_id}
-								review={this.props.review}
-								willUpdateReview={value =>
-									this.setState({ reviewToUpdate: value })
-								}
-								showReviewModal={this.props.showReviewModal}
-							/>
-						) : (
-							<React.Fragment>
+			<ReviewModalContainer>
+				{this.props.review_id ? (
+					this.state.reviewToUpdate ? (
+						<EditReview
+							user_id={this.props.userInfo.user_id}
+							review={this.props.review}
+							willUpdateReview={value =>
+								this.setState({ reviewToUpdate: value })
+							}
+							showReviewModal={this.props.showReviewModal}
+						/>
+					) : (
+						<ModalShade
+							onClick={event => {
+								event.stopPropagation();
+								if (!this.state.confirm) this.props.showReviewModal(false);
+							}}
+						>
+							<ModalBox onClick={event => event.stopPropagation()}>
 								<CloseModalButton
 									onClick={() => this.props.showReviewModal(false)}
 								>
@@ -237,24 +237,24 @@ class ReviewModal extends Component {
 										</React.Fragment>
 									)}
 								</ReviewContainer>
-							</React.Fragment>
-						)
-					) : this.props.project && this.props.userInfo.user_id ? (
-						<NewReview
-							user_id={this.props.userInfo.user_id}
-							username={this.props.userInfo.username}
-							project={this.props.project}
-							showReviewModal={this.props.showReviewModal}
-						/>
-					) : (
-						<StatusMessage>How did you get here? Tell Max.</StatusMessage>
-					)}
-					{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
-					{this.props.deletingReview && (
-						<ConfirmModal statusMessage={'Deleting review...'} />
-					)}
-				</ModalBox>
-			</ModalShade>
+							</ModalBox>
+						</ModalShade>
+					)
+				) : this.props.project && this.props.userInfo.user_id ? (
+					<NewReview
+						user_id={this.props.userInfo.user_id}
+						username={this.props.userInfo.username}
+						project={this.props.project}
+						showReviewModal={this.props.showReviewModal}
+					/>
+				) : (
+					<StatusMessage>How did you get here? Tell Max.</StatusMessage>
+				)}
+				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
+				{this.props.deletingReview && (
+					<ConfirmModal statusMessage={'Deleting review...'} />
+				)}
+			</ReviewModalContainer>
 		);
 	}
 }
