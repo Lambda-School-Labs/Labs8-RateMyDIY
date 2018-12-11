@@ -144,7 +144,9 @@ class ReviewModal extends Component {
 	likeHandler = (event, like) => {};
 
 	componentDidMount() {
-		if (this.props.review_id) this.props.getReview(this.props.review_id);
+		this.props.review_id
+			? this.props.getReview(this.props.review_id)
+			: this.setState({ reviewToAdd: true });
 	}
 
 	// Todo:
@@ -154,92 +156,86 @@ class ReviewModal extends Component {
 	render() {
 		return (
 			<ReviewModalContainer>
-				{this.props.review_id ? (
-					this.state.reviewToUpdate ? (
-						<EditReview
-							user_id={this.props.userInfo.user_id}
-							review={this.props.review}
-							willUpdateReview={value =>
-								this.setState({ reviewToUpdate: value })
-							}
-							showReviewModal={this.props.showReviewModal}
-						/>
-					) : (
-						<ModalShade
-							onClick={event => {
-								event.stopPropagation();
-								if (!this.state.confirm) this.props.showReviewModal(false);
-							}}
-						>
-							<ModalBox onClick={event => event.stopPropagation()}>
-								<CloseModalButton
-									onClick={() => this.props.showReviewModal(false)}
-								>
-									x
-								</CloseModalButton>
-								<ReviewContainer>
-									{this.props.gettingReview ? (
-										<StatusMessage>Loading review...</StatusMessage>
-									) : this.props.gettingReviewError ? (
-										<StatusMessage>
-											{this.props.gettingReviewError}
-										</StatusMessage>
-									) : (
-										<React.Fragment>
-											<ProjectTitle>{`@${this.props.review.maker_name}'s ${
-												this.props.review.project_name
-											}`}</ProjectTitle>
-											<Reviewer>{`Review by: @${
-												this.props.review.reviewer_name
-											}`}</Reviewer>
-											<Img
-												src={this.props.review.img_url}
-												alt={this.props.review.img_url || 'project image'}
-											/>
-											<StarCount rating={this.props.review.rating} />
-											<ReviewText>{this.props.review.text}</ReviewText>
+				{this.props.review_id && !this.state.reviewToUpdate ? (
+					<ModalShade
+						onClick={event => {
+							event.stopPropagation();
+							if (!this.state.confirm) this.props.showReviewModal(false);
+						}}
+					>
+						<ModalBox onClick={event => event.stopPropagation()}>
+							<CloseModalButton
+								onClick={() => this.props.showReviewModal(false)}
+							>
+								x
+							</CloseModalButton>
+							<ReviewContainer>
+								{this.props.gettingReview ? (
+									<StatusMessage>Loading review...</StatusMessage>
+								) : this.props.gettingReviewError ? (
+									<StatusMessage>{this.props.gettingReviewError}</StatusMessage>
+								) : (
+									<React.Fragment>
+										<ProjectTitle>{`@${this.props.review.maker_name}'s ${
+											this.props.review.project_name
+										}`}</ProjectTitle>
+										<Reviewer>{`Review by: @${
+											this.props.review.reviewer_name
+										}`}</Reviewer>
+										<Img
+											src={this.props.review.img_url}
+											alt={this.props.review.img_url || 'project image'}
+										/>
+										<StarCount rating={this.props.review.rating} />
+										<ReviewText>{this.props.review.text}</ReviewText>
 
-											{this.props.deletingReviewError && (
-												<StatusMessage error>
-													{this.props.deletingReviewError}
-												</StatusMessage>
-											)}
+										{this.props.deletingReviewError && (
+											<StatusMessage error>
+												{this.props.deletingReviewError}
+											</StatusMessage>
+										)}
 
-											{this.props.review.reviewer_id ===
-											this.props.userInfo.user_id ? (
-												<ButtonContainer>
-													<EditButton
-														onClick={() =>
-															this.setState({ reviewToUpdate: true })
-														}
-													>
-														Edit Review
-													</EditButton>
-													<DeleteButton onClick={this.deleteHandler}>
-														Delete Review
-													</DeleteButton>
-												</ButtonContainer>
-											) : (
-												<LikeContainer>
-													<Like
-														src={thumbup}
-														alt="thumbup"
-														onClick={() => this.likeHandler(1)}
-													/>
-													<HelpfulText>Helpful?</HelpfulText>
-													<Dislike
-														src={thumbdown}
-														alt="thumbdown"
-														onClick={() => this.likeHandler(0)}
-													/>
-												</LikeContainer>
-											)}
-										</React.Fragment>
-									)}
-								</ReviewContainer>
-							</ModalBox>
-						</ModalShade>
-					)
+										{this.props.review.reviewer_id ===
+										this.props.userInfo.user_id ? (
+											<ButtonContainer>
+												<EditButton
+													onClick={() =>
+														this.setState({ reviewToUpdate: true })
+													}
+												>
+													Edit Review
+												</EditButton>
+												<DeleteButton onClick={this.deleteHandler}>
+													Delete Review
+												</DeleteButton>
+											</ButtonContainer>
+										) : (
+											<LikeContainer>
+												<Like
+													src={thumbup}
+													alt="thumbup"
+													onClick={() => this.likeHandler(1)}
+												/>
+												<HelpfulText>Helpful?</HelpfulText>
+												<Dislike
+													src={thumbdown}
+													alt="thumbdown"
+													onClick={() => this.likeHandler(0)}
+												/>
+											</LikeContainer>
+										)}
+									</React.Fragment>
+								)}
+							</ReviewContainer>
+						</ModalBox>
+					</ModalShade>
+				) : this.state.reviewToUpdate ? (
+					<EditReview
+						user_id={this.props.userInfo.user_id}
+						review={this.props.review}
+						willUpdateReview={value => this.setState({ reviewToUpdate: value })}
+						showReviewModal={this.props.showReviewModal}
+					/>
 				) : this.props.project && this.props.userInfo.user_id ? (
 					<NewReview
 						user_id={this.props.userInfo.user_id}
