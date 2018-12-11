@@ -8,39 +8,32 @@ import {
 	ADDING_REVIEW,
 	ADDED_REVIEW,
 	ADD_REVIEW_ERROR,
-	WILL_UPDATE_REVIEW,
 	UPDATING_REVIEW,
 	UPDATED_REVIEW,
 	UPDATE_REVIEW_ERROR,
-	WILL_DELETE_REVIEW,
 	DELETING_REVIEW,
 	DELETED_REVIEW,
-	DELETE_REVIEW_ERROR,
-	SHOW_REVIEW_MODAL
+	DELETE_REVIEW_ERROR
 } from '../actions';
 
 const initialState = {
-	review: {},
-	reviewId: null,
+	review: {}
+	// reviewId: null,
 
-	gettingReviews: false,
-	gettingReviewsError: null,
+	// gettingReviews: false,
+	// gettingReviewsError: null,
 
-	gettingReview: false,
-	gettingReviewError: null,
+	// gettingReview: false,
+	// gettingReviewError: null,
 
-	addingReview: false,
-	addingReviewError: null,
+	// addingReview: false,
+	// addingReviewError: null,
 
-	reviewToUpdate: false,
-	updatingReview: false,
-	updatingReviewError: null,
+	// updatingReview: false,
+	// updatingReviewError: null,
 
-	reviewToDelete: false,
-	deletingReview: false,
-	deletingReviewError: null,
-
-	reviewModal: false
+	// deletingReview: false,
+	// deletingReviewError: null,
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -53,8 +46,7 @@ const reviewReducer = (state = initialState, action) => {
 			return {
 				...state,
 				review: action.payload,
-				gettingReview: false,
-				reviewToUpdate: false
+				gettingReview: false
 			};
 
 		case GET_REVIEW_ERROR:
@@ -100,13 +92,6 @@ const reviewReducer = (state = initialState, action) => {
 				addingReviewError: `${action.payload}`
 			};
 
-		// willUpdateReview
-		case WILL_UPDATE_REVIEW:
-			return {
-				...state,
-				reviewToUpdate: action.payload
-			};
-
 		// updateReview
 		case UPDATING_REVIEW:
 			return { ...state, updatingReview: true };
@@ -122,13 +107,6 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				updatingReview: false,
 				updatingReviewError: `${action.payload}`
-			};
-
-		// willDeleteReview
-		case WILL_DELETE_REVIEW:
-			return {
-				...state,
-				reviewToDelete: action.payload
 			};
 
 		// deleteReview
@@ -148,13 +126,6 @@ const reviewReducer = (state = initialState, action) => {
 				...state,
 				deletingReview: false,
 				deletingReviewError: `${action.payload}`
-			};
-
-		// showReviewModal
-		case SHOW_REVIEW_MODAL:
-			return {
-				...state,
-				reviewModal: action.payload
 			};
 
 		default:
