@@ -45,7 +45,8 @@ const reviewReducer = (state = initialState, action) => {
 		case GOT_REVIEW:
 			return {
 				...state,
-				review: action.payload,
+				review: action.payload.review,
+				reviewId: action.payload.review_id,
 				gettingReview: false
 			};
 
@@ -81,8 +82,7 @@ const reviewReducer = (state = initialState, action) => {
 		case ADDED_REVIEW:
 			return {
 				...state,
-				addingReview: false,
-				reviewId: action.payload
+				addingReview: false
 			};
 
 		case ADD_REVIEW_ERROR:
