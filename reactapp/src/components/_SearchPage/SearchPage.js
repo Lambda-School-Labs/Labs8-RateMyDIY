@@ -96,7 +96,7 @@ class SearchPage extends Component {
 					<div className="search-results">
 						{this.props.projects.length === 0 &&
 						this.props.gettingSearchResults === false ? (
-							<NoSearchResults>No projects found :( </NoSearchResults>
+							<NoSearchResults>No projects found </NoSearchResults>
 						) : (
 							''
 						)}
