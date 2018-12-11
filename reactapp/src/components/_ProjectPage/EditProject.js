@@ -1,10 +1,10 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import UploadProjectPictureIcon from './circleplus.png';
 // Components
 import { StarCount, ConfirmModal } from '../../components';
-
+import StarRatings from 'react-star-ratings';
 // Actions
 import { updateProject } from '../../actions';
 
@@ -33,12 +33,12 @@ class EditProject extends Component {
 	// Keep form data in the state
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
+		console.log("this.props " + this.props);
 	};
 
 	// Submit changes
-	submitHandler = event => {
+	submitProjectChanges = event => {
 		event.preventDefault();
-
 		this.props.updateProject(
 			this.props.project.project_id,
 			{
@@ -83,45 +83,58 @@ class EditProject extends Component {
 		this.setState({
 			project_name: this.props.project.project_name,
 			img_url: this.props.project.img_url,
-			text: this.props.project.text
+			text: this.props.project.text,
+			project_rating: this.props.project.project_rating
 		});
 	}
 
 	render() {
 		return (
-			<EditProjectFormContainer onSubmit={this.submitHandler}>
+			<EditProjectFormContainer onSubmit={this.submitProjectChanges}>
 				<ProjectHeader>
-					<ProjectNameInput
-						name="project_name"
-						type="text"
-						placeholder="project title"
-						value={this.state.project_name}
-						onChange={this.changeHandler}
-						required
-					/>
-					<StarCount rating={this.props.project.rating} />
-					<ReviewsButton disabled>Reviews</ReviewsButton>
+					<ProjectName>
+						<ProjectNameInput
+							name="project_name_input"
+							type="text"
+							placeholder="Project Title"
+							value={this.state.project_name}
+							onChange={this.changeHandler}
+							required
+						/>
+					</ProjectName>
+					<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
+					{this.props.project.project_rating &&
+						<ProjectRatingContainer>
+							< StarRatings
+								rating={Number(this.props.project.project_rating)}
+								starRatedColor="black"
+								starEmptyColor="grey"
+								// changeRating={this.changeRating}
+								starDimension="20px"
+								starSpacing="5px"
+								numberOfStars={5}
+							/>
+						</ProjectRatingContainer>}
 				</ProjectHeader>
-				<Img
-					src={this.props.project.img_url}
-					alt={this.props.project.img_url || 'project image'}
-				/>
-				{/* HiddenFileInput is hidden */}
-				<HiddenFileInput
+				<ImgContainer>
+					<LabelProfilePictureInput htmlFor="file"
+						onClick={() => this.fileInput}
+						disabled={this.props.updatingProject || this.props.gettingProject}
+					>
+						<UploadProjectPictureIconStyle className="upload-icon" src={UploadProjectPictureIcon} />
+					</LabelProfilePictureInput>
+					<ProjectImage
+						src={this.props.project.img_url}
+						alt={this.props.project.img_url || 'project image'}
+					/>
+				</ImgContainer>
+				{/* HiddenProfilePictureInput is hidden */}
+				<HiddenProfilePictureInput
 					type="file"
 					name="file"
 					id="file"
-					class="inputfile"
 					ref={fileInput => (this.fileInput = fileInput)}
 				/>
-				<LabelForHiddenFileInput for="file"
-					onClick={() => this.fileInput}
-					disabled={this.props.updatingProject || this.props.gettingProject}
-				>
-					{this.state.selectedFile
-						? this.state.selectedFile.name
-						: 'Pick File'}
-				</LabelForHiddenFileInput>
 				<div className="mt-5">
 					<button
 						className="btn btn-info"
@@ -131,27 +144,30 @@ class EditProject extends Component {
 						Upload!
 						</button>
 				</div>
-				<TextInput
-					name="text"
-					type="text"
-					placeholder="project description"
-					value={this.state.text}
-					onChange={this.changeHandler}
-					required
-				/>
-				<ProjectButtonContainer>
-					<CancelButton
+				<DescriptionContainer>
+					<DescriptionInput
+						name="text"
+						type="text"
+						placeholder="project description"
+						value={this.state.text}
+						onChange={this.changeHandler}
+						required
+					/>
+				</DescriptionContainer>
+				<EditProjectOptionsContainer>
+					<CancelLink
 						onClick={this.cancelHandler}
 						disabled={this.props.updatingProject || this.props.gettingProject}
 					>
 						Cancel
-					</CancelButton>
-					<SubmitInput
+					</CancelLink>
+					<SubmitLink
 						type="submit"
 						value="Submit Changes"
 						disabled={this.props.updatingProject || this.props.gettingProject}
-					/>
-				</ProjectButtonContainer>
+					>tesatsatast
+					</SubmitLink>
+				</EditProjectOptionsContainer>
 
 				{(this.props.updatingProject || this.props.gettingProject) && (
 					<StatusMessage small>Updating project...</StatusMessage>
@@ -165,13 +181,12 @@ class EditProject extends Component {
 				{this.state.confirm && <ConfirmModal confirm={this.state.confirm} />}
 			</EditProjectFormContainer>
 		);
-	}
-}
+	};
+};
 
 const mapStateToProps = state => {
 	return {
 		gettingProject: state.projectReducer.gettingProject,
-
 		updatingProject: state.projectReducer.updatingProject,
 		updatingProjectError: state.projectReducer.updatingProjectError
 	};
@@ -187,41 +202,98 @@ export default connect(
 
 // Styled-components
 const EditProjectFormContainer = styled.form`
-	background: #ffcccc;
-`;
-
-const Img = styled.img`
-	display: block;
+	display: flex;
+	flex-direction: column;
+	background: #e9ded8;
 	width: 100%;
-	background: #cceeee;
-	margin: 0 auto 20px auto;
+	margin: 0 0 24px 0;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
-const HiddenFileInput = styled.input`
+const ProjectHeader = styled.div`
+	display: flex;
+	position: 50%;
+	flex-direction: column;
+	background: #e9ded8;
+	padding: 24px 24px 12px 24px;
+`;
+
+const ProjectName = styled.h2`
+	display: flex;
+	font-size: 32px;
+	font-weight: bold;
+	margin: 0 0 0 -2px;
+`;
+
+const ProjectRatingContainer = styled.div`
+	
+`;
+
+const ProjectNameInput = styled.input`
+	background-color: #e9ded8;
+	font-size: 32px;
+	font-weight: bold;
+	border: none;
+	margin: 0;
+	padding: 0;
+	width:100%;
+`;
+
+const ProjectAuthor = styled.div`
+	
+`;
+
+const ImgContainer = styled.div`
+	position: relative;
+	display: block;
+	height: auto;
+	margin: 0 auto;
+	transition: .5s ease;
+	:hover {
+		opacity: 0.5;
+	}
+	&.image-icon {
+    display: none;
+  }
+`;
+
+const LabelProfilePictureInput = styled.label`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+	text-align: center;
+`;
+
+const UploadProjectPictureIconStyle = styled.img`
+	width: 35%;
+	height: 35%;
+	opacity: .4;
+	transition: .5s ease;
+`;
+
+const ProjectImage = styled.img`
+	width: auto;
+	max-height: 600px !important;
+`;
+
+const HiddenProfilePictureInput = styled.input`
 	display: none;
 `;
 
-const LabelForHiddenFileInput = styled.label`
-`;
+const DescriptionContainer = styled.div``;
+const DescriptionInput = styled.input``;
 
-const TextInput = styled.input``;
+const CancelLink = styled.a``;
 
-const CancelButton = styled.button``;
-
-const SubmitInput = styled.input``;
-
-const ProjectHeader = styled.div`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
-`;
+const SubmitLink = styled.button``;
 
 const ReviewsButton = styled.button``;
 
-const ProjectNameInput = styled.input``;
 
-const ProjectButtonContainer = styled.div`
+
+const EditProjectOptionsContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-top: -12px;

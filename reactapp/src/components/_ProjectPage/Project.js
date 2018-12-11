@@ -3,20 +3,68 @@ import React from 'react';
 import ModalImage from 'react-modal-image';
 // import { Button } from 'reactstrap';
 // Components
-// import StarRatings from 'react-star-ratings';
-
-// Styles
+import StarRatings from 'react-star-ratings';
 import styled from 'styled-components';
 
-const ProjectWrapper = styled.div`
-	margin: 0 0 24px 0;
-`;
+const Project = props => {
+	return (
+		<ProjectContainer>
+			<ProjectHeader>
+				<ProjectName>{props.project.project_name}</ProjectName>
+				<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+				{props.project.project_rating &&
+					<ProjectRatingContainer>
+						< StarRatings
+							rating={Number(props.project.project_rating)}
+							starRatedColor="black"
+							starEmptyColor="grey"
+							// changeRating={this.changeRating}
+							starDimension="20px"
+							starSpacing="5px"
+							numberOfStars={5}
+						/>
+					</ProjectRatingContainer>}
+			</ProjectHeader>
+			<ImgContainer>
+				<Img
+					small={props.project.img_url}
+					large={props.project.img_url}
+					alt={props.project.project_name}
+					src={props.project.img_url}
+				/>
+			</ImgContainer>
+			<DescriptionContainer>{props.project.text}</DescriptionContainer>
+			{props.owner && (
+				<OptionsContainer>
+					<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
+					<EditLink
+						onClick={() => props.willUpdateProject(true)}
+						disabled={props.disabled}
+					>
+						edit
+						</EditLink>
+					<DeleteButton
+						color="danger"
+						onClick={props.deleteHandler}
+						disabled={props.disabled}
+					>
+						delete
+						</DeleteButton>
+				</OptionsContainer>
+			)}
+		</ProjectContainer>
+	);
+};
 
+export default Project;
+
+// Styled-components
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	background: #e9ded8;
 	width: 100%;
+	margin: 0 0 24px 0;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
@@ -32,33 +80,36 @@ const ProjectName = styled.h2`
 	display: flex;
 	font-size: 32px;
 	font-weight: bold;
+	margin: 0 0 0 -2px;
 `;
 
 const ProjectAuthor = styled.div`
-	margin: 0 0 0 2px;
 `;
 
-const Img = styled(ModalImage)`
-	margin: 0 auto;
-	background: white;
-	width: auto;
-	height: auto;
+const ProjectRatingContainer = styled.div`
+	
 `;
 
 const ImgContainer = styled.div`
-	margin: auto;
-	max-width: 700px;
 	height: auto;
+  margin: 0 auto;
+`;
+
+const Img = styled(ModalImage)`
+	width: auto;
+	max-height: 600px !important;
 `;
 
 const DescriptionContainer = styled.div`
 	width: auto;
 	padding: 24px 24px 12px 24px;
 `;
+
 const Description = styled.p`
-	width: 100%
+	width: 100%;
 	font-size: 16px;
 `;
+
 const OptionsContainer = styled.div`
 	display: flex;
 	margin: 8px 0 0 auto;
@@ -91,55 +142,3 @@ const DeleteButton = styled.button`
 	cursor: pointer;
 	padding: 0;
 `;
-
-const Project = props => {
-	return (
-		<ProjectWrapper>
-			<ProjectContainer>
-				<ProjectHeader>
-					<ProjectName>{props.project.project_name}</ProjectName>
-					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
-					{/* {props.project.project_rating ?
-						<StarRatings
-							rating={props.project.project_rating}
-							starRatedColor="black"
-							starEmptyColor="grey"
-							// changeRating={this.changeRating}
-							starDimension="20px"
-							starSpacing="5px"
-							numberOfStars={5}
-						/> : null} */}
-				</ProjectHeader>
-				<ImgContainer>
-					<Img
-						small={props.project.img_url}
-						large={props.project.img_url}
-						alt={props.project.project_name}
-						src={props.project.img_url}
-					/>
-				</ImgContainer>
-				<DescriptionContainer>{props.project.text}</DescriptionContainer>
-				{props.owner && (
-					<OptionsContainer>
-						<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
-						<EditLink
-							onClick={() => props.willUpdateProject(true)}
-							disabled={props.disabled}
-						>
-							edit
-						</EditLink>
-						<DeleteButton
-							color="danger"
-							onClick={props.deleteHandler}
-							disabled={props.disabled}
-						>
-							delete
-						</DeleteButton>
-					</OptionsContainer>
-				)}
-			</ProjectContainer>
-		</ProjectWrapper>
-	);
-};
-
-export default Project;
