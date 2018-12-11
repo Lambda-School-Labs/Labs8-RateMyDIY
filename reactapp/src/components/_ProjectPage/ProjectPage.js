@@ -152,8 +152,8 @@ class ProjectPage extends Component {
 							/>
 						) : this.props.gettingUserInfo ||
 						  (this.props.gettingProject &&
-								this.props.project.project_id !=
-									this.props.match.params.project_id) ||
+								this.props.project.project_id !==
+									parseInt(this.props.match.params.project_id)) ||
 						  this.props.gettingReviewId ? (
 							<React.Fragment>
 								<StatusMessage>Loading project...</StatusMessage>
@@ -229,8 +229,8 @@ class ProjectPage extends Component {
 						)}
 
 						{/* Bottom buttons */}
-						{this.props.project.project_id ==
-							this.props.match.params.project_id &&
+						{this.props.project.project_id ===
+							parseInt(this.props.match.params.project_id) &&
 							!this.props.gettingReviewId &&
 							!this.props.gettingProjectError &&
 							!this.state.postToAdd &&
