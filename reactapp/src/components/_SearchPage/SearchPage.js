@@ -20,6 +20,11 @@ const SearchPageWrapper = styled.div`
 	width: 100%;
 `;
 
+const NoSearchResults = styled.div`
+	margin: 50px auto;
+	font-size: 24px;
+`;
+
 class SearchPage extends Component {
 	constructor() {
 		super();
@@ -28,13 +33,9 @@ class SearchPage extends Component {
 
 	componentDidMount() {
 		const values = queryString.parse(this.props.location.search);
-
 		if (values.query) {
-			console.log('dbug---');
-			console.log(values.query);
 			this.setState({ searchTerm: values.query });
 		}
-
 		this.props.fetchSearchResults(values.query);
 	}
 
@@ -60,7 +61,6 @@ class SearchPage extends Component {
 	handleFilterCategoryFood = e => {
 		e.preventDefault();
 		const searchTerm = 'food';
-		console.log(searchTerm);
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
@@ -69,7 +69,6 @@ class SearchPage extends Component {
 	handleFilterCategoryTech = e => {
 		e.preventDefault();
 		const searchTerm = 'tech';
-		console.log(searchTerm);
 		//call featch search results action
 		this.props.fetchCategoryResults(searchTerm);
 		//push to search page
@@ -84,6 +83,7 @@ class SearchPage extends Component {
 		//push to search page
 	};
 	render() {
+		console.log(this.props);
 		return (
 			<SearchPageWrapper>
 				<Header
@@ -94,8 +94,12 @@ class SearchPage extends Component {
 				<div className="search-page-container">
 					<div className="search-options" />
 					<div className="search-results">
-						<h1>Search results</h1>
-						{this.props.projects.length === 0 ? <p>No projects found</p> : ''}
+						{this.props.projects.length === 0 &&
+						this.props.gettingSearchResults === false ? (
+							<NoSearchResults>No projects found :( </NoSearchResults>
+						) : (
+							''
+						)}
 						<SearchPageSearchBar
 							handleFilterCategoryFood={this.handleFilterCategoryFood}
 							handleFilterCategoryTech={this.handleFilterCategoryTech}
@@ -120,7 +124,8 @@ class SearchPage extends Component {
 const mapStateToProps = state => {
 	console.log(state);
 	return {
-		projects: state.searchReducer.projects
+		projects: state.searchReducer.projects,
+		gettingSearchResults: state.searchReducer.gettingSearchResults
 	};
 };
 

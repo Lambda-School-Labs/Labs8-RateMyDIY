@@ -49,8 +49,6 @@ const SearchBarButton = styled.button`
 `;
 
 const SearchBar = props => {
-	console.log('lets debug the queryyyyy');
-	console.log(props);
 	return (
 		<SearchBarWrapper>
 			<SearchBarInput

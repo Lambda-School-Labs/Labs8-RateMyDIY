@@ -28,7 +28,6 @@ const Logo = styled.img`
 `;
 
 const Header = props => {
-	console.log(props);
 	return (
 		<HeaderContainer>
 			<HeaderContainerWraper>
