@@ -54,7 +54,7 @@ const SearchBar = props => {
 			<SearchBarInput
 				onChange={e => props.handleChange(e)}
 				placeholder="Find a DIY project or Author"
-				value={props.searchTerm}
+				//value={props.searchTerm}
 			/>
 			<SearchBarButton
 				onClick={e => props.handleSearch(e)}

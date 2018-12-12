@@ -34,29 +34,14 @@ class SearchPage extends Component {
 	componentDidMount() {
 		const values = queryString.parse(this.props.location.search);
 		if (values.query) {
+			console.log('dbug queryyyy');
+			console.log(values.query);
 			this.setState({ searchTerm: values.query });
 		}
 		this.props.fetchSearchResults(values.query);
 	}
 
-	handleChange = e => {
-		console.log(e.target.value);
-		this.setState({
-			...this.state,
-			input: e.target.value,
-			searchTerm: e.target.value
-		});
-	};
-
-	handleSearch = e => {
-		e.preventDefault();
-		const searchTerm = this.state.input;
-		console.log(searchTerm);
-		//call featch search results action
-		//push to search page
-		this.props.fetchSearchResults(searchTerm);
-		this.props.history.push(`/search?query=${searchTerm}`);
-	};
+	componentDidUpdate(prevProps) {}
 
 	handleFilterCategoryFood = e => {
 		e.preventDefault();
@@ -87,8 +72,7 @@ class SearchPage extends Component {
 		return (
 			<SearchPageWrapper>
 				<Header
-					handleChange={this.handleChange}
-					handleSearch={this.handleSearch}
+					history={this.props.history}
 					searchTerm={this.state.searchTerm}
 				/>
 				<div className="search-page-container">
