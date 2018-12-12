@@ -44,9 +44,12 @@ class SortDropDown extends React.Component {
 	};
 
 	handleClick = e => {
+		console.log(e.target);
 		//call function to close dropdown
 		this.handleClose(e);
+
 		//call props function to sort
+		this.props.handleSort('Rating');
 	};
 
 	render() {
@@ -80,7 +83,9 @@ class SortDropDown extends React.Component {
 								<ClickAwayListener onClickAway={this.handleClose}>
 									<MenuList>
 										{this.props.options.map(option => (
-											<MenuItem onClick={this.handleClick}>{option}</MenuItem>
+											<MenuItem key={option} onClick={this.handleClick}>
+												{option}
+											</MenuItem>
 										))}
 									</MenuList>
 								</ClickAwayListener>

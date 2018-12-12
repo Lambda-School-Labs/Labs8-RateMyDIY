@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "array-sort": "^1.0.0",
     "husky": "^1.2.0"
   }
 }

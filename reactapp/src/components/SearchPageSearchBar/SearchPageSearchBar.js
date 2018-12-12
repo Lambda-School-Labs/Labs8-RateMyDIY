@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import {
 	Dropdown,
 	DropdownToggle,
@@ -14,6 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+
+import { sortProjects } from '../../actions/index';
 
 import { SortDropDown } from '../index';
 
@@ -45,7 +48,7 @@ const SearchOptionsLabel = styled.p`
 	font-size: 14px;
 	text-transform: uppercase;
 `;
-export default class SearchPageSearchBar extends React.Component {
+class SearchPageSearchBar extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -54,6 +57,11 @@ export default class SearchPageSearchBar extends React.Component {
 			dropdownOpen: false
 		};
 	}
+
+	handleSort = sortBy => {
+		console.log('lets sort these projectsssss');
+		this.props.sortProjects(sortBy);
+	};
 
 	toggle() {
 		this.setState(prevState => ({
@@ -92,7 +100,10 @@ export default class SearchPageSearchBar extends React.Component {
 						</Dropdown>
 					</SelectStyle>
 					<SearchOptionsLabel>sort</SearchOptionsLabel>
-					<SortDropDown options={['Rating', 'New', 'Number of Reviews']} />
+					<SortDropDown
+						handleSort={this.handleSort}
+						options={['Rating', 'New', 'Number of Reviews']}
+					/>
 					{/* <SelectStyle name="Stars" id="stars">
 						<UncontrolledDropdown>
 							<DropdownToggle caret>Sort By</DropdownToggle>
@@ -110,3 +121,16 @@ export default class SearchPageSearchBar extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	console.log(state);
+	return {
+		// projects: state.searchReducer.projects,
+		// gettingSearchResults: state.searchReducer.gettingSearchResults
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ sortProjects }
+)(SearchPageSearchBar);
