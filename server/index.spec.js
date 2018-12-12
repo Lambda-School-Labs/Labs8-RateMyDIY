@@ -28,13 +28,13 @@ describe('environmental variables', () => {
         const server = require('./server');
         const db = require('./config/dbConfig');
 
-        // implementation needs improvement, could use third party library (such as superagent)
+        // implementation needs help, maybe use third party library (such as superagent)
         // for now login to the site with:
         // email: seeduser@donotdelete.com
         // password: password
         // set cookie to value below
 
-        const cookie = 's%3AjyXIaeI7tK4bI1UASbHpdYxJRsoo91BF.ReXFeKTVbJbO24jR3TI9xqEEr8qED6uK4K3qC76hytU'
+        const cookie = 'COOKIE HERE'
         
         // beforeAll(function(done) {
         //     db.migrate.latest()
@@ -202,7 +202,8 @@ describe('environmental variables', () => {
                         'img_url': '',
                         'text': 'post text'
                     })
-                    // .set('Cookie', [`connect.sid=${cookie}`])
+                    // finds post with cookie, not ideal
+                    .set('Cookie', [`connect.sid=${cookie}`])
                     // .set('Accept', 'application/json')
                     // .expect('Content-Type', /json/)
                     .expect(302)
