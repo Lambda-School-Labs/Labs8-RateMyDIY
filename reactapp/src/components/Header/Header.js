@@ -29,10 +29,11 @@ const Logo = styled.img`
 `;
 
 class Header extends React.Component {
-	state = { input: '', searchTerm: this.props.searchTerm };
+	state = { input: '', searchTerm: '' };
 
 	componentDidMount() {}
 	handleChange = e => {
+		console.log(e.target.value);
 		this.setState({
 			...this.state,
 			input: e.target.value,
@@ -50,7 +51,10 @@ class Header extends React.Component {
 		this.props.history.push(`/search?query=${searchTerm}`);
 	};
 	render() {
-		console.log(this.props.history);
+		console.log('this is the search term: ' + this.props.searchTerm);
+		console.log(
+			'this is the search term stored in state: ' + this.state.searchTerm
+		);
 		return (
 			<HeaderContainer>
 				<HeaderContainerWraper>
