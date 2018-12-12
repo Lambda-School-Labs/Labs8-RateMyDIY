@@ -8,14 +8,25 @@ import {
 	DropdownItem,
 	UncontrolledDropdown
 } from 'reactstrap';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+
+import { SortDropDown } from '../index';
 
 //Apply styles
 const SearchWrapper = styled.div`
-	width: 80%;
+	width: 35%;
 	height: 25px;
 	margin: 15px auto;
 	display: flex;
 	flex-direction: column;
+	margin-left: 55%;
+
+	border: 1px solid yellow;
 `;
 
 const SelectWrapper = styled.div`
@@ -30,37 +41,10 @@ const SelectStyle = styled.div`
 	/* border-radius: 5px; */
 `;
 
-// const SearchBarWrapper = styled.form`
-//   display: flex;
-//   width: 100%;
-//   height: 35px;
-//   align-items: baseline;
-// `;
-// const SearchBarSearchButtonWrapper = styled.div`
-//   display: flex;
-//   height: 100px;
-//   align-items: flex-end;
-// `;
-// const SearchBarInput = styled.input`
-//   width: 100%;
-//   height: 35px;
-//   color: black;
-//   outline: none;
-//   border: 2px solid black;
-//   border-radius: 5px;
-//   font-size: 14px;
-// `;
-
-// const SearchBarButton = styled.button`
-//   width: 80px;
-//   height: 25px;
-//   margin: 0px 15px;
-//   background: 0;
-//   border: none;
-//   border: 2px solid black;
-//   box-shadow: 5px 5px 0px;
-// `;
-
+const SearchOptionsLabel = styled.p`
+	font-size: 14px;
+	text-transform: uppercase;
+`;
 export default class SearchPageSearchBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -107,8 +91,9 @@ export default class SearchPageSearchBar extends React.Component {
 							</DropdownMenu>
 						</Dropdown>
 					</SelectStyle>
-					<h1>Sort by</h1>
-					<SelectStyle name="Stars" id="stars">
+					<SearchOptionsLabel>sort</SearchOptionsLabel>
+					<SortDropDown options={['Rating', 'New', 'Number of Reviews']} />
+					{/* <SelectStyle name="Stars" id="stars">
 						<UncontrolledDropdown>
 							<DropdownToggle caret>Sort By</DropdownToggle>
 							<DropdownMenu>
@@ -119,7 +104,7 @@ export default class SearchPageSearchBar extends React.Component {
 								<DropdownItem>Date of Review</DropdownItem>
 							</DropdownMenu>
 						</UncontrolledDropdown>
-					</SelectStyle>
+					</SelectStyle> */}
 				</SelectWrapper>
 			</SearchWrapper>
 		);

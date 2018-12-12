@@ -68,7 +68,7 @@ class SearchPage extends Component {
 		//push to search page
 	};
 	render() {
-		console.log(this.props);
+		console.log(this.props.projects);
 		return (
 			<SearchPageWrapper>
 				<Header
@@ -77,27 +77,28 @@ class SearchPage extends Component {
 				/>
 				<div className="search-page-container">
 					<div className="search-options" />
-					<div className="search-results">
-						{this.props.projects.length === 0 &&
-						this.props.gettingSearchResults === false ? (
-							<NoSearchResults>No projects found </NoSearchResults>
-						) : (
-							''
-						)}
+					<div className="search-results-container">
 						<SearchPageSearchBar
 							handleFilterCategoryFood={this.handleFilterCategoryFood}
 							handleFilterCategoryTech={this.handleFilterCategoryTech}
 							handleFilterCategoryHome={this.handleFilterCategoryHome}
 							handleChange={this.handleChange}
 						/>
-
-						{this.props.projects.map(project => (
-							<ProjectTile
-								history={this.props.history}
-								key={project.project_id}
-								project={project}
-							/>
-						))}
+						{this.props.projects.length === 0 &&
+						this.props.gettingSearchResults === false ? (
+							<NoSearchResults>No projects found </NoSearchResults>
+						) : (
+							''
+						)}
+						<div className="search-results">
+							{this.props.projects.map(project => (
+								<ProjectTile
+									history={this.props.history}
+									key={project.project_id}
+									project={project}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
 			</SearchPageWrapper>
