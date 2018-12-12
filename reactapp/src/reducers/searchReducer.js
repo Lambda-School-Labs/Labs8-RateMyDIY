@@ -1,3 +1,5 @@
+import sort from 'fast-sort';
+// let arraySort = require('array-sort');
 import {
 	FETCH_SEARCH_RESULTS,
 	FETCH_SEARCH_RESULTS_SUCCESS,
@@ -15,8 +17,6 @@ import {
 const initialState = {
 	projects: []
 };
-
-let arraySort = require('array-sort');
 
 const searchReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -47,8 +47,10 @@ const searchReducer = (state = initialState, action) => {
 		case SORT_PROJECTS_BY_RATING: {
 			//sort by rating
 			const projects = state.projects.slice();
-			const sortedProjects = arraySort(projects, 'project_id');
-			console.log(arraySort(state.projects, 'project_id'));
+			const sortedProjects = sort(projects).desc(
+				project => project.project_rating
+			);
+			console.log(sort(sortedProjects));
 
 			return {
 				...state,

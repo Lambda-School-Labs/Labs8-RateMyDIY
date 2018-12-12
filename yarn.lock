@@ -107,6 +107,11 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+fast-sort@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/fast-sort/-/fast-sort-1.5.4.tgz#c4064a24f7e0224018839ff5980a2bb7f7d672b9"
+  integrity sha512-+I2B9AefwlP1h5g2IFbrB718u4O51AH6UW3HQmWp/lw9EBmUSpFjLY8t60kSpcIp+t3Vv/IhXixjgA8UJTrQgw==
+
 find-up@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-3.0.0.tgz#49169f1d7993430646da61ecc5ae355c21c97b73"
