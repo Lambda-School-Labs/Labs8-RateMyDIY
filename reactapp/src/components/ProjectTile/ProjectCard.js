@@ -123,7 +123,7 @@ class ProjectCard extends React.Component {
 						>
 							{this.props.project.text}
 							{
-								//adding project rating for sortin debug
+								//adding project rating for sorting debug
 								this.props.project.project_rating
 							}
 						</Typography>

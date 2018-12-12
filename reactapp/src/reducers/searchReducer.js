@@ -59,6 +59,14 @@ const searchReducer = (state = initialState, action) => {
 		}
 		case SORT_PROJECTS_BY_DATE: {
 			//sort by date
+			const projects = state.projects.slice();
+			const sortedProjects = sort(projects).asc(
+				project => project.last_updated
+			);
+			return {
+				...state,
+				projects: sortedProjects
+			};
 		}
 		default:
 			return state;

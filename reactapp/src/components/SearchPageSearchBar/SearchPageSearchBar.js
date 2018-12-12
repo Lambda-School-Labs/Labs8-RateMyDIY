@@ -102,7 +102,7 @@ class SearchPageSearchBar extends React.Component {
 					<SearchOptionsLabel>sort</SearchOptionsLabel>
 					<SortDropDown
 						handleSort={this.handleSort}
-						options={['Rating', 'New', 'Number of Reviews']}
+						options={['Rating', 'New', 'Reviews']}
 					/>
 					{/* <SelectStyle name="Stars" id="stars">
 						<UncontrolledDropdown>
