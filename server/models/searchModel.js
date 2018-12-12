@@ -33,7 +33,6 @@ function getSearchResults(query) {
 			'projects.text',
 			'projects.last_updated'
 		)
-		.orderBy('project_rating', 'desc')
 		.then(projects => {
 			let fuse = new Fuse(projects, options); // "projects" is the item array
 			let result = fuse.search(query);
