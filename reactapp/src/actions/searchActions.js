@@ -132,14 +132,11 @@ export const fetchCategoryResults = query => {
 };
 
 export const sortProjects = type => {
-	console.log('sort by : ' + type);
 	return dispatch => {
 		if ('rating' === type.toLowerCase()) {
 			dispatch({ type: SORT_PROJECTS_BY_RATING });
 		} else if ('new' === type.toLowerCase()) {
 			dispatch({ type: SORT_PROJECTS_BY_DATE });
-		} else if ('reviews' === type.toLowerCase()) {
-			dispatch({ type: SORT_PROJECTS_BY_REVIEWS });
 		}
 	};
 };

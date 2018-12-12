@@ -19,10 +19,9 @@ const styles = theme => ({
 	root: {
 		display: 'flex'
 	},
-	profilepic: {
-		width: '40px',
-		height: '40px',
-		borderRadius: '50%'
+	button: {
+		fontSize: '24px',
+		color: 'red'
 	}
 });
 
@@ -50,7 +49,9 @@ class SortDropDown extends React.Component {
 		this.handleClose(e);
 
 		//call props function to sort
-		this.props.handleSort(option);
+		if (this.props.handleSort) {
+			this.props.handleSort(option);
+		}
 	};
 
 	render() {
@@ -66,10 +67,22 @@ class SortDropDown extends React.Component {
 					aria-owns={open ? 'menu-list-grow' : undefined}
 					aria-haspopup="true"
 					onClick={this.handleToggle}
-					style={{ outline: 'none' }}
+					color="primary"
+					style={{
+						border: '2px solid #232a34',
+						fontSize: '18px',
+						color: '#232a34',
+						width: '100px',
+						padding: '5px',
+						'&:hover': {
+							backgroundColor: '#232a34',
+							color: 'white'
+						}
+					}}
 				>
-					Relevance
+					{this.props.buttonLabel}
 				</Button>
+
 				<Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
 					{({ TransitionProps, placement }) => (
 						<Grow
@@ -85,6 +98,7 @@ class SortDropDown extends React.Component {
 									<MenuList>
 										{this.props.options.map(option => (
 											<MenuItem
+												style={{ fontSize: '18px' }}
 												key={option}
 												onClick={e => this.handleClick(e, option)}
 											>

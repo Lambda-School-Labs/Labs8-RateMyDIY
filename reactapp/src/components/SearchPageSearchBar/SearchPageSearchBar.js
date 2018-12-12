@@ -28,8 +28,6 @@ const SearchWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-left: 55%;
-
-	border: 1px solid yellow;
 `;
 
 const SelectWrapper = styled.div`
@@ -44,10 +42,6 @@ const SelectStyle = styled.div`
 	/* border-radius: 5px; */
 `;
 
-const SearchOptionsLabel = styled.p`
-	font-size: 14px;
-	text-transform: uppercase;
-`;
 class SearchPageSearchBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -74,7 +68,7 @@ class SearchPageSearchBar extends React.Component {
 		return (
 			<SearchWrapper>
 				<SelectWrapper>
-					<h1>Filter by</h1>
+					{/* <h1>Filter by</h1>
 					<SelectStyle name="Category" id="category">
 						<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 							<DropdownToggle caret>Categories</DropdownToggle>
@@ -98,11 +92,15 @@ class SearchPageSearchBar extends React.Component {
 								</DropdownItem>
 							</DropdownMenu>
 						</Dropdown>
-					</SelectStyle>
-					<SearchOptionsLabel>sort</SearchOptionsLabel>
+					</SelectStyle> */}
+					<SortDropDown
+						options={['Tech', 'Food', 'Home']}
+						buttonLabel="Filter"
+					/>
 					<SortDropDown
 						handleSort={this.handleSort}
-						options={['Rating', 'New', 'Reviews']}
+						options={['Relevance', 'Rating', 'New']}
+						buttonLabel="Sort"
 					/>
 					{/* <SelectStyle name="Stars" id="stars">
 						<UncontrolledDropdown>
