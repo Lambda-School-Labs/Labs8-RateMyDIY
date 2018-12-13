@@ -81,9 +81,9 @@ class MenuDrawer extends React.Component {
 							<ListItem className={classes.center}>
 								<Link to="/ReviewList">My Reviews</Link>
 							</ListItem>
-							<ListItem className={classes.center}>
+							{/* <ListItem className={classes.center}>
 								<Link to="/Billing">Billing</Link>
-							</ListItem>
+							</ListItem> */}
 							<ListItem className={classes.center}>
 								<Link to="/settings">Settings</Link>
 							</ListItem>
@@ -95,13 +95,18 @@ class MenuDrawer extends React.Component {
 					<div className={classes.fullList}>
 						<List>
 							<ListItem className={classes.center}>
-								<Link to={`/users/${this.props.userInfo.user_id}`}>
+								<Link to={`/ProjectList}`}>
 									My Profile
 								</Link>
 							</ListItem>
 							<ListItem className={classes.center}>
-								<Link to={`/users/${this.props.userInfo.user_id}/settings`}>
+								<Link to={`/settings`}>
 									Profile Settings
+								</Link>
+							</ListItem>
+							<ListItem className={classes.center}>
+								<Link to={`/newproject`}>
+									New Project
 								</Link>
 							</ListItem>
 							<ListItem className={classes.center}>

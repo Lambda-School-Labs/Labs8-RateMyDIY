@@ -26,7 +26,10 @@ const styles = theme => ({
 		},
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: '35px',
-		color: theme.palette.secondary.main
+		color: theme.palette.secondary.main,
+		[theme.breakpoints.down('sm')]: {
+			width: '100%'
+		}
 	},
 	media: {
 		height: 0,
