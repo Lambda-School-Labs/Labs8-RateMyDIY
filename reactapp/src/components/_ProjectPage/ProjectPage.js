@@ -41,15 +41,15 @@ const ProjectContainer = styled.div`
 	max-width: 750px;
 `;
 
-const SideBarContainer = styled.div`
-	display: flex;
-	border: 1px solid green;
-	margin: 0 0 0 5px;
-	width: 10%;
-	min-width: 150px;
-	height: 500px;
-	min-height: 500px;
-`;
+// const SideBarContainer = styled.div`
+// 	display: flex;
+// 	border: 1px solid green;
+// 	margin: 0 0 0 5px;
+// 	width: 10%;
+// 	min-width: 150px;
+// 	height: 500px;
+// 	min-height: 500px;
+// `;
 
 const StatusMessage = styled.p``;
 
@@ -154,7 +154,7 @@ class ProjectPage extends Component {
 							/>
 						) : this.props.gettingUserInfo ||
 							(this.props.gettingProject &&
-								this.props.project.project_id !=
+								this.props.project.project_id !==
 								this.props.match.params.project_id) ||
 							this.props.gettingReviewId ? (
 									<React.Fragment>
@@ -185,8 +185,6 @@ class ProjectPage extends Component {
 												disabled={disabled}
 											/>
 										)}
-						{console.log(this.props)
-						}
 						{/* Display posts */}
 						{this.props.project.posts &&
 							!this.props.gettingReviewId &&
@@ -232,7 +230,7 @@ class ProjectPage extends Component {
 						)}
 
 						{/* Bottom buttons */}
-						{this.props.project.project_id ==
+						{this.props.project.project_id ===
 							this.props.match.params.project_id &&
 							!this.props.gettingReviewId &&
 							!this.props.gettingProjectError &&
