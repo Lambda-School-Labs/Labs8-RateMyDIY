@@ -10,7 +10,10 @@ import {
 	UPDATE_PROJECT_ERROR,
 	DELETING_PROJECT,
 	DELETED_PROJECT,
-	DELETE_PROJECT_ERROR
+	DELETE_PROJECT_ERROR,
+	UPDATING_PROJECT_IMAGE,
+	UPDATED_PROJECT_IMAGE,
+	UPDATE_PROJECT_IMAGE_ERROR
 } from '../actions';
 
 const initialState = {
@@ -104,6 +107,24 @@ const projectReducer = (state = initialState, action) => {
 				deletingProject: false,
 				DeletingProjectError: `${action.payload}`
 			};
+
+		// updateProjectImage
+		case UPDATING_PROJECT_IMAGE:
+			return { ...state, updatingProjectImage: true };
+
+		case UPDATED_PROJECT_IMAGE:
+			return {
+				...state,
+				updatingProjectImage: false
+			};
+
+		case UPDATE_PROJECT_IMAGE_ERROR:
+			return {
+				...state,
+				updatingProjectImage: false,
+				updatingProjectImageError: `${action.payload}`
+			};
+
 
 		default:
 			return state;
