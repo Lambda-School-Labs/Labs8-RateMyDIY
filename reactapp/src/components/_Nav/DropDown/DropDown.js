@@ -63,7 +63,11 @@ class DropDown extends React.Component {
 					aria-owns={open ? 'menu-list-grow' : undefined}
 					aria-haspopup="true"
 					onClick={this.handleToggle}
-					style={{ outline: 'none', paddingRight: '8px' }}
+					style={{
+						outline: 'none',
+						padding: '8px 8px 8px 20px',
+						margin: '0 0 0 4px'
+					}}
 				>
 					<img
 						src={this.props.userInfo.img_url}
