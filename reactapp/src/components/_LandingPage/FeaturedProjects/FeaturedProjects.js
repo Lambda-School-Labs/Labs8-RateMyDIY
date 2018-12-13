@@ -35,8 +35,9 @@ const FeaturedProjectTitle = styled.h1`
 	font-size: 18px;
 	width: 100%;
 	margin: 25px 50px 0px 50px;
-	color: ${props => props.theme.mui.palette.primary.dark} @media
-		(max-width: 500px) {
+	color: ${props => props.theme.mui.palette.primary.dark} 
+	
+	@media (max-width: 500px) {
 		width: 80%;
 		margin: 15px auto;
 		text-align: center;

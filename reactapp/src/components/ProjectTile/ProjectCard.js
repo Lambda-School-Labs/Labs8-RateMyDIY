@@ -27,8 +27,10 @@ const styles = theme => ({
 		backgroundColor: theme.palette.secondary.light,
 		borderRadius: '35px',
 		color: theme.palette.secondary.main,
-		[theme.breakpoints.down('sm')]: {
-			width: '100%'
+		['@media (max-width: 500px)']: {
+			width: '90%',
+			// margin: '25px 25px 25px 0px'
+			margin: '25px auto 30px'
 		}
 	},
 	media: {
@@ -49,6 +51,10 @@ const StyledLink = styled(Link)`
 	&:hover {
 		text-decoration: none;
 		background: none;
+	}
+
+	@media (max-width: 500px) {
+		width: 100%;
 	}
 `;
 
