@@ -125,6 +125,10 @@ class ProjectCard extends React.Component {
 							component="p"
 						>
 							{this.props.project.text}
+							{
+								//adding project rating for sorting debug
+								this.props.project.project_rating
+							}
 						</Typography>
 					</CardContent>
 					<CardActions className={classes.actions} disableActionSpacing />
