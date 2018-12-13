@@ -74,6 +74,7 @@ const ProjectHeader = styled.div`
 	flex-direction: column;
 	background: #e9ded8;
 	padding: 24px 24px 12px 24px;
+	/* border-bottom: 1px solid black; */
 `;
 
 const ProjectName = styled.h2`
@@ -91,23 +92,20 @@ const ProjectRatingContainer = styled.div`
 `;
 
 const ImgContainer = styled.div`
+	display: flex;
 	height: auto;
-  margin: 0 auto;
+	margin: 0 auto;
+	max-height: 600px !important;
+	width: auto;
 `;
 
 const Img = styled(ModalImage)`
-	width: auto;
-	max-height: 600px !important;
 `;
 
 const DescriptionContainer = styled.div`
+	/* border-top: 1px solid black; */
 	width: auto;
 	padding: 24px 24px 12px 24px;
-`;
-
-const Description = styled.p`
-	width: 100%;
-	font-size: 16px;
 `;
 
 const OptionsContainer = styled.div`
