@@ -10,8 +10,10 @@ const Project = props => {
 	return (
 		<ProjectContainer>
 			<ProjectHeader>
-				<ProjectName>{props.project.project_name}</ProjectName>
-				<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+				<ProjectNameAndAuthorContainer>
+					<ProjectName>{props.project.project_name}</ProjectName>
+					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+				</ProjectNameAndAuthorContainer>
 				{props.project.project_rating &&
 					<ProjectRatingContainer>
 						< StarRatings
@@ -33,25 +35,27 @@ const Project = props => {
 					src={props.project.img_url}
 				/>
 			</ImgContainer>
-			<DescriptionContainer>{props.project.text}</DescriptionContainer>
-			{props.owner && (
-				<OptionsContainer>
-					<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
-					<EditLink
-						onClick={() => props.willUpdateProject(true)}
-						disabled={props.disabled}
-					>
-						edit
+			<DescriptionContainer>
+				{props.project.text}
+				{props.owner && (
+					<OptionsContainer>
+						<ReviewsLink disabled={props.disabled}>reviews</ReviewsLink>
+						<EditLink
+							onClick={() => props.willUpdateProject(true)}
+							disabled={props.disabled}
+						>
+							edit
 						</EditLink>
-					<DeleteButton
-						color="danger"
-						onClick={props.deleteHandler}
-						disabled={props.disabled}
-					>
-						delete
+						<DeleteButton
+							color="danger"
+							onClick={props.deleteHandler}
+							disabled={props.disabled}
+						>
+							delete
 						</DeleteButton>
-				</OptionsContainer>
-			)}
+					</OptionsContainer>
+				)}
+			</DescriptionContainer>
 		</ProjectContainer>
 	);
 };
@@ -62,21 +66,23 @@ export default Project;
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #e9ded8;
+	background: #fff;
+	border-radius: 4px;
 	width: 100%;
-	margin: 0 0 24px 0;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	border: 1px solid lightgray;
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
-	flex-direction: column;
-	background: #e9ded8;
-	padding: 24px 24px 12px 24px;
-	/* border-bottom: 1px solid black; */
+	flex-direction: row;
+	padding: 18px 20px 10px 20px;
+	justify-content: space-between;
+  align-items: center;
 `;
-
+const ProjectNameAndAuthorContainer = styled.div`
+	
+`;
 const ProjectName = styled.h2`
 	display: flex;
 	font-size: 32px;
@@ -100,19 +106,22 @@ const ImgContainer = styled.div`
 `;
 
 const Img = styled(ModalImage)`
+height: 100%;
+width: 100%;
 `;
 
 const DescriptionContainer = styled.div`
 	/* border-top: 1px solid black; */
 	width: auto;
-	padding: 24px 24px 12px 24px;
+	margin: 18px 20px 10px 20px;
+	line-height: 18px;
 `;
 
 const OptionsContainer = styled.div`
-	display: flex;
-	margin: 8px 0 0 auto;
+	margin: 5px 0 0 0px;
 	font-size: 11px;
 	color: rgb(42, 43, 45);
+	width: auto;
 `;
 
 const ReviewsLink = styled.button`
