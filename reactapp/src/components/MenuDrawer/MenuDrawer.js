@@ -31,12 +31,28 @@ const styles = {
 	center: {
 		display: 'flex',
 		justifyContent: 'center'
+	},
+	profile: {
+		width: '40px',
+		height: '40px',
+		borderRadius: '50%'
+	},
+	arrow: {
+		width: '20px',
+		height: '20px'
 	}
 };
 
 const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: center;
+`;
+
+const ImgContainer = styled.div`
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: #fff;
 `;
 
 class MenuDrawer extends React.Component {
@@ -72,6 +88,9 @@ class MenuDrawer extends React.Component {
 				menuList = (
 					<div className={classes.fullList}>
 						<List>
+							<ListItem className={classes.center}>
+								<Link exact to="/">Home</Link>
+							</ListItem>
 							<ListItem className={classes.center}>
 								<Link to="/search">Search</Link>
 							</ListItem>
@@ -125,11 +144,21 @@ class MenuDrawer extends React.Component {
 						onClick={this.toggleDrawer('top', true)}
 						style={styles.center}
 					>
-						<img
-							src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/chevron-down-480.png"
+						{this.props.profile ? 
+						<ImgContainer>
+							<img
+							src={this.props.userInfo.img_url}
 							alt=""
-							style={{ width: '20px', height: '20px' }}
-						/>
+							className={classes.profile}
+							/>
+						</ImgContainer>
+						:
+						<img
+							src='https://cdn2.iconfinder.com/data/icons/lightly-icons/30/chevron-down-480.png'
+							alt=""
+							className={classes.arrow}
+							/>
+						}
 					</Button>
 				</ButtonContainer>
 				<Drawer

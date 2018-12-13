@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { AccountSideBar, Nav } from '../../../components';
 import { Header } from '../../../components';
 import { ProjectRender } from '../../../components';
+import { MenuDrawer } from '../../../components';
 import './ProjectList.css';
 
 import {
@@ -44,7 +45,6 @@ class ProjectList extends Component {
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
 				/>
-				<Nav />
 				<div className="project-list-container">
 					<AccountSideBar />
 

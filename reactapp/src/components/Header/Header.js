@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchSearchResults, fetchCategoryResults } from '../../actions';
 import { connect } from 'react-redux';
 import { SearchBar, Nav } from '../index';
+import { MenuDrawer } from '../../components';
 
 const HeaderContainer = styled.div`
 	width: 100%;
@@ -58,22 +59,37 @@ class Header extends React.Component {
 		return (
 			<HeaderContainer>
 				<HeaderContainerWraper>
-					<Link to="/">
-						<Logo
-							style={{ width: '60px', height: '60px', margin: '0 20px' }}
-							src="https://ratemydiy.s3.amazonaws.com/1544565541530"
-							alt="LOGO"
-						/>
-					</Link>
+					{window.innerWidth <= 500 ? 
+					<Fragment>
+						<HeaderSearchContainer>
+							<SearchBar
+								handleChange={this.handleChange}
+								handleSearch={this.handleSearch}
+								searchTerm={this.state.searchTerm}
+							/>
+						</HeaderSearchContainer>
+						<MenuDrawer profile /> 
+					</Fragment>
+					: 
+					<Fragment>
+						<Link to="/">
+							<Logo
+								style={{ width: '60px', height: '60px', margin: '0 20px' }}
+								src="https://ratemydiy.s3.amazonaws.com/1544565541530"
+								alt="LOGO"
+							/>
+						</Link>
 
-					<HeaderSearchContainer>
-						<SearchBar
-							handleChange={this.handleChange}
-							handleSearch={this.handleSearch}
-							searchTerm={this.state.searchTerm}
-						/>
-					</HeaderSearchContainer>
-					<Nav />
+						<HeaderSearchContainer>
+							<SearchBar
+								handleChange={this.handleChange}
+								handleSearch={this.handleSearch}
+								searchTerm={this.state.searchTerm}
+							/>
+						</HeaderSearchContainer>
+						<Nav />
+					</Fragment>
+					}
 				</HeaderContainerWraper>
 			</HeaderContainer>
 		);
