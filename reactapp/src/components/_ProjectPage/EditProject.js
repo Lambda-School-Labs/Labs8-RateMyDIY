@@ -1,12 +1,12 @@
 // Dependencies
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UploadProjectPictureIcon from './circleplus.png';
 // Components
-import { StarCount, ConfirmModal } from '../../components';
+import { ConfirmModal } from '../../components';
 import StarRatings from 'react-star-ratings';
+import UploadProjectPictureIcon from './circleplus.png';
 // Actions
-import { updateProject } from '../../actions';
+import { updateProject, updateProjectImage } from '../../actions';
 
 // Styles
 import styled from 'styled-components';
@@ -14,26 +14,50 @@ import styled from 'styled-components';
 class EditProject extends Component {
 	state = {
 		project_name: '',
-		img_url: null,
+		img_url: '',
 		text: '',
 		categories: [],
-		selectedFile: null
+		selectedFile: null,
+		// file: null
 	};
 
-	singleFileChangedHandler = event => {
-		this.setState({
-			selectedFile: event.target.files[0]
-		});
+	// This stores the project image file recieved in the ReactFileReader form data  
+	projectImageSelector = (event) => {
+		const file = URL.createObjectURL(event.target.files[0])
+		this.setState(() => ({ img_url: file }))
 	};
 
-	singleFileUploadHandler = event => {
+	projectImageUploader = event => {
 		event.preventDefault();
+
+		// If file selected
+		if (this.state.selectedFile) {
+
+			const data = new FormData();
+
+			const headerData = {
+				headers: {
+					accept: 'application/json',
+					'Accept-Language': 'en-US,en;q=0.8',
+					'Content-Type': `multipart/form-data; boundary=${data._boundary}`
+				}
+			}
+
+			console.log("FILE SELECTED " + this.state.selectedFile);
+
+			data.append(
+				'image',
+				this.state.selectedFile,
+				this.state.selectedFile.name
+			);
+
+			this.props.updateProjectImage(data, headerData, value => this.setState({ img_url: value }))
+		}
 	};
 
 	// Keep form data in the state
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
-		console.log("this.props " + this.props);
 	};
 
 	// Submit changes
@@ -62,6 +86,7 @@ class EditProject extends Component {
 			this.state.text === this.props.project.text
 		) {
 			this.props.willUpdateProject(false);
+			this.setState(prevState => ({ toggle: !prevState.toggle }));
 		} else {
 			this.setState({
 				confirm: {
@@ -78,7 +103,11 @@ class EditProject extends Component {
 			});
 		}
 	};
-
+	escCancelHandler = (event) => {
+		if (event.keyCode === 27) {
+			this.cancelHandler(event);
+		}
+	}
 	componentDidMount() {
 		this.setState({
 			project_name: this.props.project.project_name,
@@ -86,6 +115,11 @@ class EditProject extends Component {
 			text: this.props.project.text,
 			project_rating: this.props.project.project_rating
 		});
+		document.addEventListener("keydown", this.escCancelHandler, false);
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener("keydown", this.escCancelHandler, false);
 	}
 
 	render() {
@@ -117,28 +151,29 @@ class EditProject extends Component {
 						</ProjectRatingContainer>}
 				</ProjectHeader>
 				<ImgContainer>
-					<LabelProfilePictureInput htmlFor="file"
-						onClick={() => this.fileInput}
+					<ProjectPictureHiddenInput
+						type="file"
+						id="project_picture_input"
+						onChange={this.projectImageSelector}
+					/>
+					<ProjectPictureUploadLabel
+						htmlFor="project_picture_input"
 						disabled={this.props.updatingProject || this.props.gettingProject}
 					>
-						<UploadProjectPictureIconStyle className="upload-icon" src={UploadProjectPictureIcon} />
-					</LabelProfilePictureInput>
+						<UploadProjectPictureIconStyle
+							className="upload-icon"
+							src={UploadProjectPictureIcon} />
+					</ProjectPictureUploadLabel>
 					<ProjectImage
-						src={this.props.project.img_url}
-						alt={this.props.project.img_url || 'project image'}
+						src={this.state.img_url}
+						alt={this.state.img_url || 'project image'}
 					/>
 				</ImgContainer>
 				{/* HiddenProfilePictureInput is hidden */}
-				<HiddenProfilePictureInput
-					type="file"
-					name="file"
-					id="file"
-					ref={fileInput => (this.fileInput = fileInput)}
-				/>
 				<div className="mt-5">
 					<button
 						className="btn btn-info"
-						onClick={this.singleFileUploadHandler}
+						onClick={this.projectImageUploader}
 						disabled={this.props.updatingProject || this.props.gettingProject}
 					>
 						Upload!
@@ -158,6 +193,8 @@ class EditProject extends Component {
 					<CancelLink
 						onClick={this.cancelHandler}
 						disabled={this.props.updatingProject || this.props.gettingProject}
+						onKeyDown={this.escCancelHandler}
+						tabIndex="0"
 					>
 						Cancel
 					</CancelLink>
@@ -165,7 +202,7 @@ class EditProject extends Component {
 						type="submit"
 						value="Submit Changes"
 						disabled={this.props.updatingProject || this.props.gettingProject}
-					>tesatsatast
+					>Submit Link
 					</SubmitLink>
 				</EditProjectOptionsContainer>
 
@@ -195,7 +232,7 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		updateProject
+		updateProject, updateProjectImage
 	}
 )(EditProject);
 
@@ -243,43 +280,56 @@ const ProjectAuthor = styled.div`
 	
 `;
 
+const ProjectPictureHiddenInput = styled.input`
+	opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  // alternative to pointer-events, compatible with all browsers, just make it impossible to find
+  width: 1px;
+  height: 1px;
+`;
+
+const ProjectPictureUploadLabel = styled.label`
+	text-align: center;
+`;
+
 const ImgContainer = styled.div`
 	position: relative;
-	display: block;
+	margin: 0 auto;
+	max-height: 600px !important;
+	height: auto;
+	width: auto;
 	height: auto;
 	margin: 0 auto;
 	transition: .5s ease;
 	:hover {
-		opacity: 0.5;
+		opacity: .9;
 	}
-	&.image-icon {
-    display: none;
-  }
-`;
-
-const LabelProfilePictureInput = styled.label`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-	text-align: center;
 `;
 
 const UploadProjectPictureIconStyle = styled.img`
+	position: absolute;
+  top: 50%;
+  left: 50%;
 	width: 35%;
 	height: 35%;
 	opacity: .4;
+  transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	margin: auto;
+	padding: auto;
 	transition: .5s ease;
+	:hover {
+		opacity: .9;
+	}
+	z-index: 2;
 `;
 
 const ProjectImage = styled.img`
-	width: auto;
+	position: relative;
+	width: 100%;
 	max-height: 600px !important;
-`;
-
-const HiddenProfilePictureInput = styled.input`
-	display: none;
+	transition: .5s ease;
 `;
 
 const DescriptionContainer = styled.div``;
@@ -289,7 +339,7 @@ const CancelLink = styled.a``;
 
 const SubmitLink = styled.button``;
 
-const ReviewsButton = styled.button``;
+// const ReviewsButton = styled.button``;
 
 
 
