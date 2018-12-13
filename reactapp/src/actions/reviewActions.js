@@ -40,7 +40,7 @@ export const getReview = review_id => {
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/${review_id}`
+				`/api/reviews/${review_id}`
 			)
 
 			.then(({ data }) => {
@@ -53,16 +53,13 @@ export const getReview = review_id => {
 
 // get review_id by project_id & user_id
 export const getReviewId = (project_id, user_id) => {
-	console.log(
-		`reviewActions: getReviewId(project_id: ${project_id}, user_id: ${user_id})`
-	);
 	return dispatch => {
 		dispatch({ type: GETTING_REVIEW_ID });
 
 		axios
 			.get(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/getid/${user_id}/${project_id}`
+				`/api/reviews/getid/${user_id}/${project_id}`
 			)
 
 			.then(({ data }) => {
@@ -82,7 +79,7 @@ export const addReview = review => {
 		axios
 			.post(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/`,
+				`/api/reviews/`,
 				review
 			)
 
@@ -115,7 +112,7 @@ export const updateReview = (review_id, changes) => {
 		axios
 			.put(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/${review_id}`,
+				`/api/reviews/${review_id}`,
 				changes
 			)
 
@@ -145,7 +142,7 @@ export const deleteReview = (user_id, review_id) => {
 		axios
 			.delete(
 				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
-					`/api/reviews/${review_id}`,
+				`/api/reviews/${review_id}`,
 				{ data: { user_id } } // Have to use { data: body } for DELETE
 			)
 
