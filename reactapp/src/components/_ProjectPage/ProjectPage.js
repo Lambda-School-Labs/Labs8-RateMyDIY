@@ -141,7 +141,7 @@ class ProjectPage extends Component {
 			<ProjectPageHeaderContainer>
 				{this.state.redirect && <Redirect push to={this.state.redirect} />}
 				<ScrollToTopOnMount />
-				<Header />
+				<Header history={this.props.history} />
 				<ProjectPageContainer>
 					<ProjectContainer>
 						{this.props.gettingUserInfo ||

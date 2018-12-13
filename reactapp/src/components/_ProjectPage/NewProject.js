@@ -190,6 +190,17 @@ class NewProject extends Component {
 						`/api/projects/image-upload`,
 					data,
 					{
+						onUploadProgress: progressEvent => {
+							console.log(
+								'Upload Progress:' +
+									Math.round(
+										(progressEvent.loaded / progressEvent.total) * 100
+									) +
+									'%'
+							);
+						}
+					},
+					{
 						headers: {
 							accept: 'application/json',
 							'Accept-Language': 'en-US,en;q=0.8',
@@ -281,10 +292,7 @@ class NewProject extends Component {
 		return (
 			<NewProjectBody>
 				<NewProjectHeader>
-					<Header
-						handleChange={this.handleChange}
-						handleSearch={this.handleSearch}
-					/>
+					<Header history={this.props.history} />
 				</NewProjectHeader>
 				<NewProjectContainer>
 					{this.state.redirect && <Redirect push to={this.state.redirect} />}
