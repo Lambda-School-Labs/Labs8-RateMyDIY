@@ -98,6 +98,7 @@ class ReviewList extends Component {
 						handleChange={this.handleChange}
 						handleSearch={this.handleSearch}
 					/>
+					<div className='reviewContainer'>
 					{window.innerWidth <= 500 ? null : <AccountSideBar />}
 					{window.innerWidth <= 500 ? 
 					<SelectHeader className='selectHeader'>Your Reviews</SelectHeader>
@@ -124,6 +125,7 @@ class ReviewList extends Component {
 							/>
 						))}
 					</div>
+				</div>
 				</div>
 			);
 		}

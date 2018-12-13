@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AccountSideBar, Nav } from '../../../components';
 import { Header } from '../../../components';
-import { ProjectRender } from '../../../components';
-import { MenuDrawer } from '../../../components';
+import { ProjectTile } from '../../../components';
 import styled from 'styled-components';
+import { EmptyCard }from '../../../components';
 import './ProjectList.css';
 
 import {
@@ -50,6 +50,7 @@ class ProjectList extends Component {
 					handleChange={this.handleChange}
 					handleSearch={this.handleSearch}
 				/>
+				<div className='projectContainer'>
 				{window.innerWidth <= 500 ? null : <AccountSideBar />}
 				{window.innerWidth <= 500 ? 
 				<AddButton className='addButton'>
@@ -58,29 +59,20 @@ class ProjectList extends Component {
 					</Link>
 				</AddButton>
 				:
-				<div className="addNew">
-				<h2>New Project</h2>
-					<Link to="/newproject">
-						<img
-							alt="PLACEHOLDER! alt text"
-							src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-						/>
-					</Link>
+				<div>
+					<EmptyCard addNew project />
 				</div>}
 
 					<div className="myProjectsDisplay">
 						{this.props.myProjects.map(myProject => (
-							<ProjectRender
+							<ProjectTile
 								key={myProject.project_id}
-								myProjectProject_id={myProject.project_id}
-								myProjectProject_name={myProject.project_name}
-								myProjectImg_url={myProject.img_url}
-								myProjectProject_rating={myProject.project_rating}
-								myProjectProject_text={myProject.text}
+								project={myProject}
 							/>
 						))}
 					</div>
 				</div>
+			</div>
 		);
 	}
 }

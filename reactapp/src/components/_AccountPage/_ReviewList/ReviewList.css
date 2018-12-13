@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.reviewContainer {
+  margin-top: 100px;
+}
+
 .myReviewsDisplay {
   margin-left: 20px;
   background-color: #ffffff;
