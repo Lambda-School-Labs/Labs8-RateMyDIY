@@ -23,10 +23,18 @@ const HeaderContainerWraper = styled.div`
 const HeaderSearchContainer = styled.div`
 	width: 50%;
 	margin: 0 20px;
+
+	@media (max-width: 500px) {
+		width: 90%;
+	}
 `;
 
 const Logo = styled.img`
 	cursor: pointer;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
 `;
 
 class Header extends React.Component {
@@ -59,37 +67,23 @@ class Header extends React.Component {
 		return (
 			<HeaderContainer>
 				<HeaderContainerWraper>
-					{window.innerWidth <= 500 ? 
-					<Fragment>
-						<HeaderSearchContainer>
-							<SearchBar
-								handleChange={this.handleChange}
-								handleSearch={this.handleSearch}
-								searchTerm={this.state.searchTerm}
-							/>
-						</HeaderSearchContainer>
-						<MenuDrawer profile /> 
-					</Fragment>
-					: 
-					<Fragment>
-						<Link to="/">
-							<Logo
-								style={{ width: '60px', height: '60px', margin: '0 20px' }}
-								src="https://ratemydiy.s3.amazonaws.com/1544565541530"
-								alt="LOGO"
-							/>
-						</Link>
+					<Link to="/">
+						<Logo
+							style={{ width: '60px', height: '60px', margin: '0 20px' }}
+							src="https://ratemydiy.s3.amazonaws.com/1544565541530"
+							alt="LOGO"
+						/>
+					</Link>
 
-						<HeaderSearchContainer>
-							<SearchBar
-								handleChange={this.handleChange}
-								handleSearch={this.handleSearch}
-								searchTerm={this.state.searchTerm}
-							/>
-						</HeaderSearchContainer>
-						<Nav />
-					</Fragment>
-					}
+					<HeaderSearchContainer>
+						<SearchBar
+							handleChange={this.handleChange}
+							handleSearch={this.handleSearch}
+							searchTerm={this.state.searchTerm}
+						/>
+					</HeaderSearchContainer>
+					
+					{window.innerWidth <= 500 ? <MenuDrawer sidebar profile /> : <Nav /> }
 				</HeaderContainerWraper>
 			</HeaderContainer>
 		);

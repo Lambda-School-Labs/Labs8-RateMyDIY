@@ -35,7 +35,13 @@ const styles = {
 	profile: {
 		width: '40px',
 		height: '40px',
-		borderRadius: '50%'
+		borderRadius: '50%',
+		position: 'absolute',
+		top: 0,  
+		bottom: 0,  
+		left: 0,  
+		right: 0,  
+		margin: 'auto',
 	},
 	arrow: {
 		width: '20px',
@@ -53,6 +59,8 @@ const ImgContainer = styled.div`
 	height: 50px;
 	border-radius: 50%;
 	background-color: #fff;
+	position: relative;
+	margin-top: 8px;
 `;
 
 class MenuDrawer extends React.Component {
@@ -105,6 +113,9 @@ class MenuDrawer extends React.Component {
 							</ListItem> */}
 							<ListItem className={classes.center}>
 								<Link to="/settings">Settings</Link>
+							</ListItem>
+							<ListItem className={classes.center}>
+								<a href={logoutURL}>Signout</a>
 							</ListItem>
 						</List>
 					</div>
