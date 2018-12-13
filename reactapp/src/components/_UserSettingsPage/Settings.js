@@ -187,7 +187,7 @@ const UsernameContainer = styled.div`
 
 const UsernameHeader = styled.h1`
 	align-self: center;
-	color: ${props => props.theme.mui.palette.secondary.main};
+	color: ${props => props.theme.mui.palette.primary.dark};
 	font-size: 4rem;
 
 	@media (max-width: 500px) {
