@@ -84,6 +84,7 @@ class DropDown extends React.Component {
 						src={this.props.userInfo.img_url}
 						className={classes.profilepic}
 						alt={this.props.userInfo.username}
+						style={{ background: '#bfbfbf' }}
 					/>
 					<img
 						src={arrowDown}
