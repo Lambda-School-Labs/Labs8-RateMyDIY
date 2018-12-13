@@ -97,7 +97,7 @@ class MenuDrawer extends React.Component {
 					<div className={classes.fullList}>
 						<List>
 							<ListItem className={classes.center}>
-								<Link exact to="/">Home</Link>
+								<Link exact='true' to="/">Home</Link>
 							</ListItem>
 							<ListItem className={classes.center}>
 								<Link to="/search">Search</Link>
