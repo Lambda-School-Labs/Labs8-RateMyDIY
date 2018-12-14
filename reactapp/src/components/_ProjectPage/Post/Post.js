@@ -45,6 +45,8 @@ const Text = styled.p`
 `;
 
 const OptionsContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
 	margin: 0 20px 10px 20px;
 	font-size: 11px;
 	color: rgb(42, 43, 45);
