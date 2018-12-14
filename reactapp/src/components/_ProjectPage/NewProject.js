@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 import axios from 'axios';
 
 // Components
@@ -14,18 +15,19 @@ import { addProject } from '../../actions';
 import styled from 'styled-components';
 
 const NewProjectContainer = styled.div`
-  width: 700px;
-  padding: 25px 30px 15px 30px;
-  margin: 0 auto;
-  margin-top: 80px;
-  display: flex;
-  flex-direction: column;
-  background: #e9ded8;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	width: 640px;
+	padding: 25px 30px 25px 30px;
+	margin: 0 auto;
+	margin-top: 110px;
+	display: flex;
+	flex-direction: column;
+	background: #e9ded8;
+	border-radius: 4px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const NewProjectBody = styled.div`
-  width: 100%;
+	width: 100%;
 `;
 
 const NewProjectHeader = styled.div``;
@@ -33,135 +35,172 @@ const StatusMessage = styled.p``;
 
 const ProjectForm = styled.form``;
 
+const ImgWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 380px;
+	width: 100%;
+	background: #c8c8c8;
+	margin-bottom: 20px;
+`;
+
 const Img = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 380px;
-  width: 100%;
-  background: white;
-  margin-bottom: 20px;
+	align-self: center;
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	background: #c8c8c8;
 `;
 
 const ProjectImageFlex = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
 `;
 
 const ProjectImage = styled.input`
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 `;
 
 const ProjectImageFile = styled.div`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #f1e5e6;
-  background-color: #d3394c;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 15px 10px 15px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  &:hover {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-    background-color: #772940;
-  }
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
 `;
 
 const ProjectImageUpload = styled.div`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #f1e5e6;
-  background-color: #d3394c;
-  padding: 10px 15px 10px 15px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  &:hover {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-    background-color: #772940;
-  }
-`;
-const ProfileHeader = styled.h2`
-  width: 80%;
-  color: ${props => props.theme.mui.palette.secondary.main};
-  font-size: 2.5rem;
-  margin: 2% auto;
-  text-align: center;
-`;
-const ImageFileUpload = styled.div`
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  fill: currentColor;
-  margin-top: -0.25em;
-  margin-right: 0.25em;
-  cursor: pointer;
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
 `;
 
-const TextInput = styled.input`
-  padding: 5px 461px 200px 5px;
-  margin-bottom: 20px;
-  margin-top: 10px;
+const ProfileHeader = styled.h2`
+	width: 80%;
+	height: 24px;
+	color: ${props => props.theme.mui.palette.primary.dark};
+	font-size: 2.5rem;
+	margin: 2% auto;
+	text-align: center;
+`;
+
+const ImageFileUpload = styled.div`
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+	fill: currentColor;
+	margin-top: -0.25em;
+	margin-right: 0.25em;
+	cursor: pointer;
+`;
+
+const TextArea = styled.textarea`
+	width: 100%;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	outline: none;
+	resize: none;
+	padding: 10px;
+	margin: 6px 0 20px;
 `;
 
 const CancelButton = styled.button`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #f1e5e6;
-  background-color: #d3394c;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 15px 10px 15px;
-  cursor: pointer;
-  &:hover {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-    background-color: #772940;
-  }
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
 `;
 
 const SubmitInput = styled.input`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: #f1e5e6;
-  background-color: #d3394c;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 15px 10px 15px;
-  cursor: pointer;
-  &:hover {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-    background-color: #772940;
-  }
+	font-size: 1.25em;
+	font-weight: 700;
+	color: #f1e5e6;
+	background-color: #254f8d;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
 `;
 
 const ProjectHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	/* margin-top: 10px; */
+	margin-bottom: 20px;
 `;
 
 const ProjectNameInput = styled.input`
-  padding: 8px;
+	width: 70%;
+	font-size: 1.6rem;
+	padding: 8px;
 `;
 
 const ProjectButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 `;
 
-class NewProject extends Component {
+const selectorStyles = {
+	control: base => ({
+		...base,
+		height: '38px',
+		border: '1px solid #A9A9A9',
+		borderRadius: 'none',
+		fontSize: '1.6rem'
+	})
+};
 
+const options = [
+	{ value: 1, label: 'Home' },
+	{ value: 2, label: 'Garden' },
+	{ value: 3, label: 'Cooking' },
+	{ value: 4, label: 'Carpentry' },
+	{ value: 5, label: 'Tech' },
+	{ value: 6, label: 'Automotive' },
+	{ value: 7, label: 'Misc' }
+];
+
+class NewProject extends Component {
 	state = {
 		project_name: '',
 		img_url: null,
@@ -250,6 +289,12 @@ class NewProject extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
+	// Not multi select !!
+	handleSelect = categories => {
+		this.setState({ categories });
+		console.log(`Option selected:`, categories);
+	};
+
 	// Submit new project
 	submitHandler = event => {
 		event.preventDefault();
@@ -260,7 +305,7 @@ class NewProject extends Component {
 				project_name: this.state.project_name,
 				img_url: this.state.img_url,
 				text: this.state.text,
-				categories: this.state.categories
+				categories: [this.state.categories.value]
 			},
 			url => this.setState({ redirect: url })
 		);
@@ -295,31 +340,49 @@ class NewProject extends Component {
 				<NewProjectHeader>
 					<Header history={this.props.history} />
 				</NewProjectHeader>
+
 				<NewProjectContainer>
 					{this.state.redirect && <Redirect push to={this.state.redirect} />}
+
 					<ProjectForm onSubmit={this.submitHandler}>
-						Project title:
+						{/* Project title: */}
 						<ProjectHeader>
 							<ProjectNameInput
 								name="project_name"
 								type="text"
+								maxLength="48"
 								placeholder="Project title"
 								value={this.state.project_name}
 								onChange={this.changeHandler}
 								autoFocus
 								required
 							/>
+
+							<div style={{ width: '30%' }}>
+								{/* // Not multi select !! */}
+								<Select
+									value={this.state.categories}
+									onChange={this.handleSelect}
+									options={options}
+									placeholder="Select category"
+									style={{ fontSize: '1.6rem' }}
+									styles={selectorStyles}
+									required
+								/>
+							</div>
 						</ProjectHeader>
-						<Img
-							src={
-								this.state.img_url ||
-								'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
-							}
-							alt={
-								this.state.img_url ||
-								'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
-							}
-						/>
+						<ImgWrapper>
+							<Img
+								src={
+									this.state.img_url ||
+									'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+								}
+								alt={
+									this.state.img_url ||
+									'https://sanitationsolutions.net/wp-content/uploads/2015/05/empty-image.png'
+								}
+							/>
+						</ImgWrapper>
 						<ProjectImage
 							type="file"
 							id="myuniqueid"
@@ -349,18 +412,17 @@ class NewProject extends Component {
 								Upload Image!
 							</ProjectImageUpload>
 						</ProjectImageFlex>
-						{this.state.selectedFile ? (
-							<ProfileHeader>{this.state.selectedFile.name}</ProfileHeader>
-						) : null}
-						Project description:
-						<TextInput
-							className="TextInput"
+						{/* <ProfileHeader>
+							{this.state.selectedFile ? this.state.selectedFile.name : null}
+						</ProfileHeader> */}
+						{/* Project description: */}
+						<TextArea
 							name="text"
-							type="text"
+							rows="6"
+							maxLength="1024"
 							placeholder="Project description"
 							value={this.state.text}
 							onChange={this.changeHandler}
-							required
 						/>
 						<ProjectButtonContainer>
 							<CancelButton
@@ -390,23 +452,20 @@ class NewProject extends Component {
 			</NewProjectBody>
 		);
 	}
-
 }
 
 const mapStateToProps = state => {
-  return {
-    userInfo: state.loggedInReducer.userInfo,
+	return {
+		userInfo: state.loggedInReducer.userInfo,
 
-    addingProject: state.projectReducer.addingProject,
-    addingProjectError: state.projectReducer.addingProjectError
-  };
+		addingProject: state.projectReducer.addingProject,
+		addingProjectError: state.projectReducer.addingProjectError
+	};
 };
 
 export default connect(
-
 	mapStateToProps,
 	{
 		addProject
 	}
-
 )(NewProject);
