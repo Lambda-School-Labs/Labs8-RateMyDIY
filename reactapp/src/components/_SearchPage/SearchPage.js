@@ -34,14 +34,10 @@ class SearchPage extends Component {
 	componentDidMount() {
 		const values = queryString.parse(this.props.location.search);
 		if (values.query) {
-			console.log('dbug queryyyy');
-			console.log(values.query);
 			this.setState({ searchTerm: values.query });
 		}
 		this.props.fetchSearchResults(values.query);
 	}
-
-	componentDidUpdate(prevProps) {}
 
 	handleFilterCategoryFood = e => {
 		e.preventDefault();
@@ -106,7 +102,6 @@ class SearchPage extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state);
 	return {
 		projects: state.searchReducer.projects,
 		gettingSearchResults: state.searchReducer.gettingSearchResults

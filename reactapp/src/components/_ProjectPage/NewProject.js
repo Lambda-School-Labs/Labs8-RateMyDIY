@@ -371,7 +371,6 @@ class NewProject extends Component {
 								/>
 							</div>
 						</ProjectHeader>
-
 						<ImgWrapper>
 							<Img
 								src={
