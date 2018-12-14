@@ -37,7 +37,8 @@ const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: 40%;
+	min-width: 20%;
+	width: 45%;
 	max-width: 750px;
 `;
 
@@ -59,7 +60,21 @@ const ButtonContainer = styled.div`
 	margin-top: 20px;
 `;
 
-const ProjectButton = styled.button``;
+const ProjectButton = styled.a`
+	display: flex;
+	max-height: 100px;
+	max-width: 100px;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	background: pink;
+	border: 3px lightgreen dashed;
+	:hover {
+		background: purple;
+	}
+`;
 
 const ReviewButton = styled.button``;
 
@@ -230,7 +245,7 @@ class ProjectPage extends Component {
 						)}
 
 						{/* Bottom buttons */}
-						{this.props.project.project_id ===
+						{this.props.project.project_id ==
 							this.props.match.params.project_id &&
 							!this.props.gettingReviewId &&
 							!this.props.gettingProjectError &&
@@ -241,7 +256,7 @@ class ProjectPage extends Component {
 										onClick={() => this.setState({ postToAdd: 'text' })}
 										disabled={disabled}
 									>
-										Add Text Field
+										Add Text
 									</ProjectButton>
 									<ProjectButton
 										onClick={() => this.setState({ postToAdd: 'image' })}
