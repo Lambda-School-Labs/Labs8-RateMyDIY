@@ -14,9 +14,9 @@ const Project = props => {
 					<ProjectName>{props.project.project_name}</ProjectName>
 					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
 				</ProjectNameAndAuthorContainer>
-				{props.project.project_rating &&
-					<ProjectRatingContainer>
-						< StarRatings
+				<ProjectRatingContainer>
+					{props.project.project_rating &&
+						<ProjectRatingTool
 							rating={Number(props.project.project_rating)}
 							starRatedColor="black"
 							starEmptyColor="grey"
@@ -24,8 +24,8 @@ const Project = props => {
 							starDimension="20px"
 							starSpacing="5px"
 							numberOfStars={5}
-						/>
-					</ProjectRatingContainer>}
+						/>}
+				</ProjectRatingContainer>
 			</ProjectHeader>
 			<ImgContainer>
 				<Img
@@ -66,10 +66,10 @@ export default Project;
 const ProjectContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	background: #fff;
 	border-radius: 4px;
 	width: 100%;
 	border: 1px solid lightgray;
+	margin: 0 0 18px 0;
 `;
 
 const ProjectHeader = styled.div`
@@ -81,7 +81,9 @@ const ProjectHeader = styled.div`
   align-items: center;
 `;
 const ProjectNameAndAuthorContainer = styled.div`
-	
+	display: flex;
+	min-width: 70%;
+	flex-direction: column;
 `;
 const ProjectName = styled.h2`
 	display: flex;
@@ -94,7 +96,13 @@ const ProjectAuthor = styled.div`
 `;
 
 const ProjectRatingContainer = styled.div`
-	
+	display: flex;
+	align-self: flex-end;
+	width: auto;
+	padding: 0;
+`;
+
+const ProjectRatingTool = styled(StarRatings)`
 `;
 
 const ImgContainer = styled.div`
@@ -111,14 +119,14 @@ width: 100%;
 `;
 
 const DescriptionContainer = styled.div`
-	/* border-top: 1px solid black; */
 	width: auto;
 	margin: 18px 20px 10px 20px;
 	line-height: 18px;
+	text-align: justify;
 `;
 
 const OptionsContainer = styled.div`
-	margin: 5px 0 0 0px;
+	margin: 5px 0 0 0;
 	font-size: 11px;
 	color: rgb(42, 43, 45);
 	width: auto;
