@@ -122,14 +122,16 @@ const DescriptionContainer = styled.div`
 	width: auto;
 	margin: 18px 20px 10px 20px;
 	line-height: 18px;
-	text-align: justify;
+	/* text-align: justify; */
 `;
 
 const OptionsContainer = styled.div`
+	display: flex;
 	margin: 5px 0 0 0;
 	font-size: 11px;
 	color: rgb(42, 43, 45);
 	width: auto;
+	justify-content: flex-end;
 `;
 
 const ReviewsLink = styled.button`
