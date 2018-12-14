@@ -38,7 +38,7 @@ const ProjectContainer = styled.div`
 	flex-direction: column;
 	height: 100%;
 	min-width: 20%;
-	width: 45%;
+	width: 50%;
 	max-width: 750px;
 `;
 
@@ -69,8 +69,8 @@ const ProjectButton = styled.a`
 	border-radius: 50%;
 	align-items: center;
 	justify-content: center;
-	background: pink;
-	border: 3px lightgreen dashed;
+	/* background: ; */
+	border: 3px lightgray solid;
 	:hover {
 		background: purple;
 	}
