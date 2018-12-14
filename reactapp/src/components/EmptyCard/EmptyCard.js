@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 // import CardActions from '@material-ui/core/CardActions';
 import red from '@material-ui/core/colors/red';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
 	card: {
