@@ -140,6 +140,13 @@ class EditProject extends Component {
 						</ProjectName>
 						<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
 					</ProjectNameAndAuthorContainer>
+					<UploadImageButtonTemp
+						className="btn btn-info"
+						onClick={this.projectImageUploader}
+						disabled={this.props.updatingProject || this.props.gettingProject}
+					>
+						Upload Image (temp)
+						</UploadImageButtonTemp>
 				</ProjectHeader>
 				<ImgContainer>
 					<ProjectPictureHiddenInput
@@ -161,15 +168,6 @@ class EditProject extends Component {
 					/>
 				</ImgContainer>
 				{/* HiddenProfilePictureInput is hidden */}
-				<div className="mt-5">
-					<button
-						className="btn btn-info"
-						onClick={this.projectImageUploader}
-						disabled={this.props.updatingProject || this.props.gettingProject}
-					>
-						Upload!
-						</button>
-				</div>
 				<DescriptionContainer>
 					<DescriptionInput
 						name="text"
@@ -187,13 +185,13 @@ class EditProject extends Component {
 						onKeyDown={this.escCancelHandler}
 						tabIndex="0"
 					>
-						Cancel
+						cancel
 					</CancelLink>
 					<SubmitLink
 						type="submit"
 						value="Submit Changes"
 						disabled={this.props.updatingProject || this.props.gettingProject}
-					>Submit Link
+					>submit
 					</SubmitLink>
 				</EditProjectOptionsContainer>
 
@@ -246,6 +244,7 @@ const ProjectHeader = styled.div`
 	justify-content: space-between;
   align-items: center;
 `;
+
 const ProjectNameAndAuthorContainer = styled.div`
 	display: flex;
 	min-width: 70%;
@@ -318,6 +317,12 @@ const ProjectImage = styled.img`
 	transition: .5s ease;
 `;
 
+const UploadImageButtonTemp = styled.button`
+	display: flex;
+	width: auto;
+	margin: 5px;
+`;
+
 const DescriptionContainer = styled.div`
 	width: auto;
 	margin: 18px 20px 10px 20px;
@@ -325,12 +330,36 @@ const DescriptionContainer = styled.div`
 	text-align: justify;
 `;
 const DescriptionInput = styled(TextareaAutosize)`
-width: 100%;
+	width: 100%;
+	border: none;
+	padding: none;
+	margin: -2px;
 `;
 
-const CancelLink = styled.a``;
+const CancelLink = styled.a`
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 0;
+	margin-right: 8px;
+	text-decoration: none;
+	color: rgb(42,43,45);
+	:hover {
+		background: none;
+		text-decoration: none;
+		color: rgb(42,43,45);
+	}
+`;
 
-const SubmitLink = styled.button``;
+const SubmitLink = styled.button`
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: none;
+	cursor: pointer;
+	color: rgb(42,43,45);
+`;
 
 // const ReviewsButton = styled.button``;
 
@@ -339,8 +368,10 @@ const SubmitLink = styled.button``;
 const EditProjectOptionsContainer = styled.div`
 	display: flex;
 	justify-content: flex-end;
-	margin-top: -12px;
-	margin-bottom: 20px;
+	margin: -5px 20px 13px 20px;
+	font-size: 11px;
+	color: rgb(42, 43, 45);
+	width: auto;
 `;
 
 const StatusMessage = styled.p``;
