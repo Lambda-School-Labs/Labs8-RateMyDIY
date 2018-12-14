@@ -63,6 +63,12 @@ class ProjectList extends Component {
 
 					<div className="myProjectsDisplay">
 						{this.props.myProjects.map((myProject, index) => {
+							if (window.innerWidth <= 500) {
+								return <ProjectTile
+									key={myProject.project_id}
+									project={myProject}
+								/>
+							}
 							if (index === 0) {
 								return (
 								<Fragment>

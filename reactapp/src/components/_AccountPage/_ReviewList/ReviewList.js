@@ -25,10 +25,14 @@ const SelectHeader = styled.h1`
 
 const FeaturedProjectListTiles = styled.div`
 	display: flex;
-	flex-direction: column
-	/* justify-content: space-between; */
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	align-content: flex-start;
 
 	@media (max-width: 500px) {
+		display: flex;
+		flex-direction: column
 		width: 100%;
 		// align-self: center;
 	}
@@ -60,7 +64,6 @@ class ReviewList extends Component {
 	};
 
 	render() {
-		console.log('REVIEWS', this.props.myReviews)
 		if (!this.props.myReviews || this.props.myReviews.length === 0) {
 			return (
 				<div className='reviewPage'>
@@ -68,20 +71,24 @@ class ReviewList extends Component {
 						handleChange={this.handleChange}
 						handleSearch={this.handleSearch}
 					/>
-					{window.innerWidth <= 500 ? null : <AccountSideBar />}
-					{window.innerWidth <= 500 ? 
-					<SelectHeader className='selectHeader'>Select a project to review</SelectHeader>
-					:
-					null}
-					<FeaturedProjectListTiles>
-						{this.props.featuredProjects.map(project => (
-							<ProjectTile
-								history={this.props.history}
-								project={project}
-								key={project.project_id}
-							/>
-						))}
-					</FeaturedProjectListTiles>
+					<div className='reviewContainer'>
+						{window.innerWidth <= 500 ? null : <AccountSideBar />}
+						{window.innerWidth <= 500 ? 
+						<SelectHeader className='selectHeader'>Select a project to review</SelectHeader>
+						:
+						null}
+						<div className="myReviewDisplay">
+							<FeaturedProjectListTiles>
+								{this.props.featuredProjects.map(project => (
+									<ProjectTile
+										history={this.props.history}
+										project={project}
+										key={project.project_id}
+									/>
+								))}
+							</FeaturedProjectListTiles>
+						</div>
+					</div>
 				</div>
 			);
 		} else {
@@ -100,6 +107,15 @@ class ReviewList extends Component {
 
 					<div className="myReviewDisplay">
 						{this.props.myReviews.map((myReviews, index) => {
+							if (window.innerWidth <= 500) {
+								return <ReviewCard
+									review={myReviews}
+									key={myReviews.review_id}
+									showReviewModal={value =>
+										this.setState({ reviewModal: value })
+									}
+								/>
+							}
 							if (index === 0) {
 								return (
 								<Fragment>

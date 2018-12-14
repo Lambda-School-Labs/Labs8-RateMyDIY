@@ -46,8 +46,15 @@
     width: 100vw;
   }
 
+  .reviewContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
   .myReviewDisplay {
     width: 80%;
+    align-self: center;
   }
 
   .selectHeader {
