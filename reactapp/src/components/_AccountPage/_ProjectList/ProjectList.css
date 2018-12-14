@@ -26,6 +26,8 @@ img {
 
 .projectContainer {
 	margin-top: 100px;
+	display: flex;
+	flex-direction: row;
 }
 
 /* .project-list-container {
@@ -35,10 +37,11 @@ img {
 .myProjectsDisplay {
 	width: 100%;
 	background-color: #ffffff;
-	margin-top: 20px;
+	/* margin-top: 20px; */
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	margin: 3%;
 }
 
 .myProjectDisplay {

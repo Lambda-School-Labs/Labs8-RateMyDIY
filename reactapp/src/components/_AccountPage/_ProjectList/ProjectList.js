@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -59,17 +59,27 @@ class ProjectList extends Component {
 					</Link>
 				</AddButton>
 				:
-				<div>
-					<EmptyCard addNew project />
-				</div>}
+				null}
 
 					<div className="myProjectsDisplay">
-						{this.props.myProjects.map(myProject => (
-							<ProjectTile
-								key={myProject.project_id}
-								project={myProject}
-							/>
-						))}
+						{this.props.myProjects.map((myProject, index) => {
+							if (index === 0) {
+								return (
+								<Fragment>
+								<EmptyCard addNew style={{ margin: '3%' }}/>
+								<ProjectTile 
+									key={myProject.project_id}
+									project={myProject}
+								/>
+								</Fragment>
+								)
+							} else {
+								return <ProjectTile
+									key={myProject.project_id}
+									project={myProject}
+								/>
+							}
+						})}
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchMyReviews, fetchSearchResults, loggedIn, getFeaturedProjects } from '../../../actions';
@@ -7,8 +7,9 @@ import { Header } from '../../../components';
 import styled from 'styled-components';
 import './ReviewList.css';
 // import styled from 'styled-components';
-import { ReviewRender } from '../../../components';
+import { ReviewCard } from '../../../components';
 import { ProjectTile } from '../../../components';
+import { EmptyCard }from '../../../components';
 // const CardLink = styled.a`
 //   text-decoration: none;
 //   color:black &:hover {
@@ -71,15 +72,7 @@ class ReviewList extends Component {
 					{window.innerWidth <= 500 ? 
 					<SelectHeader className='selectHeader'>Select a project to review</SelectHeader>
 					:
-					<div className="addNewReview">
-					<h2>New Review</h2>
-						<Link to={`/projects`}>
-							<img
-								alt="PLACEHOLDER! alt text"
-								src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-							/>
-						</Link>
-					</div>}
+					null}
 					<FeaturedProjectListTiles>
 						{this.props.featuredProjects.map(project => (
 							<ProjectTile
@@ -103,27 +96,33 @@ class ReviewList extends Component {
 					{window.innerWidth <= 500 ? 
 					<SelectHeader className='selectHeader'>Your Reviews</SelectHeader>
 					:
-					<div className="addNewReview">
-					<h2>New Review</h2>
-						<Link to={`/projects`}>
-							<img
-								alt="PLACEHOLDER! alt text"
-								src="http://chittagongit.com//images/plus-button-icon/plus-button-icon-13.jpg"
-							/>
-						</Link>
-					</div>}
+					null}
 
 					<div className="myReviewDisplay">
-						{this.props.myReviews.map(myReviews => (
-							<ReviewRender
-								key={myReviews.review_id}
-								myReview_id={myReviews.project_id}
-								myReviewsText={myReviews.text}
-								myReviewsImg_url={myReviews.img_url}
-								myReviewsRating={myReviews.rating}
-								projectName={myReviews.project_name}
-							/>
-						))}
+						{this.props.myReviews.map((myReviews, index) => {
+							if (index === 0) {
+								return (
+								<Fragment>
+									<EmptyCard addNew style={{ margin: '3%' }} />
+									<ReviewCard
+										review={myReviews}
+										key={myReviews.review_id}
+										showReviewModal={value =>
+											this.setState({ reviewModal: value })
+										}
+									/>
+								</Fragment>
+								)
+							} else {
+								return <ReviewCard
+									review={myReviews}
+									key={myReviews.review_id}
+									showReviewModal={value =>
+										this.setState({ reviewModal: value })
+									}
+								/>
+							}
+						})}
 					</div>
 				</div>
 				</div>
