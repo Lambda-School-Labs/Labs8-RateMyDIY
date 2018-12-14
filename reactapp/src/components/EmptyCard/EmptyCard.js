@@ -80,7 +80,7 @@ class ProjectCard extends React.Component {
 				{this.props.addNew ? 
 					<div style={{ width: '100%', height: '220px', background: '#bfbfbf', textAlign: 'center', verticalAlign: 'middle', lineHeight: '220px' }}>
 						{this.props.review ? 
-						<Link to={this.props.project_id}>
+						<Link to={`/project/${this.props.featured_id}`}>
 							Add New
 						</Link>
 						:

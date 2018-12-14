@@ -103,7 +103,7 @@ class ReviewList extends Component {
 							if (index === 0) {
 								return (
 								<Fragment>
-									<EmptyCard addNew style={{ margin: '3%' }} />
+									<EmptyCard addNew review featured_id={this.props.featuredProjects[0].project_id} style={{ margin: '3%' }} />
 									<ReviewCard
 										review={myReviews}
 										key={myReviews.review_id}
