@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ConfirmModal } from '../../components';
 import StarRatings from 'react-star-ratings';
 import UploadProjectPictureIcon from './circleplus.png';
+import TextareaAutosize from 'react-autosize-textarea';
 // Actions
 import { updateProject, updateProjectImage } from '../../actions';
 
@@ -126,29 +127,19 @@ class EditProject extends Component {
 		return (
 			<EditProjectFormContainer onSubmit={this.submitProjectChanges}>
 				<ProjectHeader>
-					<ProjectName>
-						<ProjectNameInput
-							name="project_name_input"
-							type="text"
-							placeholder="Project Title"
-							value={this.state.project_name}
-							onChange={this.changeHandler}
-							required
-						/>
-					</ProjectName>
-					<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
-					{this.props.project.project_rating &&
-						<ProjectRatingContainer>
-							< StarRatings
-								rating={Number(this.props.project.project_rating)}
-								starRatedColor="black"
-								starEmptyColor="grey"
-								// changeRating={this.changeRating}
-								starDimension="20px"
-								starSpacing="5px"
-								numberOfStars={5}
+					<ProjectNameAndAuthorContainer>
+						<ProjectName>
+							<ProjectNameInput
+								name="project_name_input"
+								type="text"
+								placeholder="Project Title"
+								value={this.state.project_name}
+								onChange={this.changeHandler}
+								required
 							/>
-						</ProjectRatingContainer>}
+						</ProjectName>
+						<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
+					</ProjectNameAndAuthorContainer>
 				</ProjectHeader>
 				<ImgContainer>
 					<ProjectPictureHiddenInput
@@ -241,43 +232,39 @@ export default connect(
 const EditProjectFormContainer = styled.form`
 	display: flex;
 	flex-direction: column;
-	background: #e9ded8;
+	border-radius: 4px;
 	width: 100%;
-	margin: 0 0 24px 0;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	border: 1px solid lightgray;
+	margin: 0 0 18px 0;
 `;
 
 const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
+	flex-direction: row;
+	padding: 18px 20px 10px 20px;
+	justify-content: space-between;
+  align-items: center;
+`;
+const ProjectNameAndAuthorContainer = styled.div`
+	display: flex;
+	min-width: 70%;
 	flex-direction: column;
-	background: #e9ded8;
-	padding: 24px 24px 12px 24px;
 `;
 
 const ProjectName = styled.h2`
 	display: flex;
-	font-size: 32px;
-	font-weight: bold;
 	margin: 0 0 0 -2px;
 `;
 
-const ProjectRatingContainer = styled.div`
-	
-`;
-
 const ProjectNameInput = styled.input`
-	background-color: #e9ded8;
+	border: 0;
+	margin: -3px 0 -4px 0;
 	font-size: 32px;
 	font-weight: bold;
-	border: none;
-	margin: 0;
-	padding: 0;
-	width:100%;
 `;
 
 const ProjectAuthor = styled.div`
-	
 `;
 
 const ProjectPictureHiddenInput = styled.input`
@@ -295,11 +282,11 @@ const ProjectPictureUploadLabel = styled.label`
 
 const ImgContainer = styled.div`
 	position: relative;
+	display: flex;
+	height: auto;
 	margin: 0 auto;
 	max-height: 600px !important;
-	height: auto;
 	width: auto;
-	height: auto;
 	margin: 0 auto;
 	transition: .5s ease;
 	:hover {
@@ -311,7 +298,6 @@ const UploadProjectPictureIconStyle = styled.img`
 	position: absolute;
   top: 50%;
   left: 50%;
-	width: 35%;
 	height: 35%;
 	opacity: .4;
   transform: translate(-50%, -50%);
@@ -322,18 +308,25 @@ const UploadProjectPictureIconStyle = styled.img`
 	:hover {
 		opacity: .9;
 	}
-	z-index: 2;
+	z-index: 1;
 `;
 
 const ProjectImage = styled.img`
 	position: relative;
+	height: 100%;
 	width: 100%;
-	max-height: 600px !important;
 	transition: .5s ease;
 `;
 
-const DescriptionContainer = styled.div``;
-const DescriptionInput = styled.input``;
+const DescriptionContainer = styled.div`
+	width: auto;
+	margin: 18px 20px 10px 20px;
+	line-height: 18px;
+	text-align: justify;
+`;
+const DescriptionInput = styled(TextareaAutosize)`
+width: 100%;
+`;
 
 const CancelLink = styled.a``;
 
