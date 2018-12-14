@@ -13,11 +13,16 @@ import {
 	DELETE_PROJECT_ERROR,
 	UPDATING_PROJECT_IMAGE,
 	UPDATED_PROJECT_IMAGE,
-	UPDATE_PROJECT_IMAGE_ERROR
+	UPDATE_PROJECT_IMAGE_ERROR,
+	GETTING_PROJECT_REVIEWS,
+	GOT_PROJECT_REVIEWS,
+	GET_PROJECT_REVIEWS_ERROR,
+	LIKED_PROJECT_REVIEW
 } from '../actions';
 
 const initialState = {
-	project: {}
+	project: {},
+	reviews: []
 
 	// gettingProjects: false,
 	// gettingProjectsError: null,
@@ -125,6 +130,35 @@ const projectReducer = (state = initialState, action) => {
 				updatingProjectImageError: `${action.payload}`
 			};
 
+		// getProjectReviews
+		case GETTING_PROJECT_REVIEWS:
+			return { ...state, gettingProjectReviews: true };
+
+		case GOT_PROJECT_REVIEWS:
+			return {
+				...state,
+				reviews: action.payload,
+				gettingProjectReviews: false
+			};
+
+		case GET_PROJECT_REVIEWS_ERROR:
+			return {
+				...state,
+				gettingProjectReviews: false,
+				gettingProjectReviewsError: `${action.payload}`
+			};
+
+		case LIKED_PROJECT_REVIEW:
+			return {
+				...state,
+				reviews: state.reviews[0]
+					? state.reviews.map(review =>
+						review.review_id === action.payload.review_id
+							? { ...review, like: action.payload.like }
+							: review
+					)
+					: []
+			};
 
 		default:
 			return state;

@@ -23,13 +23,17 @@ export const DELETE_PROJECT_ERROR = 'DELETE_PROJECT_ERROR';
 export const UPDATING_PROJECT_IMAGE = 'UPDATING_PROJECT_IMAGE';
 export const UPDATED_PROJECT_IMAGE = 'UPDATED_PROJECT_IMAGE';
 export const UPDATE_PROJECT_IMAGE_ERROR = 'UPDATE_PROJECT_IMAGE_ERROR';
+// getProjectReviews
+export const GETTING_PROJECT_REVIEWS = 'GETTING_PROJECT_REVIEWS';
+export const GOT_PROJECT_REVIEWS = 'GOT_PROJECT_REVIEWS';
+export const GET_PROJECT_REVIEWS_ERROR = 'GET_PROJECT_REVIEWS_ERROR';
 
 // Loading message tester
 // function sleep(ms) {
 // 	return new Promise(resolve => setTimeout(resolve, ms));
 // }
 
-// // get project by project_id
+// get project by project_id
 export const getProject = project_id => {
 	return dispatch => {
 		dispatch({ type: GETTING_PROJECT });
@@ -157,6 +161,7 @@ export const deleteProject = (project_id, user_id, callback) => {
 	};
 };
 
+// update project image
 export const updateProjectImage = (selectedFile, headerData, callback) => {
 
 	return dispatch => {
@@ -168,7 +173,6 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 				`/api/projects/image-upload`,
 				selectedFile, headerData
 			)
-
 
 			.then(response => {
 				// If file size is larger than expected.
@@ -183,9 +187,6 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 					}
 
 					dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error });
-
-
-
 				} else {
 					const img_url = response.data.location
 					console.log(`projectActions img_url:`, img_url);
@@ -193,13 +194,29 @@ export const updateProjectImage = (selectedFile, headerData, callback) => {
 					dispatch({ type: UPDATED_PROJECT_IMAGE });
 					callback(img_url);
 				}
-			}
-			)
-
+			})
 
 			.catch(error => dispatch({ type: UPDATE_PROJECT_IMAGE_ERROR, payload: error }))
-
-
-
 	}
 }
+
+// get reviews by project_id
+export const getProjectReviews = (user_id, project_id) => {
+	return dispatch => {
+		dispatch({ type: GETTING_PROJECT_REVIEWS });
+
+		axios
+			.get(
+				(process.env.REACT_APP_BACKEND || `http://localhost:5000`) +
+				`/api/projects/${project_id}/reviews/${user_id || 0}`
+			)
+
+			.then(({ data }) => {
+				dispatch({ type: GOT_PROJECT_REVIEWS, payload: data });
+			})
+
+			.catch(error =>
+				dispatch({ type: GET_PROJECT_REVIEWS_ERROR, payload: error })
+			);
+	};
+};

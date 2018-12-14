@@ -17,13 +17,14 @@ function getPopularProjects() {
 				'users.username',
 				'users.img_url as maker_photo_url',
 				'projects.project_id',
-				'projects.project_rating'
+				'projects.project_rating',
+				'projects.text'
 			)
 			// For Azure
 			// .orderBy('project_rating', 'desc')
 			// For Heroku
 			.orderByRaw('project_rating DESC NULLS LAST')
-			.limit(4)
+			.limit(6)
 	);
 }
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getUsername, getProfilePic } from '../../actions/settingActions';
+import { fetchSearchResults } from '../../actions';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,7 +12,7 @@ import Modal from '@material-ui/core/Modal';
 import { compose } from 'redux';
 import ReactLoading from 'react-loading';
 
-import { Nav, Twillio } from '../../components';
+import { Header, Twillio } from '../../components';
 
 const styles = theme => ({
 	paper: {
@@ -39,6 +40,10 @@ const SettingsPageContainer = styled.div`
 	width: 100%;
 	min-width: 550px;
 	background-color: ${props => props.theme.mui.palette.primary.main};
+
+	@media (max-width: 500px) {
+		width: 100vw;
+	}
 `;
 
 const SettingsContainer = styled.div`
@@ -47,8 +52,16 @@ const SettingsContainer = styled.div`
 	align-items: center;
 	width: 80%;
 	margin: 0 auto;
+	margin-top: 100px;
 	border-radius: 30px;
 	background-color: ${props => props.theme.mui.palette.primary.light};
+
+	@media (max-width: 500px) {
+		position: absolute;
+		width: 100%;
+		border-radius: none;
+		text-align: center;
+	}
 `;
 
 const ProfileImgHolder = styled.div`
@@ -68,6 +81,12 @@ const ProfileForm = styled.form`
 	width: 30%;
 	height: 100%;
 	margin: 2% 0%;
+
+	@media (max-width: 500px) {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
 `;
 
 // const CustomFileInput = styled.input`
@@ -97,6 +116,11 @@ const FileButton = styled.label`
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
 	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+	}
 `;
 
 const UploadButton = styled.button`
@@ -116,6 +140,11 @@ const UploadButton = styled.button`
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
 	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+	}
 `;
 
 const ProfileHeader = styled.h2`
@@ -124,6 +153,10 @@ const ProfileHeader = styled.h2`
 	font-size: 2.5rem;
 	margin: 2% auto;
 	text-align: center;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const StatusMessage = styled.h2`
@@ -132,6 +165,10 @@ const StatusMessage = styled.h2`
 	font-size: 2.5rem;
 	margin: 2% auto;
 	text-align: center;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const UsernameContainer = styled.div`
@@ -141,17 +178,30 @@ const UsernameContainer = styled.div`
 	padding: 3%;
 	background-color: ${props => props.theme.mui.palette.secondary.light};
 	border-radius: 5px;
+
+	@media (max-width: 500px) {
+		width: 100%;
+		text-align: center;
+	}
 `;
 
 const UsernameHeader = styled.h1`
 	align-self: center;
-	color: ${props => props.theme.mui.palette.secondary.main};
+	color: ${props => props.theme.mui.palette.primary.dark};
 	font-size: 4rem;
+
+	@media (max-width: 500px) {
+		color: ${props => props.theme.mui.palette.primary.dark};
+	}
 `;
 
 const UsernameForm = styled.form`
 	display: flex;
 	flex-direction: column;
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 const StyledInput = styled.input`
@@ -160,6 +210,13 @@ const StyledInput = styled.input`
 
 	&:focus {
 		outline: none;
+	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+		align-self: center;
+		border: 1px solid ${props => props.theme.mui.palette.primary.dark}
 	}
 `;
 
@@ -180,6 +237,12 @@ const UsernameButton = styled.input`
 		background-color: ${props => props.theme.mui.palette.primary.dark};
 		color: white;
 	}
+
+	@media (max-width: 500px) {
+		width: 80%;
+		margin: 3%;
+		align-self: center;
+	}
 `;
 
 const TextButton = styled.p`
@@ -195,9 +258,22 @@ class UserSettings extends Component {
 	state = {
 		username: '',
 		img_url: null,
-		open: false
+		open: false,
+		input: ''
+	};
+	handleChange = e => {
+		this.setState({ ...this.state, input: e.target.value });
 	};
 
+	handleSearch = e => {
+		e.preventDefault();
+		const searchTerm = this.state.input;
+		console.log(searchTerm);
+		//call featch search results action
+		//push to search page
+		this.props.fetchSearchResults(searchTerm);
+		this.props.history.push(`/search?query=${searchTerm}`);
+	};
 	handleOpen = () => {
 		this.setState({ open: true });
 	};
@@ -293,7 +369,10 @@ class UserSettings extends Component {
 		const { classes } = this.props;
 		return (
 			<SettingsPageContainer>
-				<Nav />
+				<Header
+					handleChange={this.handleChange}
+					handleSearch={this.handleSearch}
+				/>
 				<SettingsContainer>
 					<ProfileImgHolder>
 						<ProfileImg src={this.props.userInfo.img_url} />
@@ -377,7 +456,7 @@ const mapStateToProps = state => ({
 export default compose(
 	connect(
 		mapStateToProps,
-		{ getUsername, getProfilePic }
+		{ getUsername, getProfilePic, fetchSearchResults }
 	),
 	withStyles(styles)
 )(UserSettings);

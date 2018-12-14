@@ -32,12 +32,16 @@ function getReview(review_id, user_id) {
 		.then(review => {
 			// Is the user logged in?
 			if (user_id) {
+				console.log(`Checking if user ${user_id} liked review ${review_id}`);
 				// Return the review with like state
 				return db('likes')
 					.where({ review_id, user_id })
 					.select('like')
 					.first()
-					.then(like => ({ ...review, like }));
+					.then(like =>
+						// This could be cleaned up a bit
+						like === undefined ? review : { ...review, like: like.like }
+					);
 			} else {
 				// Return the review without like state
 				return review;
@@ -375,7 +379,7 @@ function removeReview(user_id, review_id) {
 																			2
 																	) / 2
 															  ).toFixed(1)
-															: null,
+															: 0,
 														rating_sum: project_rating_sum,
 														rating_count: project_rating_count
 													},
@@ -414,7 +418,7 @@ function removeReview(user_id, review_id) {
 																									2
 																							) / 2
 																					  ).toFixed(1)
-																					: null,
+																					: 0,
 																				rating_sum: user_rating_sum,
 																				rating_count: user_rating_count
 																			},
