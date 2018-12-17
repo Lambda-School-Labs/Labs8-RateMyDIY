@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 // Components
 import { ConfirmModal } from '../../components';
-import StarRatings from 'react-star-ratings';
 import UploadProjectPictureIcon from './circleplus.png';
 import TextareaAutosize from 'react-autosize-textarea';
 // Actions
