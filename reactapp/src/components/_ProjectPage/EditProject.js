@@ -15,13 +15,23 @@ import styled from 'styled-components';
 
 class EditProject extends Component {
 	state = {
-		project_name: '',
+		projectName: '',
 		img_url: '',
-		text: '',
+		projectDescriptionText: '',
 		categories: [],
 		selectedFile: null,
 		uploadingProjectImage: false
 	};
+
+	componentDidMount() {
+		this.setState({
+			projectName: this.props.project.project_name,
+			img_url: this.props.project.img_url,
+			projectDescriptionText: this.props.project.text,
+			project_rating: this.props.project.project_rating
+		});
+		document.addEventListener("keydown", this.escCancelHandler, false);
+	}
 
 	// This stores the project image file recieved in the ReactFileReader form data  
 	singleFileChangedHandler = event => {
@@ -86,19 +96,11 @@ class EditProject extends Component {
 								console.log(response.data.path);
 							}
 						} else {
-							// Success
-							let fileName = response.data;
-
 							let photo = response.data.location;
 							this.setState({
 								img_url: photo,
 								uploadingProjectImage: false
-							});
-							console.log('filedata', fileName);
-
-							console.log('photo', photo);
-
-							//   this.ocShowAlert("File Uploaded", "#3089cf");
+							}, () => { this.submitProjectChanges() });
 						}
 					} else {
 						console.log('error');
@@ -114,11 +116,11 @@ class EditProject extends Component {
 	// Keep form data in the state
 	changeHandler = event => {
 		this.setState({ [event.target.name]: event.target.value });
+		console.log(event.target.value)
 	};
 
-	// Submit changes
+	// updates the project with the edited data
 	submitProjectChanges = event => {
-		event.preventDefault();
 		if (this.props.selectedFile && !this.state.uploadingProjectImage) {
 			this.singleFileUploadHandler(event);
 		}
@@ -126,9 +128,9 @@ class EditProject extends Component {
 			this.props.project.project_id,
 			{
 				user_id: this.props.user_id,
-				project_name: this.state.project_name,
+				projectName: this.state.project_name,
 				img_url: this.state.img_url,
-				text: this.state.text,
+				projectDescriptionText: this.state.projectDescriptionText,
 				categories: this.state.categories
 			},
 			() => this.props.willUpdateProject(false)
@@ -140,9 +142,9 @@ class EditProject extends Component {
 		event.preventDefault();
 
 		if (
-			this.state.project_name === this.props.project.project_name &&
+			this.state.projectName === this.props.project.project_name &&
 			this.state.img_url === this.props.project.img_url &&
-			this.state.text === this.props.project.text
+			this.state.projectDescriptionText === this.props.project.text
 		) {
 			this.props.willUpdateProject(false);
 			this.setState(prevState => ({ toggle: !prevState.toggle }));
@@ -162,49 +164,24 @@ class EditProject extends Component {
 			});
 		}
 	};
-	escCancelHandler = (event) => {
-		if (event.keyCode === 27) {
-			this.cancelHandler(event);
-		}
-	}
-	componentDidMount() {
-		this.setState({
-			project_name: this.props.project.project_name,
-			img_url: this.props.project.img_url,
-			text: this.props.project.text,
-			project_rating: this.props.project.project_rating
-		});
-		document.addEventListener("keydown", this.escCancelHandler, false);
-	}
-
-	componentWillUnmount() {
-		document.removeEventListener("keydown", this.escCancelHandler, false);
-	}
 
 	render() {
 		return (
-			<EditProjectFormContainer onSubmit={this.submitProjectChanges}>
+			<EditProjectFormContainer onSubmit={this.singleFileUploadHandler}>
 				<ProjectHeader>
 					<ProjectNameAndAuthorContainer>
 						<ProjectName>
 							<ProjectNameInput
-								name="project_name_input"
+								name="projectName"
 								type="text"
 								placeholder="Project Title"
-								value={this.state.project_name}
+								value={this.state.projectName}
 								onChange={this.changeHandler}
 								required
 							/>
 						</ProjectName>
 						<ProjectAuthor>by user ID {this.props.project.user_id}</ProjectAuthor>
 					</ProjectNameAndAuthorContainer>
-					<UploadImageButtonTemp
-						className="btn btn-info"
-						onClick={this.singleFileUploadHandler}
-						disabled={this.props.updatingProject || this.props.gettingProject}
-					>
-						Upload Image (temp)
-						</UploadImageButtonTemp>
 				</ProjectHeader>
 				<ImgContainer>
 					<ProjectPictureHiddenInput
@@ -228,10 +205,10 @@ class EditProject extends Component {
 				{/* HiddenProfilePictureInput is hidden */}
 				<DescriptionContainer>
 					<DescriptionInput
-						name="text"
+						name="projectDescriptionText"
 						type="text"
 						placeholder="project description"
-						value={this.state.text}
+						value={this.state.projectDescriptionText}
 						onChange={this.changeHandler}
 						required
 					/>
@@ -362,10 +339,10 @@ const UploadProjectPictureIconStyle = styled.img`
 	margin: auto;
 	padding: auto;
 	transition: .5s ease;
+	z-index: 1;
 	:hover {
 		opacity: .9;
 	}
-	z-index: 1;
 `;
 
 const ProjectImage = styled.img`
@@ -373,12 +350,6 @@ const ProjectImage = styled.img`
 	height: 100%;
 	width: 100%;
 	transition: .5s ease;
-`;
-
-const UploadImageButtonTemp = styled.button`
-	display: flex;
-	width: auto;
-	margin: 5px;
 `;
 
 const DescriptionContainer = styled.div`
@@ -395,14 +366,12 @@ const DescriptionInput = styled(TextareaAutosize)`
 `;
 
 const CancelLink = styled.a`
-	background: none;
-	border: none;
-	outline: none;
 	cursor: pointer;
-	padding: 0;
 	margin-right: 8px;
 	text-decoration: none;
 	color: rgb(42,43,45);
+	position: relative;
+	z-index: 10;
 	:hover {
 		background: none;
 		text-decoration: none;
