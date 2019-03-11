@@ -94,6 +94,7 @@ const ProjectContainer = styled.div`
 	border-radius: 4px;
 	width: 100%;
 	border: 1px solid lightgray;
+	padding: 18px 20px;
 	margin: 0 0 30px 0;
 `;
 
@@ -101,10 +102,10 @@ const ProjectHeader = styled.div`
 	display: flex;
 	position: 50%;
 	flex-direction: row;
-	padding: 18px 20px 0 20px;
+	/* padding: 18px 20px 0 20px; */
 	justify-content: space-between;
 	align-items: center;
-	margin: 0 0 20px 0;
+	/* margin: 0 0 20px 0; */
 `;
 
 const ProjectNameAuthorCategoryContainer = styled.div`
@@ -167,6 +168,7 @@ const Img = styled.img`
 	background: #f6f6f6;
 	max-height: 600px;
 	width: 100%;
+	margin: 20px 0 18px;
 	object-fit: contain;
 `;
 
@@ -174,7 +176,7 @@ const ProjectRatingTool = styled(StarRatings)``;
 
 const DescriptionContainer = styled.div`
 	width: auto;
-	margin: 18px 20px 4px 20px;
+	/* margin: 18px 20px 4px 20px; */
 	line-height: 18px;
 	/* text-align: justify; */
 `;

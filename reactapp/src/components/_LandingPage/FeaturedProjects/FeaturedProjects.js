@@ -16,6 +16,7 @@ const FeaturedProjectsWrapper = styled.div`
 	padding: 12px 0;
 	border: 1px solid lightgray;
 	border-radius: 8px;
+	margin-bottom: 30px;
 
 	@media (max-width: 500px) {
 		width: 100%;
