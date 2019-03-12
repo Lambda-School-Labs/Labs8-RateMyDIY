@@ -1,4 +1,4 @@
-![Qraft logo](./qraft-logo.png)
+![Qraft logo](./qraft-logo-resized.png)
 
 # Qraft
 
