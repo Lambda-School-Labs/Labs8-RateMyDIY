@@ -16,7 +16,7 @@ const Project = props => {
 			<ProjectHeader>
 				<ProjectNameAuthorCategoryContainer>
 					<ProjectName>{props.project.project_name}</ProjectName>
-					<ProjectAuthor>by user ID {props.project.user_id}</ProjectAuthor>
+					<ProjectAuthor>by {props.project.username}</ProjectAuthor>
 					<CategoryContainer>
 						{props.project.categories &&
 							// [
@@ -121,7 +121,10 @@ const ProjectName = styled.h2`
 	margin: 0 0 0 -2px;
 `;
 
-const ProjectAuthor = styled.div``;
+const ProjectAuthor = styled.div`
+	padding: 4px 0 0;
+	font-size: 1.6rem;
+`;
 
 const ProjectRatingAndReviewsContainer = styled.div`
 	display: flex;
@@ -177,15 +180,15 @@ const ProjectRatingTool = styled(StarRatings)``;
 const DescriptionContainer = styled.div`
 	width: auto;
 	/* margin: 18px 20px 4px 20px; */
+	font-size: 1.6rem;
 	line-height: 18px;
 	/* text-align: justify; */
 `;
 
 const OptionsContainer = styled.div`
 	display: flex;
-	margin: 5px 0 0 0;
-	font-size: 11px;
-	color: rgb(42, 43, 45);
+	margin: 8px 0 -6px 0;
+	font-size: 1.4rem;
 	width: auto;
 	justify-content: flex-end;
 `;
@@ -196,7 +199,7 @@ const EditLink = styled.button`
 	outline: none;
 	cursor: pointer;
 	padding: 0;
-	margin-right: 8px;
+	margin-right: 12px;
 `;
 
 const DeleteButton = styled.button`
