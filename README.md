@@ -91,4 +91,4 @@ DATABASE_URL= <<DATABASE_URL>>
 
 # Data Model
 
-![Image of Qraft data model](https://ratemydiy.s3.amazonaws.com/1552410351760)
+![Image of Qraft data model](./data-model.png)
