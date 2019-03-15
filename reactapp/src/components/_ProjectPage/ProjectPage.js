@@ -364,4 +364,18 @@ const ProjectButton = styled.button`
 	}
 `;
 
-const ReviewButton = styled.button``;
+const ReviewButton = styled.button`
+	font-size: 1.25em;
+	font-weight: 700;
+	color: white;
+	background-color: #254f8d;
+	padding: 10px 15px 10px 15px;
+	cursor: pointer;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+	&:hover {
+		outline: 1px dotted #000;
+		outline: -webkit-focus-ring-color auto 5px;
+		background-color: #1c293b;
+	}
+`;
