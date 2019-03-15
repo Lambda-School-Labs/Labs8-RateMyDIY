@@ -22,63 +22,6 @@ import { loggedIn, project_ReviewId_Chain, deleteProject } from '../../actions';
 // Styles
 import styled from 'styled-components';
 
-const ProjectPageHeaderContainer = styled.div`
-	width: 100%;
-`;
-
-const ProjectPageContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	/* margin: 100px auto 0 auto; */
-	margin: 100px auto;
-	width: 100%;
-`;
-
-const ProjectContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	min-width: 20%;
-	width: 50%;
-	max-width: 750px;
-`;
-
-// const SideBarContainer = styled.div`
-// 	display: flex;
-// 	border: 1px solid green;
-// 	margin: 0 0 0 5px;
-// 	width: 10%;
-// 	min-width: 150px;
-// 	height: 500px;
-// 	min-height: 500px;
-// `;
-
-const StatusMessage = styled.p``;
-
-const ButtonContainer = styled.div`
-	display: flex;
-	justify-content: space-around;
-	margin-top: 20px;
-`;
-
-const ProjectButton = styled.a`
-	display: flex;
-	max-height: 100px;
-	max-width: 100px;
-	height: 100px;
-	width: 100px;
-	border-radius: 50%;
-	align-items: center;
-	justify-content: center;
-	/* background: ; */
-	border: 3px lightgray solid;
-	:hover {
-		background: purple;
-	}
-`;
-
-const ReviewButton = styled.button``;
-
 class ProjectPage extends Component {
 	state = {};
 
@@ -86,6 +29,7 @@ class ProjectPage extends Component {
 	deleteHandler = event => {
 		event.preventDefault();
 
+		// Trigger confirmation modal
 		this.setState({
 			confirm: {
 				text: [
@@ -133,6 +77,8 @@ class ProjectPage extends Component {
 	};
 
 	componentDidMount() {
+		// Check if user is logged in, then get project and review_id if it exists
+		// - Currently goes through three request/response cycles (once for login check, once for project data, once for review id) - can definitely by improved!
 		this.props.loggedIn(
 			project_ReviewId_Chain,
 			this.props.match.params.project_id
@@ -154,147 +100,171 @@ class ProjectPage extends Component {
 
 		return (
 			<ProjectPageHeaderContainer>
+				{/* Redirect functionality */}
 				{this.state.redirect && <Redirect push to={this.state.redirect} />}
+
 				<ScrollToTopOnMount />
+
 				<Header history={this.props.history} />
+
 				<ProjectPageContainer>
 					<ProjectContainer>
+						{/* Loading the project? */}
 						{this.props.gettingUserInfo ||
-							this.props.gettingReviewId ||
-							(this.props.gettingProject &&
-								!(
-									this.props.updatingProject ||
-									this.state.projectToUpdate ||
-									this.state.postToAdd ||
-									this.state.postToUpdate ||
-									this.state.postToDelete
-								)) ? (
-								<React.Fragment>
-									<StatusMessage>Loading project...</StatusMessage>
-								</React.Fragment>
-							) : this.props.gettingUserInfoError ||
-								this.props.gettingProjectError ||
-								this.props.gettingReviewIdError ? (
-									<React.Fragment>
-										<StatusMessage>Failed to load project</StatusMessage>
-										<StatusMessage error>
-											{this.props.gettingUserInfoError ||
-												this.props.gettingProjectError ||
-												this.props.gettingReviewIdError}
-										</StatusMessage>
-									</React.Fragment>
-								) : this.props.deletingProjectError ? (
-									<React.Fragment>
-										<StatusMessage>Failed to delete project</StatusMessage>
-										<StatusMessage error>
-											{this.props.gettingProjectError}
-										</StatusMessage>
-									</React.Fragment>
+						this.props.gettingReviewId ||
+						(this.props.gettingProject &&
+							!(
+								this.props.updatingProject ||
+								this.state.projectToUpdate ||
+								this.state.postToAdd ||
+								this.state.postToUpdate ||
+								this.state.postToDelete
+							)) ? (
+							// Display loading status
+							<React.Fragment>
+								<StatusMessage>Loading project...</StatusMessage>
+							</React.Fragment>
+						) : // Error loading project?
+						this.props.gettingUserInfoError ||
+						  this.props.gettingProjectError ||
+						  this.props.gettingReviewIdError ? (
+							// Display error
+							<React.Fragment>
+								<StatusMessage>Failed to load project</StatusMessage>
+								<StatusMessage error>
+									{this.props.gettingUserInfoError ||
+										this.props.gettingProjectError ||
+										this.props.gettingReviewIdError}
+								</StatusMessage>
+							</React.Fragment>
+						) : // Error deleting project?
+						this.props.deletingProjectError ? (
+							// Display error
+							<React.Fragment>
+								<StatusMessage>Failed to delete project</StatusMessage>
+								<StatusMessage error>
+									{this.props.gettingProjectError}
+								</StatusMessage>
+							</React.Fragment>
+						) : (
+							<React.Fragment>
+								{/* Editing project? */}
+								{this.state.projectToUpdate ? (
+									// Display editable project
+									<EditProject
+										user_id={this.props.userInfo.user_id}
+										project={this.props.project}
+										willUpdateProject={value =>
+											this.setState({ projectToUpdate: value })
+										}
+									/>
 								) : (
-										<React.Fragment>
-											{this.state.projectToUpdate ? (
-												<EditProject
-													user_id={this.props.userInfo.user_id}
-													project={this.props.project}
-													willUpdateProject={value =>
-														this.setState({ projectToUpdate: value })
-													}
-												/>
-											) : (
-													<Project
-														project={this.props.project}
-														owner={owner}
-														willUpdateProject={value =>
-															this.setState({ projectToUpdate: value })
-														}
-														deleteHandler={this.deleteHandler}
-														disabled={disabled}
-													/>
-												)}
+									// Display project
+									<Project
+										project={this.props.project}
+										owner={owner}
+										willUpdateProject={value =>
+											this.setState({ projectToUpdate: value })
+										}
+										deleteHandler={this.deleteHandler}
+										disabled={disabled}
+									/>
+								)}
 
-											{/* Display posts */}
-											{this.props.project.posts &&
-												this.props.project.posts.map(post =>
-													// Could probably move this logic to Post
-													post.post_id === this.state.postToUpdate ? (
-														<EditPost
-															key={post.post_id}
-															user_id={this.props.userInfo.user_id}
-															project_id={this.props.project.project_id}
-															post={post}
-															willUpdatePost={value =>
-																this.setState({ postToUpdate: value })
-															}
-														/>
-													) : (
-															<Post
-																key={post.post_id}
-																post={post}
-																user_id={this.props.userInfo.user_id}
-																project_id={this.props.project.project_id}
-																owner={owner}
-																willUpdatePost={value =>
-																	this.setState({ postToUpdate: value })
-																}
-																willDeletePost={value =>
-																	this.setState({ postToDelete: value })
-																}
-																postToDelete={post.post_id === this.state.postToDelete}
-																disabled={disabled}
-															/>
-														)
-												)}
-
-											{/* Add new post */}
-											{this.state.postToAdd && (
-												<NewPost
-													postType={this.state.postToAdd}
-													user_id={this.props.userInfo.user_id}
-													project_id={this.props.project.project_id}
-													willAddPost={value => this.setState({ postToAdd: value })}
-												/>
-											)}
-
-											{/* Bottom buttons */}
-											{owner ? (
-												<ButtonContainer>
-													<ProjectButton
-														onClick={() => this.setState({ postToAdd: 'text' })}
-														disabled={disabled}
-													>
-														Add Text Field
-										</ProjectButton>
-													<ProjectButton
-														onClick={() => this.setState({ postToAdd: 'image' })}
-														disabled={disabled}
-													>
-														Add Picture
-										</ProjectButton>
-												</ButtonContainer>
-											) : this.props.reviewId ? (
-												<ReviewButton
-													onClick={() =>
-														this.setState({ reviewModal: this.props.reviewId })
-													}
-													disabled={this.props.gettingReviewId}
-												>
-													View Your Review
-									</ReviewButton>
-											) : (
-														<ReviewButton
-															onClick={() =>
-																this.props.userInfo.user_id
-																	? this.setState({ reviewModal: 'new' })
-																	: this.notLoggedInHandler()
-															}
-															disabled={this.props.gettingReviewId}
-														>
-															Review Project
-									</ReviewButton>
-													)}
-										</React.Fragment>
+								{/* Any posts? */}
+								{this.props.project.posts &&
+									// Display posts
+									this.props.project.posts.map(post =>
+										// Is this post being edited?
+										post.post_id === this.state.postToUpdate ? (
+											// Display editable post
+											<EditPost
+												key={post.post_id}
+												user_id={this.props.userInfo.user_id}
+												project_id={this.props.project.project_id}
+												post={post}
+												willUpdatePost={value =>
+													this.setState({ postToUpdate: value })
+												}
+											/>
+										) : (
+											// Display post
+											<Post
+												key={post.post_id}
+												post={post}
+												user_id={this.props.userInfo.user_id}
+												project_id={this.props.project.project_id}
+												owner={owner}
+												willUpdatePost={value =>
+													this.setState({ postToUpdate: value })
+												}
+												willDeletePost={value =>
+													this.setState({ postToDelete: value })
+												}
+												postToDelete={post.post_id === this.state.postToDelete}
+												disabled={disabled}
+											/>
+										)
 									)}
+
+								{/* Adding a new post? */}
+								{this.state.postToAdd && (
+									// Display newPost component
+									<NewPost
+										postType={this.state.postToAdd}
+										user_id={this.props.userInfo.user_id}
+										project_id={this.props.project.project_id}
+										willAddPost={value => this.setState({ postToAdd: value })}
+									/>
+								)}
+
+								{/* Is the user the author? */}
+								{owner ? (
+									// Display edit/delete buttons
+									<ButtonContainer>
+										<ProjectButton
+											onClick={() => this.setState({ postToAdd: 'text' })}
+											disabled={disabled}
+										>
+											Add Text Field
+										</ProjectButton>
+										<ProjectButton
+											onClick={() => this.setState({ postToAdd: 'image' })}
+											disabled={disabled}
+										>
+											Add Picture
+										</ProjectButton>
+									</ButtonContainer>
+								) : // Has the user reviewed this post?
+								this.props.reviewId ? (
+									// Display button to view review
+									<ReviewButton
+										onClick={() =>
+											this.setState({ reviewModal: this.props.reviewId })
+										}
+										disabled={this.props.gettingReviewId}
+									>
+										View Your Review
+									</ReviewButton>
+								) : (
+									// Display button to add review
+									<ReviewButton
+										onClick={() =>
+											this.props.userInfo.user_id
+												? this.setState({ reviewModal: 'new' })
+												: this.notLoggedInHandler()
+										}
+										disabled={this.props.gettingReviewId}
+									>
+										Review Project
+									</ReviewButton>
+								)}
+							</React.Fragment>
+						)}
+
+						{/* Show the review modal? */}
 						{this.state.reviewModal && (
+							// Display review modal
 							<ReviewModal
 								review_id={this.props.reviewId}
 								showReviewModal={value => this.setState({ reviewModal: value })}
@@ -302,14 +272,17 @@ class ProjectPage extends Component {
 							/>
 						)}
 
+						{/* Show the confirmation modal? */}
 						{this.state.confirm && (
+							// Display confirmation modal
 							<ConfirmModal confirm={this.state.confirm} />
 						)}
+						{/* Deleting the project? */}
 						{this.props.deletingProject && (
+							// Display deleting status
 							<ConfirmModal statusMessage={'Deleting project...'} />
 						)}
 					</ProjectContainer>
-					{/* <SideBarContainer /> */}
 				</ProjectPageContainer>
 			</ProjectPageHeaderContainer>
 		);
@@ -346,3 +319,49 @@ export default connect(
 		deleteProject
 	}
 )(ProjectPage);
+
+// Styled components
+const ProjectPageHeaderContainer = styled.div`
+	width: 100%;
+`;
+
+const ProjectPageContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	margin: 100px auto;
+	width: 100%;
+`;
+
+const ProjectContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-width: 20%;
+	width: 50%;
+	max-width: 750px;
+`;
+
+const StatusMessage = styled.p``;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+`;
+
+const ProjectButton = styled.button`
+	display: flex;
+	max-height: 100px;
+	max-width: 100px;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	border: 3px lightgray solid;
+	:hover {
+		background: purple;
+	}
+`;
+
+const ReviewButton = styled.button``;
