@@ -4,12 +4,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 // import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 // import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 // import IconButton from '@material-ui/core/IconButton';
 // import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
@@ -31,16 +29,16 @@ const styles = theme => ({
 		// border: '1px solid lightgray',
 		cursor: 'pointer',
 		position: 'relative',
-
-		['@media (max-width: 1000px)']: {
-			width: '47%',
-			marginLeft: '2%'
-		},
-
-		['@media (max-width: 500px)']: {
-			width: '90%',
-			margin: '25px auto 30px'
-		}
+		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
+		// ['@media (max-width: 1000px)']: {
+		// 	width: '47%',
+		// 	marginLeft: '2%'
+		// },
+		// Unnecessarily computed property ['@media (max-width: 500px)'] found
+		// ['@media (max-width: 500px)']: {
+		// 	width: '90%',
+		// 	margin: '25px auto 30px'
+		// }
 	},
 	media: {
 		height: 0,
@@ -59,6 +57,20 @@ const MakerInfo = styled.div`
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
+	padding: 8px 0 0;
+`;
+
+const SubInfo1 = styled.div`
+	width: 50%;
+	font-size: 1.2rem;
+	padding-left: 2px;
+`;
+
+const SubInfo2 = styled.div`
+	width: 50%;
+	font-size: 1.2rem;
+	text-align: right;
+	padding-right: 3px;
 `;
 
 const MakerName = styled.h1`
