@@ -28,7 +28,7 @@ const styles = theme => ({
 		color: theme.palette.secondary.main,
 		// border: '1px solid lightgray',
 		cursor: 'pointer',
-		position: 'relative',
+		position: 'relative'
 		// Unnecessarily computed property ['@media (max-width: 1000px)'] found
 		// ['@media (max-width: 1000px)']: {
 		// 	width: '47%',
@@ -57,15 +57,6 @@ const MakerInfo = styled.div`
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
-`;
-
-const MakerName = styled.h1`
-	padding: 6px 0 0;
-`;
-
-const MakerInfo2 = styled.div`
-	display: flex;
-	width: 100%;
 	padding: 8px 0 0;
 `;
 
@@ -80,6 +71,16 @@ const SubInfo2 = styled.div`
 	font-size: 1.2rem;
 	text-align: right;
 	padding-right: 3px;
+`;
+
+const MakerName = styled.h1`
+	padding: 6px 0 0;
+`;
+
+const MakerInfo2 = styled.div`
+	display: flex;
+	width: 100%;
+	padding: 8px 0 0;
 `;
 
 class MakerCard extends React.Component {
